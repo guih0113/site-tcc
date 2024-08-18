@@ -1,0 +1,133 @@
+* {
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+  text-decoration: none;
+  font-family: "Inter";
+}
+
+.container {
+  max-width: 1180px;
+  width: 100%;
+  display: flex;
+}
+
+body {
+  background-image: url("../img/Bg3.png");
+  background-size: cover;
+}
+
+header {
+  position: sticky;
+  z-index: 1;
+  top: 30px;
+  padding: 32px;
+  width: 1180px;
+  height: 98px;
+  border-radius: 10px;
+  background: #12130F;
+  display: flex;
+  margin-top: 100px;
+  margin-left: auto;
+  margin-right: auto;
+}
+header .container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+header .container img {
+  width: 155px;
+  height: 42.913px;
+}
+header .container nav {
+  display: flex;
+  color: aliceblue;
+}
+header .container nav ul {
+  display: flex;
+  list-style: none;
+}
+header .container nav ul li {
+  margin-left: 31px;
+  cursor: pointer;
+}
+header .container nav ul li:hover {
+  transform: scale(1.05);
+  transition: 0.1s linear;
+}
+header .container input {
+  width: 99px;
+  height: 35px;
+  border-radius: 13.2px;
+  background: transparent;
+  border: 1px solid white;
+  margin-left: 15px;
+  cursor: pointer;
+  color: #fff;
+  transition: linear 0.2s;
+}
+header .container input:hover {
+  width: 99px;
+  height: 35px;
+  border-radius: 13.2px;
+  background: #00DD15;
+  border: none;
+  margin-left: 15px;
+  cursor: pointer;
+  color: black;
+}
+
+svg {
+  position: absolute;
+}
+
+.s-hero {
+  padding-bottom: 144px;
+}
+.s-hero .right {
+  width: 719px;
+  height: 361px;
+  flex-shrink: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  position: relative;
+  right: 80px;
+  top: 129px;
+}
+.s-hero .right h1 {
+  color: #F7F7F5;
+  text-align: right;
+  font-family: "Montserrat";
+  font-size: 70px;
+  letter-spacing: -0.7px;
+}
+.s-hero .right p {
+  width: 437px;
+  color: #00DD15;
+  text-align: right;
+  font-family: Inter;
+  font-size: 18px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 150%; /* 27px */
+  letter-spacing: -0.18px;
+  margin-top: 11px;
+  margin-bottom: 38px;
+}
+.s-hero .right input {
+  width: 155px;
+  height: 48.911px;
+  flex-shrink: 0;
+  border-radius: 20.667px;
+  background: #00DD15;
+  border: none;
+  color: #1F3323;
+  font-size: 17.222px;
+  font-style: normal;
+  font-weight: 700;
+  line-height: 150%; /* 25.833px */
+  letter-spacing: -0.172px;
+  cursor: pointer;
+}/*# sourceMappingURL=main.css.map */
