@@ -10,7 +10,7 @@
 <body>
     <div class="signup-container">
         <div class="signup-image">
-            <img src="imgs/favicon.ico" alt="Signup Illustration" id="loira">
+            <img src="favicon_io/favicon.ico" alt="Signup Illustration" id="icon">
         </div>
         <div class="signup-form">
             <h1>Get Started Free</h1>
@@ -47,9 +47,9 @@
             <div class="social-signup">
                 <p>Or sign up with</p>
                 <div class="social-icons">
-                    <a href="#"><img src="imgs/google-icon.png" alt="Google"></a>
-                    <a href="#"><img src="imgs/apple-icon.png" alt="Apple"></a>
-                    <a href="#"><img src="imgs/facebook-icon.png" alt="Facebook"></a>
+                    <a href="#"><img src="img/google-icon.png" alt="Google"></a>
+                    <a href="#"><img src="img/apple-icon.png" alt="Apple"></a>
+                    <a href="#"><img src="img/facebook-icon.png" alt="Facebook"></a>
                 </div>
             </div>
         </div>
