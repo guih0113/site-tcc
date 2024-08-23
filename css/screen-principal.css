@@ -1,0 +1,79 @@
+* {
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+    text-decoration: none;
+    font-family: "Inter";
+  }
+  
+  .container {
+    max-width: 1180px;
+    width: 100%;
+    display: flex;
+  }
+  
+  body {
+    background-image: url("../img/Bg3.png");
+    background-size: cover;
+  }
+  
+  header {
+    position: sticky;
+    z-index: 1;
+    top: 30px;
+    padding: 32px;
+    width: 1180px;
+    height: 98px;
+    border-radius: 10px;
+    background: #12130F;
+    display: flex;
+    margin-top: 100px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+  header .container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  header .container img {
+    width: 155px;
+    height: 42.913px;
+  }
+  header .container nav {
+    display: flex;
+    color: aliceblue;
+  }
+  header .container nav ul {
+    display: flex;
+    list-style: none;
+  }
+  header .container nav ul li {
+    margin-left: 31px;
+    cursor: pointer;
+  }
+  header .container nav ul li:hover {
+    transform: scale(1.05);
+    transition: 0.1s linear;
+  }
+  header .container input {
+    width: 99px;
+    height: 35px;
+    border-radius: 13.2px;
+    background: transparent;
+    border: 1px solid white;
+    margin-left: 15px;
+    cursor: pointer;
+    color: #fff;
+    transition: linear 0.2s;
+  }
+  header .container input:hover {
+    width: 99px;
+    height: 35px;
+    border-radius: 13.2px;
+    background: #00DD15;
+    border: none;
+    margin-left: 15px;
+    cursor: pointer;
+    color: black;
+  }
