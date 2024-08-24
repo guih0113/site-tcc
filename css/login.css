@@ -30,6 +30,12 @@ body {
     border-radius: 20px;
 }
 
+#icon{
+    width: 70px;
+    margin-bottom: -40px;
+    margin-top: 5px;
+}
+
 .signup-form {
     padding: 30px;
     color: #fff;
@@ -158,10 +164,4 @@ body {
 
 .social-icons img:hover {
     transform: scale(1.1);
-}
-
-#loira{
-    width: 70px;
-    margin-bottom: -40px;
-    margin-top: 5px;
 }
