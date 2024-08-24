@@ -36,7 +36,7 @@
     justify-content: space-between;
     align-items: center;
   }
-  header .container img {
+  header .container #logo {
     width: 155px;
     height: 42.913px;
   }
@@ -62,14 +62,46 @@
     border: 1px solid white;
     border-radius: 8px;
     display: flex;
+    flex-direction: column;
     align-items: center;
     justify-content: center;
+    margin-top: 120px;
+    position: absolute;
+    right: 0;
   }
 
-  header .container .dropdown #profile {
+  header .container .img-profile #profile {
     width: 50px;
+    position: inherit;
+    margin-right: 18px;
+    z-index: 99;
   }
-  header .container .dropdown #profile:hover {
+  header .container .img-profile #profile:hover {
     transform: scale(1.05);
     transition: 0.1s linear;
+  }
+
+  header .container .dropdown .user .informations {
+    margin-top: 70px;
+  }
+  header .container .dropdown .user .informations #name {
+    color: #fff;
+    font-size: 0.9rem;
+    text-align: center;
+  }
+  header .container .dropdown .user .informations #email {
+    color: #fff;
+    font-size: 0.5rem;
+    text-align: center;
+  }
+  
+  header .container .dropdown .user .infos{
+    display: flex;
+    flex-direction: column;
+    color: #fff;
+    margin-top: 18px;
+    border-top: 1px solid #fff;
+  }
+  header .container .dropdown .user .infos p{
+    margin-top: 16px;
   }
