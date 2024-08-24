@@ -14,7 +14,7 @@ session_start();
 <body>
     <div class="signup-container">
         <div class="signup-image">
-            <img src="favicon_io/favicon.ico" alt="Signup Illustration" id="icon">
+            <img src="imgs/favicon.ico" alt="Signup Illustration" id="loira">
         </div>
         <div class="signup-form">
             <h1>Welcome Back!</h1>

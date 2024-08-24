@@ -22,47 +22,8 @@ $username = $_SESSION['username'];
     <title>Estude para o Futuro</title>
 </head>
 <body>
-    <header>
-        <div class="container">
-            <img src="img/Logo.png" alt="Logo" id="logo"> 
-            <!-- Logo header -->
-            <nav>
-                <ul>
-                    <li>HOME</li>
-                    <li>SOBRE</li>
-                    <li>CURSOS</li>
-                    <li>DÚVIDAS</li>
-                    <li>CONTATO</li>                  
-                </ul>
-            </nav>
-            <!--Nav header -->
-            <div class="img-profile">
-                <a href="#"><img src="img/profile.svg" alt="Foto do usuário" id="profile"></a>
-            </div>
-
-            <div class="dropdown">
-                <div class="user">
-                    <div class="informations">
-                        <?php
-                            echo "<p id='name'><u>$username</u></p>
-                                  <p id='email'><u>$email</u></p>";
-                        ?>
-                    </div>
-    
-                    <div class="infos">
-                        <button class="copy">
-                            <p><span>⚙️</span> Configurações</p>
-                        </button>
-
-                        <a href="logOut.php">
-                            <button class="copy" id="logoutBtn">
-                                <p id="logout"><span>↩</span> Log out</p>
-                            </button>
-                        </a>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </header>
+    <?php
+        echo "<h1>Bem vindo <u>$username</u></h1>";
+    ?>
 </body>
 </html>
