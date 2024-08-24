@@ -56,24 +56,20 @@
     transform: scale(1.05);
     transition: 0.1s linear;
   }
-  header .container input {
-    width: 99px;
-    height: 35px;
-    border-radius: 13.2px;
-    background: transparent;
+  header .container .dropdown{
+    width: 150px;
+    height: 200px;
     border: 1px solid white;
-    margin-left: 15px;
-    cursor: pointer;
-    color: #fff;
-    transition: linear 0.2s;
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
   }
-  header .container input:hover {
-    width: 99px;
-    height: 35px;
-    border-radius: 13.2px;
-    background: #00DD15;
-    border: none;
-    margin-left: 15px;
-    cursor: pointer;
-    color: black;
+
+  header .container .dropdown #profile {
+    width: 50px;
+  }
+  header .container .dropdown #profile:hover {
+    transform: scale(1.05);
+    transition: 0.1s linear;
   }

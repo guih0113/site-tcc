@@ -35,8 +35,7 @@ $username = $_SESSION['username'];
             </nav>
             <!--Nav header -->
             <div class="dropdown">
-                <a href="login.php"><input type="submit" value="Log in"></a>
-                <a href="cadastro.php"><input type="submit" value="Cadastre-se"></a>
+                <a href="#"><img src="img/profile.svg" alt="Foto do usuário" id="profile"></a>
             </div>
             <!-- <BUtton>Login</BUtton> -->
 
