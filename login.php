@@ -14,7 +14,7 @@ session_start();
 <body>
     <div class="signup-container">
         <div class="signup-image">
-            <img src="imgs/favicon.ico" alt="Signup Illustration" id="loira">
+            <img src="favicon_io/favicon.ico" alt="Signup Illustration" id="icon">
         </div>
         <div class="signup-form">
             <h1>Welcome Back!</h1>
@@ -44,6 +44,7 @@ session_start();
                         Login($_POST['email'],$_POST['password']);
                     }
                 ?>
+                <h4>Não possui uma conta? <a href="cadastro.php"><span>Cadastre-se</span></a></h4>
             </form>
             <div class="social-signup">
                 <p>Or sign in with</p>

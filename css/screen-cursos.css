@@ -1,0 +1,225 @@
+* {
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+  text-decoration: none;
+  font-family: "Inter";
+}
+
+.container {
+  max-width: 1180px;
+  width: 100%;
+  display: flex;
+}
+
+body {
+  background-image: url("../img/Bg3.png");
+  background-size: cover;
+}
+
+header {
+  position: sticky;
+  z-index: 1;
+  top: 30px;
+  padding: 32px;
+  width: 1180px;
+  height: 98px;
+  border-radius: 10px;
+  background: #12130F;
+  display: flex;
+  margin-top: 100px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+header .container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+header .container #logo {
+  width: 155px;
+  height: 42.913px;
+}
+
+header .container nav {
+  display: flex;
+  color: aliceblue;
+}
+
+header .container nav ul {
+  display: flex;
+  list-style: none;
+}
+
+header .container nav ul a li {
+  margin-left: 31px;
+  cursor: pointer;
+  color: aliceblue;
+}
+
+header .container nav ul a li#cursos {
+  margin-left: 31px;
+  cursor: pointer;
+  color: aliceblue;
+  text-decoration: underline #00ff00;
+}
+
+header .container nav ul a li:hover {
+  transform: scale(1.05);
+  transition: 0.1s linear;
+}
+
+header .container .img-profile {
+  position: relative;
+  z-index: 2;
+  margin-right: 45px;
+}
+
+header .container .img-profile #profile {
+  width: 50px;
+  cursor: pointer;
+}
+
+header .container .dropdown {
+  width: 150px;
+  border: 1px solid white;
+  border-radius: 8px;
+  display: block; /* Permanece no fluxo de layout */
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+  position: absolute;
+  right: 26px;
+  top: 16px; /* Ajuste conforme necessário */
+  background: #12130F;
+  z-index: 1;
+  padding-top: 10px;
+  opacity: 0; /* Começa invisível */
+  max-height: 0; /* Altura inicial zero para esconder */
+  overflow: hidden; /* Esconde conteúdo quando altura é zero */
+  transition: opacity 0.3s ease-out, max-height 0.3s ease-out; /* Transição suave */
+}
+
+header .container .dropdown.show {
+  opacity: 1; /* Torna visível */
+  max-height: 200px; /* Expande para altura total */
+}
+
+
+header .container .dropdown .user .informations {
+  margin-top: 55px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+header .container .dropdown .user .informations p u#name {
+  color: #fff;
+  font-size: 0.85rem;
+  font-weight: bold;
+  width: 100%;
+  margin-left: 8px;
+}
+
+header .container .dropdown .user .informations p u#email {
+  color: #fff;
+  font-size: 0.60rem;
+  margin-top: 7px;
+  width: 100%;
+  margin-left: -20px;
+}
+
+header .container .dropdown .user .infos {
+  display: flex;
+  flex-direction: column;
+  color: #fff;
+  margin-top: 18px;
+  border-top: 1px solid #fff;
+  margin: 16px 0 16px 0;
+  padding-left: 8px;
+}
+
+
+header .container .dropdown .user .infos p {
+  text-align: start;
+  display: flex;
+  margin-top: 12px;
+}
+
+header .container .dropdown .user .infos p#logout {
+  margin-left: 4px;
+  color: rgba(255, 0, 0, 0.705);
+}
+
+main {
+  display: flex;
+  padding: 20px;
+  justify-content: center;
+  align-items: flex-start;
+  min-height: calc(100vh - 120px);
+  margin-top: 80px;
+}
+
+.courses-container {
+  width: 80%;
+  max-width: 1200px;
+}
+
+h2 {
+  color: #ffffff;
+  text-align: left;
+  margin-bottom: 20px;
+}
+
+.course-card {
+  background-color: #1e1e1e;
+  border-radius: 8px;
+  padding: 20px;
+  margin-bottom: 20px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
+}
+
+.course-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.course-icon {
+  font-size: 2rem;
+  margin-right: 600px;
+}
+
+.btn-start{
+  height: 100%;
+  width: 100px;
+}
+
+.free-label {
+  background-color: #00ff00;
+  color: #000;
+  padding: 5px 10px;
+  border-radius: 15px;
+  font-size: 0.8rem;
+  font-weight: bold;
+  cursor: pointer;
+  width: 100px;
+  height: 50px;
+}
+
+h3 {
+  margin: 10px 0;
+  font-size: 1.5rem;
+  color: #ffffff;
+  width: 50%;
+}
+
+p {
+  color: #cccccc;
+  font-size: 0.9rem;
+  margin: 0;
+  width: 50%;
+}
+

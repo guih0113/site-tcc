@@ -12,7 +12,7 @@
     }
 
     function Login($email,$senha){
-    
+        session_start();
         $comando = 'SELECT * FROM tb_usuario WHERE email_usuario = "'.$email.'" AND senha_usuario = "'.$senha.'"';
         $retorno = $GLOBALS['conexao']->query($comando);
         $usuario = $retorno->fetch_array();
@@ -21,7 +21,7 @@
             $_SESSION['email'] = $usuario['email_usuario'];
             $_SESSION['username'] = $usuario['username_usuario'];
             $_SESSION['senha'] = $usuario['senha_usuario'];
-            header('Location: screen-principal.php');
+            header('Location: screen-cursos.php');
         }
 
         else{

@@ -31,31 +31,39 @@ header {
   margin-left: auto;
   margin-right: auto;
 }
+
 header .container {
   display: flex;
   justify-content: space-between;
   align-items: center;
 }
+
 header .container img {
   width: 155px;
   height: 42.913px;
 }
+
 header .container nav {
   display: flex;
   color: aliceblue;
 }
+
 header .container nav ul {
   display: flex;
   list-style: none;
 }
-header .container nav ul li {
+
+header .container nav ul a li {
   margin-left: 31px;
   cursor: pointer;
+  color: aliceblue;
 }
-header .container nav ul li:hover {
+
+header .container nav ul a li:hover {
   transform: scale(1.05);
   transition: 0.1s linear;
 }
+
 header .container input {
   width: 99px;
   height: 35px;
@@ -67,6 +75,7 @@ header .container input {
   color: #fff;
   transition: linear 0.2s;
 }
+
 header .container input:hover {
   width: 99px;
   height: 35px;
@@ -85,6 +94,7 @@ svg {
 .s-hero {
   padding-bottom: 144px;
 }
+
 .s-hero .right {
   width: 719px;
   height: 361px;
@@ -96,6 +106,7 @@ svg {
   right: 80px;
   top: 129px;
 }
+
 .s-hero .right h1 {
   color: #F7F7F5;
   text-align: right;
@@ -103,6 +114,7 @@ svg {
   font-size: 70px;
   letter-spacing: -0.7px;
 }
+
 .s-hero .right p {
   width: 437px;
   color: #00DD15;
@@ -111,11 +123,13 @@ svg {
   font-size: 18px;
   font-style: normal;
   font-weight: 400;
-  line-height: 150%; /* 27px */
+  line-height: 150%;
+  /* 27px */
   letter-spacing: -0.18px;
   margin-top: 11px;
   margin-bottom: 38px;
 }
+
 .s-hero .right input {
   width: 155px;
   height: 48.911px;
@@ -127,7 +141,77 @@ svg {
   font-size: 17.222px;
   font-style: normal;
   font-weight: 700;
-  line-height: 150%; /* 25.833px */
+  line-height: 150%;
+  /* 25.833px */
   letter-spacing: -0.172px;
   cursor: pointer;
-}/*# sourceMappingURL=main.css.map */
+}
+
+footer {
+  background: linear-gradient(to bottom, transparent -28%, #121212);
+  color: #fff;
+  text-align: center;
+  padding: 40px 0 60px 0;
+  position: relative;
+}
+
+.social-icons {
+  margin-bottom: 30px;
+}
+
+.social-icons a {
+  color: #fff;
+  margin: 0 10px;
+  padding: 7px;
+  text-decoration: none;
+  font-size: 18px;
+  width: 40px; /* Definir largura */
+  height: 40px; /* Definir altura igual à largura */
+  border: 1px solid;
+  border-radius: 50%; /* Torna a borda redonda */
+  display: inline-flex; /* Permite centralizar conteúdo dentro */
+  align-items: center; /* Centraliza verticalmente */
+  justify-content: center;
+  transition: background-color 0.3s, color 0.3s;
+}
+
+.social-icons a:hover{
+  color: rgba(0, 0, 0, 0.678);
+  background-color: #00dd1698;
+}
+
+.footer-nav {
+  margin-bottom: 5px;
+}
+
+.footer-nav a {
+  color: #fff;
+  margin: 0 15px;
+  text-decoration: none;
+  font-size: 14px;
+}
+
+.footer-nav a:hover {
+  transform: scale(1.05);
+  transition: 0.1s linear;
+}
+
+.footer-bottom {
+  background-color: #0dff2598;
+  color: #fff;
+  padding: 10px 0;
+  position: absolute; /* Torna a posição relativa ao footer */
+  bottom: 0; /* Coloca na parte inferior do footer */
+  left: 0;
+  right: 0;
+  margin-top: 100px;
+}
+
+.footer-bottom p {
+  margin: 3px 0;
+  font-size: 15px;
+}
+
+.footer-bottom span {
+  color: red;
+}
