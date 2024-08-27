@@ -16,16 +16,17 @@ document.addEventListener("click", function(event) {
     }
 });
 
-document.addEventListener('DOMContentLoaded', () => {
-    document.querySelectorAll('.dropdown-toggle').forEach(item => {
-        item.addEventListener('click', () => {
-            const dropdownContent = item.nextElementSibling;
-            dropdownContent.classList.toggle('active');
-            if (dropdownContent.classList.contains('active')) {
-                dropdownContent.style.height = dropdownContent.scrollHeight + 'px';
-            } else {
-                dropdownContent.style.height = '0';
-            }
+function CarregarCursos() {
+    fetch('ajax.php?cursos')
+        .then(response => response.text())
+        .then(data => {
+            document.getElementById('cursos').innerHTML = data;
+        })
+        .catch(error => {
+            console.error('Erro ao carregar os cursos:', error);
         });
-    });
+}
+
+document.addEventListener('DOMContentLoaded', function() {
+    CarregarCursos();
 });

@@ -29,7 +29,7 @@ $username = $_SESSION['username'];
             <nav>
                 <ul>
                     <a href="">
-                        <li id="cursos">CURSOS</li>
+                        <li>CURSOS</li>
                     </a>
                     <a href="">
                         <li>MINHA CONTA</li> 
@@ -62,33 +62,12 @@ $username = $_SESSION['username'];
         </div>
     </header>
     <main>
-    <div class="courses-container">
-        <h2>Cursos disponíveis:</h2>
-        <div class="course-card">
-            <div class="course-header">
-                <span class="course-icon">⭐</span> <!-- Placeholder for the icon -->
-                <a href="curso.php"><button class="free-label">INICIAR</button></a>
+        <div class="main-courses-container">
+            <h2>Cursos disponíveis:</h2>
+            <div class="courses-container" id="cursos">
+
             </div>
-            <h3>INICIANTE</h3>
-            <p>CURSO DE EDUCAÇÃO FINAINCEIRA PARA INCIANTES</p>
         </div>
-        <div class="course-card">
-            <div class="course-header">
-                <span class="course-icon">⭐⭐</span> <!-- Placeholder for the icon -->
-                <a href="curso.php"><button class="free-label">INICIAR</button></a>
-            </div>
-            <h3>INTERMEDIÁRIO</h3>
-            <p>CURSO DE EDUCAÇÃO FINANCEIRA PARA INTERMEDIARIOS</p>
-        </div>
-        <div class="course-card">
-            <div class="course-header">
-                <span class="course-icon">⭐⭐⭐</span> <!-- Placeholder for the icon -->
-                <a href="curso.php"><button class="free-label">INICIAR</button></a>
-            </div>
-            <h3>EXPERIENTE</h3>
-            <p>CURSO DE EDUCAÇÃO FINANCEIRA PARA EXPERIENTES</p>
-        </div>
-    </div>
     </main>
 </body>
 </html>

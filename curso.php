@@ -19,7 +19,7 @@ $username = $_SESSION['username'];
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="css/curso.css">
-    <script src="./js/screen-cursos.js" defer></script>
+    <script src="./js/curso.js" defer></script>
     <title>Estude para o Futuro</title>
 </head>
 
@@ -66,70 +66,43 @@ $username = $_SESSION['username'];
 
     <main>
         <div class="sidebar">
-            <div class="module">
-                <h2 class="dropdown-toggle">Módulo 1 &#x25BC;</h2>
+            <div class="module" data-modulo="Módulo 1">
+                <h2 class="dropdown-toggle">Módulo 1</h2>
                 <ul class="dropdown-content">
-                    <li><a href="#">Aula 1: xxxxxxxxxxxx</a></li>
-                    <li><a href="#">Aula 2: xxxxxxxxxxxx</a></li>
-                    <li><a href="#">Aula 3: xxxxxxxxxxxx</a></li>
-                    <li><a href="#">Aula 4: xxxxxxxxxxxx</a></li>
-                    <li><a href="#">Aula 5: xxxxxxxxxxxx</a></li>
-                    <li><a href="#">Aula 6: xxxxxxxxxxxx</a></li>
-                    <li><a href="#">Aula 7: xxxxxxxxxxxx</a></li>
-                    <li><a href="#">Aula 8: xxxxxxxxxxxx</a></li>
+                    <li><a href="#" class="aula-link" data-titulo="Aula 1: XXXXXXXXXX">Aula 1: xxxxxxxxxxxx</a></li>
+                    <li><a href="#" class="aula-link" data-titulo="Aula 2: XXXXXXXXXX">Aula 2: xxxxxxxxxxxx</a></li>
+                    <li><a href="#" class="aula-link" data-titulo="Aula 3: XXXXXXXXXX">Aula 3: xxxxxxxxxxxx</a></li>
+                    <li><a href="#" class="aula-link" data-titulo="Aula 4: XXXXXXXXXX">Aula 4: xxxxxxxxxxxx</a></li>
+                    <li><a href="#" class="aula-link" data-titulo="Aula 5: XXXXXXXXXX">Aula 5: xxxxxxxxxxxx</a></li>
+                    <li><a href="#" class="aula-link" data-titulo="Aula 6: XXXXXXXXXX">Aula 6: xxxxxxxxxxxx</a></li>
+                    <li><a href="#" class="aula-link" data-titulo="Aula 7: XXXXXXXXXX">Aula 7: xxxxxxxxxxxx</a></li>
+                    <li><a href="#" class="aula-link" data-titulo="Aula 8: XXXXXXXXXX">Aula 8: xxxxxxxxxxxx</a></li>
                 </ul>
             </div>
-            <div class="module">
-                <h2 class="dropdown-toggle">Módulo 2 &#x25BC;</h2>
+            <div class="module" data-modulo="Módulo 2">
+                <h2 class="dropdown-toggle">Módulo 2</h2>
                 <ul class="dropdown-content">
-                    <li><a href="#">Aula 1: xxxxxxxxxxxx</a></li>
-                    <li><a href="#">Aula 2: xxxxxxxxxxxx</a></li>
-                    <li><a href="#">Aula 3: xxxxxxxxxxxx</a></li>
-                    <li><a href="#">Aula 4: xxxxxxxxxxxx</a></li>
-                    <li><a href="#">Aula 5: xxxxxxxxxxxx</a></li>
-                    <li><a href="#">Aula 6: xxxxxxxxxxxx</a></li>
-                    <li><a href="#">Aula 7: xxxxxxxxxxxx</a></li>
-                    <li><a href="#">Aula 8: xxxxxxxxxxxx</a></li>
+                    <li><a href="#" class="aula-link" data-titulo="Aula 1: XXXXXXXXXX">Aula 1: xxxxxxxxxxxx</a></li>
+                    <li><a href="#" class="aula-link" data-titulo="Aula 2: XXXXXXXXXX">Aula 2: xxxxxxxxxxxx</a></li>
+                    <li><a href="#" class="aula-link" data-titulo="Aula 3: XXXXXXXXXX">Aula 3: xxxxxxxxxxxx</a></li>
+                    <li><a href="#" class="aula-link" data-titulo="Aula 4: XXXXXXXXXX">Aula 4: xxxxxxxxxxxx</a></li>
+                    <li><a href="#" class="aula-link" data-titulo="Aula 5: XXXXXXXXXX">Aula 5: xxxxxxxxxxxx</a></li>
+                    <li><a href="#" class="aula-link" data-titulo="Aula 6: XXXXXXXXXX">Aula 6: xxxxxxxxxxxx</a></li>
+                    <li><a href="#" class="aula-link" data-titulo="Aula 7: XXXXXXXXXX">Aula 7: xxxxxxxxxxxx</a></li>
+                    <li><a href="#" class="aula-link" data-titulo="Aula 8: XXXXXXXXXX">Aula 8: xxxxxxxxxxxx</a></li>
                 </ul>
             </div>
-            <div class="module">
-                <h2 class="dropdown-toggle">Módulo 3 &#x25BC;</h2>
+            <div class="module" data-modulo="Módulo 3">
+                <h2 class="dropdown-toggle">Módulo 3</h2>
                 <ul class="dropdown-content">
-                    <li><a href="#">Aula 1: xxxxxxxxxxxx</a></li>
-                    <li><a href="#">Aula 2: xxxxxxxxxxxx</a></li>
-                    <li><a href="#">Aula 3: xxxxxxxxxxxx</a></li>
-                    <li><a href="#">Aula 4: xxxxxxxxxxxx</a></li>
-                    <li><a href="#">Aula 5: xxxxxxxxxxxx</a></li>
-                    <li><a href="#">Aula 6: xxxxxxxxxxxx</a></li>
-                    <li><a href="#">Aula 7: xxxxxxxxxxxx</a></li>
-                    <li><a href="#">Aula 8: xxxxxxxxxxxx</a></li>
-                </ul>
-            </div>
-            <div class="module">
-                <h2 class="dropdown-toggle">Módulo 4 &#x25BC;</h2>
-                <ul class="dropdown-content">
-                    <li><a href="#">Aula 1: xxxxxxxxxxxx</a></li>
-                    <li><a href="#">Aula 2: xxxxxxxxxxxx</a></li>
-                    <li><a href="#">Aula 3: xxxxxxxxxxxx</a></li>
-                    <li><a href="#">Aula 4: xxxxxxxxxxxx</a></li>
-                    <li><a href="#">Aula 5: xxxxxxxxxxxx</a></li>
-                    <li><a href="#">Aula 6: xxxxxxxxxxxx</a></li>
-                    <li><a href="#">Aula 7: xxxxxxxxxxxx</a></li>
-                    <li><a href="#">Aula 8: xxxxxxxxxxxx</a></li>
-                </ul>
-            </div>
-
-            <div class="module">
-                <h2 class="dropdown-toggle">Módulo 5 &#x25BC;</h2>
-                <ul class="dropdown-content">
-                    <li><a href="#">Aula 1: xxxxxxxxxxxx</a></li>
-                    <li><a href="#">Aula 2: xxxxxxxxxxxx</a></li>
-                    <li><a href="#">Aula 3: xxxxxxxxxxxx</a></li>
-                    <li><a href="#">Aula 4: xxxxxxxxxxxx</a></li>
-                    <li><a href="#">Aula 5: xxxxxxxxxxxx</a></li>
-                    <li><a href="#">Aula 6: xxxxxxxxxxxx</a></li>
-                    <li><a href="#">Aula 7: xxxxxxxxxxxx</a></li>
-                    <li><a href="#">Aula 8: xxxxxxxxxxxx</a></li>
+                    <li><a href="#" class="aula-link" data-titulo="Aula 1: XXXXXXXXXX">Aula 1: xxxxxxxxxxxx</a></li>
+                    <li><a href="#" class="aula-link" data-titulo="Aula 2: XXXXXXXXXX">Aula 2: xxxxxxxxxxxx</a></li>
+                    <li><a href="#" class="aula-link" data-titulo="Aula 3: XXXXXXXXXX">Aula 3: xxxxxxxxxxxx</a></li>
+                    <li><a href="#" class="aula-link" data-titulo="Aula 4: XXXXXXXXXX">Aula 4: xxxxxxxxxxxx</a></li>
+                    <li><a href="#" class="aula-link" data-titulo="Aula 5: XXXXXXXXXX">Aula 5: xxxxxxxxxxxx</a></li>
+                    <li><a href="#" class="aula-link" data-titulo="Aula 6: XXXXXXXXXX">Aula 6: xxxxxxxxxxxx</a></li>
+                    <li><a href="#" class="aula-link" data-titulo="Aula 7: XXXXXXXXXX">Aula 7: xxxxxxxxxxxx</a></li>
+                    <li><a href="#" class="aula-link" data-titulo="Aula 8: XXXXXXXXXX">Aula 8: xxxxxxxxxxxx</a></li>
                 </ul>
             </div>
         </div>
@@ -144,10 +117,10 @@ $username = $_SESSION['username'];
                 </div>
             </div>
             <div class="lesson-info">
-                <h3>Aula 1: xxxxxxxxxxxx</h3>
+                <h3 id="titulo-aula"><span id="modulo-aula">Módulo 1</span> | Aula 1: xxxxxxxxxxxx</h3>
                 <button class="download-button">Baixe o material</button>
-                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
             </div>
         </div>
     </main>
 </body>
+</html>

@@ -92,7 +92,13 @@ svg {
 }
 
 .s-hero {
-  padding-bottom: 144px;
+  display: flex;
+    padding-bottom: 144px;
+    justify-content: center;
+}
+
+.left {
+  margin-left: -170px;
 }
 
 .s-hero .right {

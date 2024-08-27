@@ -33,4 +33,11 @@
                   </script>";
         }
     }
+
+    function getCursos(){
+        $sql = 'SELECT * FROM tb_cursos';
+    
+        $retorno = $GLOBALS['conexao']->query($sql);
+        return $retorno;
+      }
 ?>
