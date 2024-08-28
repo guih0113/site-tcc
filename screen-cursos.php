@@ -28,8 +28,8 @@ $username = $_SESSION['username'];
             <!-- Logo header -->
             <nav>
                 <ul>
-                    <a href="">
-                        <li>CURSOS</li>
+                    <a href="screen-cursos.php">
+                        <li id="li-cursos">CURSOS</li>
                     </a>
                     <a href="">
                         <li>MINHA CONTA</li> 

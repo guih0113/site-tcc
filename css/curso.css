@@ -199,16 +199,17 @@ main {
 
 .dropdown-toggle:after {
     content: "\25BC";
-    /* Seta para baixo */
     font-size: 0.8em;
     margin-left: 10px;
     transition: transform 0.3s ease;
+    /* Removi a transição aqui */
 }
 
 .dropdown-toggle.active:after {
-    transform: rotate(180deg);
+    transform: rotate(118deg);
     content: "\25B2";
-    /* Seta para cima */
+    transition: transform 0.3s ease;
+    /* Adicionei essa linha para adicionar a transição apenas quando a classe active é adicionada */
 }
 
 .dropdown-toggle:hover {

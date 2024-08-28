@@ -64,6 +64,11 @@ header .container nav ul li:hover {
   transition: 0.1s linear;
 }
 
+header .container nav ul a li#li-cursos {
+  text-decoration: 2px underline #00ff00;
+  text-underline-offset: 3.5px;
+}
+
 header .container .img-profile {
   position: relative;
   z-index: 2;

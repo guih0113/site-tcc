@@ -91,10 +91,13 @@ svg {
   position: absolute;
 }
 
-.s-hero {
+section {
+  padding-bottom: 115px;
+}
+
+.s-hero{
   display: flex;
-    padding-bottom: 144px;
-    justify-content: center;
+  justify-content: center;
 }
 
 .left {
@@ -153,6 +156,114 @@ svg {
   cursor: pointer;
 }
 
+.cursos {
+  max-width: 1200px;
+  margin: 0 auto;
+  text-align: center;
+}
+
+.cursos h2 {
+  font-size: 28px;
+  margin-bottom: 20px;
+  color: #fff;
+}
+
+.carrossel-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 20px; /* Espaço entre os elementos */
+  position: relative;
+}
+
+.carrossel {
+  display: flex;
+  gap: 20px; /* Espaço entre os cursos */
+}
+
+.curso-card {
+  background-color: #1c1c1c;
+  border-radius: 10px;
+  padding: 20px;
+  width: 280px;
+  height: 450px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
+  opacity: 0.5;
+  transition: opacity 0.3s ease;
+}
+
+.curso-card.active {
+  opacity: 1;
+}
+
+.curso-nivel {
+  display: flex;
+  gap: 5px;
+}
+
+.curso-nivel span {
+  font-size: 1.7rem;
+}
+
+.curso-card h3 {
+  font-size: 22px;
+  margin: 10px 0 5px;
+  text-align: center;
+  color: #fff;
+}
+
+.curso-card p {
+  font-size: 14px;
+  margin: 0;
+  text-align: center;
+  color: #b3b3b3;
+  flex-grow: 1;
+}
+
+.iniciar-button {
+  background-color: #00ff00;
+  color: #000;
+  border: none;
+  border-radius: 20px;
+  padding: 10px 20px;
+  font-size: 16px;
+  cursor: pointer;
+}
+
+.iniciar-button:hover {
+  background-color: #00cc00;
+}
+
+button.prev{
+  margin-right: 170px;
+}
+
+button.prev,
+button.next {
+  background-color: #00ff00;
+  color: #000;
+  border: none;
+  padding: 10px 20px;
+  cursor: pointer;
+  border-radius: 20px;
+  font-size: 24px; /* Ajusta o tamanho da seta */
+  width: 50px; /* Largura dos botões */
+  height: 50px; /* Altura dos botões */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 700;
+}
+
+button.prev:hover,
+button.next:hover {
+  background-color: #00cc00;
+}
+
+
 footer {
   background: linear-gradient(to bottom, transparent -28%, #121212);
   color: #fff;
@@ -171,17 +282,22 @@ footer {
   padding: 7px;
   text-decoration: none;
   font-size: 18px;
-  width: 40px; /* Definir largura */
-  height: 40px; /* Definir altura igual à largura */
+  width: 40px;
+  /* Definir largura */
+  height: 40px;
+  /* Definir altura igual à largura */
   border: 1px solid;
-  border-radius: 50%; /* Torna a borda redonda */
-  display: inline-flex; /* Permite centralizar conteúdo dentro */
-  align-items: center; /* Centraliza verticalmente */
+  border-radius: 50%;
+  /* Torna a borda redonda */
+  display: inline-flex;
+  /* Permite centralizar conteúdo dentro */
+  align-items: center;
+  /* Centraliza verticalmente */
   justify-content: center;
   transition: background-color 0.3s, color 0.3s;
 }
 
-.social-icons a:hover{
+.social-icons a:hover {
   color: rgba(0, 0, 0, 0.678);
   background-color: #00dd1698;
 }
@@ -206,8 +322,10 @@ footer {
   background-color: #0dff2598;
   color: #fff;
   padding: 10px 0;
-  position: absolute; /* Torna a posição relativa ao footer */
-  bottom: 0; /* Coloca na parte inferior do footer */
+  position: absolute;
+  /* Torna a posição relativa ao footer */
+  bottom: 0;
+  /* Coloca na parte inferior do footer */
   left: 0;
   right: 0;
   margin-top: 100px;

@@ -113,7 +113,7 @@ $username = $_SESSION['username'];
                     Seu navegador não suporta a reprodução de vídeo.
                 </video>
                 <div class="video-controls">
-                    Abaixo podemos usar controles nativos ou personalizados, aqui usamos nativos para simplicidade -->
+                    Abaixo podemos usar controles nativos ou personalizados, aqui usamos nativos para simplicidade
                 </div>
             </div>
             <div class="lesson-info">

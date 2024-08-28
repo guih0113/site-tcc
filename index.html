@@ -6,6 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
     <link rel="stylesheet" href="css/main.css">
+    <script src="js/main.js" defer></script>
     <title>Document</title>
 </head>
 
@@ -21,6 +22,9 @@
                     </a>
                     <a href="#quemsomos">
                         <li>QUEM SOMOS</li>
+                    </a>
+                    <a href="#cursos">
+                        <li>CURSOS</li>
                     </a>
                     <a href="#contato">
                         <li>CONTATO</li>
@@ -80,6 +84,42 @@
             <!-- Lado Direito section -->
         </div>
     </section>
+
+    <section class="cursos">
+        <h2>Cursos disponíveis:</h2>
+        <div class="carrossel-container">
+            <button class="prev"><</button>
+            <div class="carrossel">
+                <!-- Card de cursos aqui -->
+                <div class="curso-card" data-index="0">
+                    <div class="curso-nivel">
+                        <span>&#11088;</span>
+                    </div>
+                    <h3>INICIANTE</h3>
+                    <p>Curso de educação financeira para iniciantes</p>
+                    <button class="iniciar-button">INICIAR</button>
+                </div>
+                <div class="curso-card" data-index="1">
+                    <div class="curso-nivel">
+                        <span>&#11088;&#11088;</span>
+                    </div>
+                    <h3>INTERMEDIÁRIO</h3>
+                    <p>Curso de educação financeira para intermediários</p>
+                    <button class="iniciar-button">INICIAR</button>
+                </div>
+                <div class="curso-card" data-index="2">
+                    <div class="curso-nivel">
+                        <span>&#11088;&#11088;&#11088;</span>
+                    </div>
+                    <h3>EXPERIENTES</h3>
+                    <p>Curso de educação financeira para experientes</p>
+                    <button class="iniciar-button">INICIAR</button>
+                </div>
+            </div>
+            <button class="next">></button>
+        </div>
+    </section>
+    
     <!-- Fim section -->
     <footer id="contato">
         <div class="social-icons">

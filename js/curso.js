@@ -16,11 +16,13 @@ document.addEventListener("click", function (event) {
         dropdown.classList.remove('show');
     }
 });
+//ícone profile
 
 //Div sidebar
 document.addEventListener('DOMContentLoaded', () => {
-    document.querySelectorAll('.dropdown-toggle').forEach(item => {
+    document.querySelectorAll('.dropdown-toggle').forEach((item) => {
         item.addEventListener('click', () => {
+            item.classList.toggle('active'); // Adicionei essa linha para toggle a classe active no elemento .dropdown-toggle
             const dropdownContent = item.nextElementSibling;
             dropdownContent.classList.toggle('active');
             if (dropdownContent.classList.contains('active')) {
@@ -32,25 +34,8 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 });
 
-//transição sidebar
-const sidebar = document.querySelector('.sidebar');
-const toggleButton = document.querySelector('.toggle-button');
 
-toggleButton.addEventListener('click', () => {
-    sidebar.classList.toggle('collapsed');
-});
-
-//alternando a seta
-const dropdownToggles = document.querySelectorAll('.dropdown-toggle');
-
-dropdownToggles.forEach((toggle) => {
-    toggle.addEventListener('click', () => {
-        toggle.classList.toggle('active');
-    });
-});
-
-
-//conteúdo das aulas sendo mostrados abaixo do video
+//mostrando o conteúdo do vídeo
 const aulas = document.querySelectorAll('.aula-link');
 // Adiciona um evento de clique a cada botão
 aulas.forEach(aula => {
@@ -63,6 +48,7 @@ aulas.forEach(aula => {
         const moduloAula = this.closest('.module').getAttribute('data-modulo');
 
         // Exibe o nome e o módulo do curso nos elementos correspondentes
-        document.getElementById('titulo-aula').textContent = `${moduloAula} | ${tituloAula}`;
+        document.getElementById('titulo-aula').innerHTML = `${moduloAula} | ${tituloAula}`;
     });
 });
+
