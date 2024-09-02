@@ -31,7 +31,7 @@ $username = $_SESSION['username'];
                     <a href="screen-cursos.php">
                         <li id="li-cursos">CURSOS</li>
                     </a>
-                    <a href="">
+                    <a href="conta.php">
                         <li>MINHA CONTA</li> 
                     </a>                      
                 </ul>

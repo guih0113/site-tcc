@@ -3,16 +3,11 @@
   margin: 0;
   box-sizing: border-box;
   text-decoration: none;
-  font-family: "Inter";
-}
-
-.container {
-  max-width: 1180px;
-  width: 100%;
-  display: flex;
 }
 
 body {
+  font-family: 'Helvetica Neue', Arial, sans-serif;
+  color: #ececec;
   background-image: url("../img/Bg3.png");
   background-size: cover;
 }
@@ -36,6 +31,8 @@ header .container {
   display: flex;
   justify-content: space-between;
   align-items: center;
+  max-width: 1180px;
+  width: 100%;
 }
 
 header .container #logo {
@@ -186,7 +183,6 @@ h2 {
   width: 100%;
   max-width: 1200px;
 }
-
 
 .course-card {
   background-color: #1e1e1e;

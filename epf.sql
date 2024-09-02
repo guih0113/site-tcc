@@ -15,9 +15,19 @@ descricao_curso varchar(200) not null,
 icone_curso varchar(50) not null
 );
 
+CREATE TABLE tb_foto (
+id_foto int primary key auto_increment not null,
+nome_foto varchar(100) not null,
+cd_usuario int,
+foreign key(cd_usuario) references tb_usuario(id_usuario)
+);
+
 INSERT INTO tb_cursos VALUES
 (default,'INICIANTE','CURSO DE EDUCAÇÂO FINANCEIRA PARA INICIANTES','&#11088;'),
 (default,'INTERMEDIÁRIO','CURSO DE EDUCAÇÂO FINANCEIRA PARA INTERMEDIÁRIOS','&#11088;&#11088;'),
 (default,'EXPERIENTES','CURSO DE EDUCAÇÂO FINANCEIRA PARA EXPERIENTES','&#11088;&#11088;&#11088;');
 
+INSERT INTO tb_usuario VALUES
+(default,'guih_0113','gui.henriquess13@gmail.com','guilherme1301');
 SELECT * FROM tb_usuario;
+SELECT * FROM tb_foto;
