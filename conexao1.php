@@ -18,9 +18,10 @@
 
         if($retorno->num_rows > 0){
             $_SESSION['id'] = $usuario['id_usuario']; 
+            $user = $_SESSION['id'];
             $_SESSION['email'] = $usuario['email_usuario'];
             $_SESSION['username'] = $usuario['username_usuario'];
-            $_SESSION['senha'] = $usuario['senha_usuario'];
+            $_SESSION['senha'] = $usuario['senha_usuario'];           
             header('Location: screen-cursos.php');
         }
 

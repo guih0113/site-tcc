@@ -177,7 +177,7 @@ header .container .dropdown .user .infos p#config {
     margin-top: 16px;
 }
 
-header .container .dropdown .user .infos p#config span{
+header .container .dropdown .user .infos p#config span {
     margin-top: -3px;
     margin-right: 1px;
 }
@@ -188,7 +188,7 @@ header .container .dropdown .user .infos a p#logout {
     margin-top: -5px;
 }
 
-header .container .dropdown .user .infos a p#logout span{
+header .container .dropdown .user .infos a p#logout span {
     margin-top: 1px;
     margin-right: 2px;
 }
@@ -203,7 +203,7 @@ header .container .dropdown .user .infos a p#logout span{
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
 }
 
-section{
+section {
     width: 100%;
 }
 
@@ -276,7 +276,10 @@ h1 {
     gap: 15px;
 }
 
+
 .btn-upload {
+    position: relative;
+    display: inline-block;
     position: relative;
     background-color: #40dc39;
     color: #ffffff;
@@ -284,17 +287,34 @@ h1 {
     border: none;
     border-radius: 6px;
     cursor: pointer;
-    display: inline-flex;
     align-items: center;
     font-weight: 500;
 }
 
-input#file-upload-button{
-    border-radius: 10px;
+.file-input {
+    position: absolute;
+    top: 0;
+    left: 0;
+    opacity: 0;
+    width: 100%;
+    height: 100%;
+    cursor: pointer;
+    display: none;
 }
 
-.file-input {
-    
+/* Estiliza o botão personalizado */
+.btn-choose-file {
+    background-color: #4CAF50;
+    color: #fff;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+/* Altera a cor do botão quando o mouse está sobre ele */
+.btn-choose-file:hover {
+    background-color: #3e8e41;
 }
 
 .btn-reset {
@@ -350,6 +370,7 @@ input#file-upload-button{
 .btn-secondary {
     background-color: #6c757d;
     color: #ffffff;
+    margin-left: 16px;
 }
 
 .btn:hover {

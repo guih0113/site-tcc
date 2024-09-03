@@ -32,3 +32,5 @@ document.addEventListener('DOMContentLoaded', function () {
     // Exibir a primeira seção por padrão
     document.querySelector('#account-general').style.display = 'block';
 });
+
+

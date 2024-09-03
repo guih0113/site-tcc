@@ -10,6 +10,12 @@ if((!isset($_SESSION['email']) == true) and (!isset($_SESSION['senha']) == true)
 
 $email = $_SESSION['email'];
 $username = $_SESSION['username'];
+$user = $_SESSION['id'];
+
+$sql = "SELECT nome_foto FROM tb_foto WHERE cd_usuario = $user";
+$res = mysqli_query($conexao, $sql);
+$row = mysqli_fetch_assoc($res);
+$perfil = isset($row['nome_foto']) ? $row['nome_foto'] : "img/profile.svg";
 ?>
 
 <!DOCTYPE html>
@@ -38,7 +44,7 @@ $username = $_SESSION['username'];
             </nav>
             <!--Nav header -->
             <div class="img-profile">
-                <a href="#"><img src="img/profile.svg" alt="Foto do usuário" id="profile"></a>
+                <a href="#"><img src="<?php echo $perfil; ?>" alt="Foto do usuário" id="profile"></a>
             </div>
 
             <div class="dropdown">
