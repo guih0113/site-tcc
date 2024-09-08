@@ -28,7 +28,6 @@ header {
     margin-top: 100px;
     margin-left: auto;
     margin-right: auto;
-    text-decoration: none;
 }
 
 header .container {
@@ -91,19 +90,25 @@ header .container .dropdown {
     border: 1px solid white;
     border-radius: 8px;
     display: block;
+    /* Permanece no fluxo de layout */
     flex-direction: column;
     align-items: center;
     justify-content: flex-start;
     position: absolute;
     right: 26px;
     top: 16px;
+    /* Ajuste conforme necessário */
     background: #12130F;
     z-index: 1;
     padding-top: 10px;
     opacity: 0;
+    /* Começa invisível */
     max-height: 0;
+    /* Altura inicial zero para esconder */
     overflow: hidden;
+    /* Esconde conteúdo quando altura é zero */
     transition: opacity 0.3s ease-out, max-height 0.3s ease-out;
+    /* Transição suave */
 }
 
 header .container .dropdown.show {
@@ -152,15 +157,15 @@ header .container .dropdown .user .infos {
     padding-left: 8px;
 }
 
-header .container .dropdown .user .infos a {
-    text-decoration: none;
-}
-
 
 header .container .dropdown .user .infos p {
     text-align: start;
     display: flex;
     margin-top: 12px;
+}
+
+header .container .dropdown .user .infos a {
+    text-decoration: none;
 }
 
 header .container .dropdown .user .infos p#config {
@@ -320,6 +325,29 @@ h1 {
     color: #ffffff;
 }
 
+.inputPass{
+    position: relative;
+    display: flex;
+    align-items: center;
+}
+
+.password-strength {
+    display: none;
+    position: absolute;
+    right: 10px;
+    font-size: 0.8rem;
+    color: #00c853;
+    background-color: transparent;
+    padding: 2px 5px;
+    border-radius: 5px;
+    font-weight: 600;
+}
+
+.msg-alert{
+    margin-top: 10px;
+    display: none;
+}
+
 .action-buttons {
     text-align: right;
     margin-top: 20px;
@@ -348,10 +376,6 @@ h1 {
 
 .btn:hover {
     opacity: 0.9;
-}
-
-.tab-content {
-    display: none;
 }
 
 #account-general {

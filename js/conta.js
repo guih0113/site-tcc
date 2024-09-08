@@ -16,21 +16,19 @@ document.addEventListener("click", function(event) {
     }
 });
 
-document.addEventListener('DOMContentLoaded', function () {
-    document.querySelectorAll('.nav-list a').forEach(link => {
-        link.addEventListener('click', function (e) {
-            e.preventDefault();
-            document.querySelectorAll('.tab-content').forEach(section => {
-                section.style.display = 'none';
-            });
-            document.querySelector(link.getAttribute('href')).style.display = 'block';
-            document.querySelectorAll('.nav-list a').forEach(link => link.classList.remove('active'));
-            link.classList.add('active');
-        });
-    });
-
-    // Exibir a primeira seção por padrão
-    document.querySelector('#account-general').style.display = 'block';
+document.getElementById('update_info').addEventListener('click', function(event) {
+    var usernameInput = document.getElementById('username');
+    var emailInput = document.getElementById('email');
+    if (usernameInput.value.length < 7 || !validateEmail(emailInput.value)) {
+        event.preventDefault();
+    }
 });
+
+function validateEmail(email) {
+    var re = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+    return re.test(email);
+}
+
+
 
 

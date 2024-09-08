@@ -73,6 +73,7 @@ header .container .img-profile {
 header .container .img-profile #profile {
     width: 50px;
     cursor: pointer;
+    border-radius: 50%;
 }
 
 header .container .dropdown {

@@ -18,7 +18,7 @@ icone_curso varchar(50) not null
 CREATE TABLE tb_foto (
 id_foto int primary key auto_increment not null,
 nome_foto varchar(100) not null,
-cd_usuario int,
+cd_usuario int unique,
 foreign key(cd_usuario) references tb_usuario(id_usuario)
 );
 

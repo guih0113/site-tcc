@@ -39,7 +39,7 @@ $perfil = isset($row['nome_foto']) ? $row['nome_foto'] : "img/profile.svg";
                     <a href="screen-cursos.php">
                         <li>CURSOS</li>
                     </a>
-                    <a href="">
+                    <a href="conta.php">
                         <li>MINHA CONTA</li>
                     </a>
                 </ul>
@@ -60,7 +60,9 @@ $perfil = isset($row['nome_foto']) ? $row['nome_foto'] : "img/profile.svg";
                     </div>
 
                     <div class="infos">
-                            <p><span>⚙️</span> Configurações</p>
+                        <a href="conta.php">
+                            <p id="config"><span>⚙️</span> Configurações</p>
+                        </a>
 
                         <a href="logOut.php">
                                 <p id="logout"><span>↩</span> Log out</p>

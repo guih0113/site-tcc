@@ -1,6 +1,24 @@
+const profile = document.querySelector('#profile'); // Seleciona a imagem de perfil
+const dropdown = document.querySelector('.dropdown');
+
+profile.addEventListener("click", function(event) {
+    // Impede o evento de clique de se propagar para o documento
+    event.stopPropagation();
+    // Alterna a classe 'show' para controle de visibilidade
+    dropdown.classList.toggle('show');
+});
+
+// Adiciona um event listener ao documento para esconder o dropdown se clicar fora
+document.addEventListener("click", function(event) {
+    // Verifica se o clique foi fora do dropdown e da imagem de perfil
+    if (!dropdown.contains(event.target) && event.target !== profile) {
+        dropdown.classList.remove('show');
+    }
+});
+
 //verificação da força da senha
 
-const passwordInput = document.getElementById("password");
+const passwordInput = document.getElementById("new-password");
 
 passwordInput.addEventListener("input", function(){
     const password = this.value;
@@ -53,38 +71,12 @@ passwordInput.addEventListener("input", function(){
     }
 })
 
-//verificação de email
-function validarEmail(email) {
-    const regex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    return regex.test(email);
-}
-
-document.getElementById('contactForm').addEventListener('submit', function(event) {
+document.getElementById('newPassword').addEventListener('submit', function(event) {
     let formData = new FormData(this);
     let canSubmit = true;
 
-    const emailInput = document.getElementById('email').value;
-    const usernameInput = document.getElementById('username').value;
-    const errorMsg = document.querySelector(".error-msg");
-    const msgError = document.querySelector(".msg-error");
-
-    if (!validarEmail(emailInput)) {
-        canSubmit = false;
-        errorMsg.style.display = 'block';
-    } else {
-        errorMsg.style.display = 'none';
-    }
-
-    if (usernameInput.length < 7) {
-        canSubmit = false;
-        msgError.style.display = 'block';
-        msgError.innerHTML = 'Seu nome de usuário deve conter no mínimo 7 caracteres.';
-    } else {
-        msgError.style.display = 'none';
-    }
-
-    const alertText = document.querySelector(".msg-alert");
-    const passwordValue = document.getElementById("password").value;
+    const alertText = document.querySelector(".alert");
+    const passwordValue = document.getElementById("new-password").value;
     let score = 0;
     if(passwordValue.length >= 8) score++;
     if(passwordValue.match(/[a-z]/)) score++;
@@ -92,14 +84,12 @@ document.getElementById('contactForm').addEventListener('submit', function(event
     if(passwordValue.match(/[0-9]/)) score++;
     if(passwordValue.match(/[^a-zA-Z0-9]/)) score++;
 
-    if(!validarEmail(emailInput) || score < 3 || usernameInput.length < 7){
-        canSubmit = false;
-        event.preventDefault();
-    }
-
     if(score < 3){
+        event.preventDefault();
         canSubmit = false;
         alertText.style.display = 'block';
+        alertText.innerHTML = 'Insira uma senha mais forte.';
+        alertText.style.backgroundColor = 'rgba(255, 0, 0, 0.834)';
     } else {
         alertText.style.display = 'none';
     }

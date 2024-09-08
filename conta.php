@@ -57,36 +57,48 @@ if (isset($_POST['update_info'])) {
     $novo_email = mysqli_real_escape_string($conexao, $_POST['email']);
     $novo_username = mysqli_real_escape_string($conexao, $_POST['username']);
     
-    // Verifica se o email já existe no banco para outro usuário
-    $query_verifica_email = "SELECT id_usuario FROM tb_usuario WHERE email_usuario = '$novo_email' AND id_usuario != $user";
-    $result_verifica_email = mysqli_query($conexao, $query_verifica_email);
-
-    // Verifica se o nome de usuário já existe no banco para outro usuário
-    $query_verifica_username = "SELECT id_usuario FROM tb_usuario WHERE username_usuario = '$novo_username' AND id_usuario != $user";
-    $result_verifica_username = mysqli_query($conexao, $query_verifica_username);
-
-    if (!$result_verifica_email || !$result_verifica_username) {
-        die("Erro na consulta SQL: " . mysqli_error($conexao));
-    }
-
-    if (mysqli_num_rows($result_verifica_email) > 0) {
-        $message = "O e-mail informado já está em uso.";
-        $alertType = "error";
-    } elseif (mysqli_num_rows($result_verifica_username) > 0) {
-        $message = "O nome de usuário informado já está em uso.";
+    // Verifica se o nome de usuário é menor que 7 caracteres
+    if (strlen($novo_username) < 7) {
+        $message = "O nome de usuário deve ter pelo menos 7 caracteres.";
         $alertType = "error";
     } else {
-        // Atualiza o email e o nome de usuário no banco de dados
-        $query_atualiza = "UPDATE tb_usuario SET email_usuario = '$novo_email', username_usuario = '$novo_username' WHERE id_usuario = $user";
-        if (mysqli_query($conexao, $query_atualiza)) {
-            // Atualiza as variáveis de sessão
-            $_SESSION['email'] = $novo_email;
-            $_SESSION['username'] = $novo_username;
-            $message = "Informações atualizadas com sucesso!";
-            $alertType = "success";
-        } else {
-            $message = "Erro ao atualizar informações: " . mysqli_error($conexao);
+        // Verifica se o email é válido
+        if (!filter_var($novo_email, FILTER_VALIDATE_EMAIL)) {
+            $message = "O e-mail informado é inválido.";
             $alertType = "error";
+        } else {
+            // Verifica se o email já existe no banco para outro usuário
+            $query_verifica_email = "SELECT id_usuario FROM tb_usuario WHERE email_usuario = '$novo_email' AND id_usuario != $user";
+            $result_verifica_email = mysqli_query($conexao, $query_verifica_email);
+
+            // Verifica se o nome de usuário já existe no banco para outro usuário
+            $query_verifica_username = "SELECT id_usuario FROM tb_usuario WHERE username_usuario = '$novo_username' AND id_usuario != $user";
+            $result_verifica_username = mysqli_query($conexao, $query_verifica_username);
+
+            if (!$result_verifica_email || !$result_verifica_username) {
+                die("Erro na consulta SQL: " . mysqli_error($conexao));
+            }
+
+            if (mysqli_num_rows($result_verifica_email) > 0) {
+                $message = "O e-mail informado já está em uso.";
+                $alertType = "error";
+            } elseif (mysqli_num_rows($result_verifica_username) > 0) {
+                $message = "O nome de usuário informado já está em uso.";
+                $alertType = "error";
+            } else {
+                // Atualiza o email e o nome de usuário no banco de dados
+                $query_atualiza = "UPDATE tb_usuario SET email_usuario = '$novo_email', username_usuario = '$novo_username' WHERE id_usuario = $user";
+                if (mysqli_query($conexao, $query_atualiza)) {
+                    // Atualiza as variáveis de sessão
+                    $_SESSION['email'] = $novo_email;
+                    $_SESSION['username'] = $novo_username;
+                    $message = "Informações atualizadas com sucesso!";
+                    $alertType = "success";
+                } else {
+                    $message = "Erro ao atualizar informações: " . mysqli_error($conexao);
+                    $alertType = "error";
+                }
+            }
         }
     }
 }
@@ -159,7 +171,9 @@ if (isset($_POST['update_info'])) {
                     </div>
 
                     <div class="infos">
-                        <p id="config"><span>⚙️</span> Configurações</p>
+                        <a href="conta.php">
+                            <p id="config"><span>⚙️</span> Configurações</p>
+                        </a>
 
                         <a href="logOut.php">
                             <p id="logout"><span>↩</span> Log out</p>
@@ -175,10 +189,8 @@ if (isset($_POST['update_info'])) {
         <div class="row">
             <nav class="sidebar">
                 <ul class="nav-list">
-                    <li><a href="#account-general" class="active">Geral</a></li>
-                    <li><a href="#account-change-password">Mudar Senha</a></li>
-                    <li><a href="#account-info">Informações</a></li>
-                    <li><a href="#account-notifications">Notificações</a></li>
+                    <li><a href="conta.php" class="active">Geral</a></li>
+                    <li><a href="senha.php">Mudar Senha</a></li>
                 </ul>
             </nav>
             <main class="content">
@@ -214,76 +226,8 @@ if (isset($_POST['update_info'])) {
                         <div class="alert">Informações atualizadas com sucesso!</div>
                     </form>
                 </section>
-
-                <!-- Seção Mudar Senha -->
-                <section id="account-change-password" class="tab-content">
-                    <h1>Mudar Senha</h1>
-                    <div class="form-group">
-                        <label for="current-password">Senha Atual</label>
-                        <input type="password" id="current-password" class="form-control">
-                    </div>
-                    <div class="form-group">
-                        <label for="new-password">Nova Senha</label>
-                        <input type="password" id="new-password" class="form-control" >
-                    </div>
-                    <div class="form-group">
-                        <label for="confirm-password">Confirmar Nova Senha</label>
-                        <input type="password" id="confirm-password" class="form-control">
-                    </div>
-                    <div class="action-buttons">
-                        <button type="button" class="btn btn-primary">Salvar Alterações</button>
-                        <button type="button" class="btn btn-secondary">Cancelar</button>
-                    </div>
-                </section>
-
-                <!-- Seção Informações -->
-                <section id="account-info" class="tab-content">
-                    <h1>Informações</h1>
-                    <div class="form-group">
-                        <label for="address">Endereço</label>
-                        <input type="text" id="address" class="form-control" value="Rua Exemplo, 123">
-                    </div>
-                    <div class="form-group">
-                        <label for="phone">Telefone</label>
-                        <input type="tel" id="phone" class="form-control" value="(11) 98765-4321">
-                    </div>
-                    <div class="form-group">
-                        <label for="birthdate">Data de Nascimento</label>
-                        <input type="date" id="birthdate" class="form-control" value="1985-05-15">
-                    </div>
-                    <div class="action-buttons">
-                        <button type="button" class="btn btn-primary">Salvar Alterações</button>
-                        <button type="button" class="btn btn-secondary">Cancelar</button>
-                    </div>
-                </section>
-
-                <!-- Seção Notificações -->
-                <section id="account-notifications" class="tab-content">
-                    <h1>Notificações</h1>
-                    <div class="form-group">
-                        <label>
-                            <input type="checkbox" checked> Receber notificações por e-mail
-                        </label>
-                    </div>
-                    <div class="form-group">
-                        <label>
-                            <input type="checkbox"> Receber notificações por SMS
-                        </label>
-                    </div>
-                    <div class="form-group">
-                        <label>
-                            <input type="checkbox"> Receber notificações push
-                        </label>
-                    </div>
-                    <div class="action-buttons">
-                        <button type="button" class="btn btn-primary">Salvar Alterações</button>
-                        <button type="button" class="btn btn-secondary">Cancelar</button>
-                    </div>
-                </section>
             </main>
         </div>
     </div>
 </body>
-<?php
-?>
 </html>
