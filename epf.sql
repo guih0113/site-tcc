@@ -22,6 +22,12 @@ cd_usuario int unique,
 foreign key(cd_usuario) references tb_usuario(id_usuario)
 );
 
+CREATE TABLE tb_adm (
+id_adm int primary key auto_increment not null,
+username_adm varchar(45) not null,
+senha_adm varchar(30) not null
+);
+
 INSERT INTO tb_cursos VALUES
 (default,'INICIANTE','CURSO DE EDUCAÇÂO FINANCEIRA PARA INICIANTES','&#11088;'),
 (default,'INTERMEDIÁRIO','CURSO DE EDUCAÇÂO FINANCEIRA PARA INTERMEDIÁRIOS','&#11088;&#11088;'),
@@ -31,3 +37,6 @@ INSERT INTO tb_usuario VALUES
 (default,'guih_0113','gui.henriquess13@gmail.com','guilherme1301');
 SELECT * FROM tb_usuario;
 SELECT * FROM tb_foto;
+
+INSERT INTO tb_adm VALUES
+(default,'guilherme','12345');

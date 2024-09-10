@@ -1,49 +1,78 @@
+<?php
+include_once('conexao1.php');
+session_start();
+
+if((!isset($_SESSION['email']) == true) and (!isset($_SESSION['senha']) == true)){
+    unset($_SESSION['email']);
+    unset($_SESSION['senha']);
+    header('Location: login.php');
+}
+
+$email = $_SESSION['email'];
+$username = $_SESSION['username'];
+$user = $_SESSION['id'];
+
+$sql = "SELECT nome_foto FROM tb_foto WHERE cd_usuario = $user";
+$res = mysqli_query($conexao, $sql);
+$row = mysqli_fetch_assoc($res);
+$perfil = isset($row['nome_foto']) ? $row['nome_foto'] : "img/profile.svg";
+?>
+
 <!DOCTYPE html>
 <html lang="pt-br">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
-    <link rel="stylesheet" href="css/main.css">
-    <script src="js/main.js" defer></script>
+    <link rel="stylesheet" href="css/mainLogado.css">
+    <script src="js/indexLogado.js" defer></script>
     <title>Estude para o Futuro</title>
 </head>
-
 <body>
     <header>
         <div class="container">
-            <a href="index.html"><img src="img/Logo.png" alt="Logo" id="logo"></a>
+            <a href="indexLogado.php"><img src="img/Logo.png" alt="Logo" id="logo"></a> 
             <!-- Logo header -->
             <nav>
                 <ul>
-                    <a href="#home">
-                        <li>HOME</li>
+                    <a href="indexLogado.php">
+                        <li id="li-home">HOME</li>
                     </a>
-                    <a href="#quemsomos">
-                        <li>QUEM SOMOS</li>
-                    </a>
-                    <a href="#cursos">
-                        <li>CURSOS</li>
-                    </a>
-                    <a href="#contato">
-                        <li>CONTATO</li>
-                    </a>
+                    <a href="screen-cursos.php">
+                        <li>CURSOS</li> 
+                    </a>                      
+                    <a href="conta.php">
+                        <li>MINHA CONTA</li> 
+                    </a>                      
                 </ul>
             </nav>
             <!--Nav header -->
-            <div class="dropdown">
-                <a href="login.php"><input type="submit" value="Log in"></a>
-                <a href="cadastro.php"><input type="submit" value="Cadastre-se"></a>
+            <div class="img-profile">
+                <a href="#"><img src="<?php echo $perfil; ?>" alt="Foto do usuário" id="profile"></a>
             </div>
-            <!-- <BUtton>Login</BUtton> -->
 
-            <!-- buttom -->
+            <div class="dropdown">
+                <div class="user">
+                    <div class="informations">
+                        <?php
+                            echo "<p><u id='name'>$username</u></p>
+                                  <p><u id='email'>$email</u></p>";
+                        ?>
+                    </div>
+    
+                    <div class="infos">
+                        <a href="conta.php">
+                            <p id="config"><span>⚙️</span> Configurações</p>
+                        </a>
+
+                        <a href="logOut.php">
+                            <p id="logout"><span>↩</span> Log out</p>
+                        </a>
+                    </div>
+                </div>
+            </div>
         </div>
     </header>
-
-    <div></div>
-
     <!-- Fim header -->
 
     <section class="s-hero" id="home">
@@ -59,7 +88,7 @@
                     planejamento</h1>
                 <p>Criamos um metodo para você se divertir e aprender um pouco mais sobre.</p>
 
-                <a href="login.php"><input type="submit" value="Começar"></a>
+                <a href="screen-cursos.php"><input type="submit" value="Começar"></a>
             </div>
             <!-- Lado Direito section -->
         </div>
@@ -133,7 +162,7 @@
             <a href="#quemsomos">Quem somos</a>
             <a href="#">Cursos</a>
             <a href="#contato">Contato</a>
-            <a href="loginAdm.php">Sou um administrador</a>
+            <a href="#">Sou um administrador</a>
         </nav>
         <div class="footer-bottom">
             <p>&copy;Estude para o Futuro | 2024</p>

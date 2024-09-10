@@ -144,10 +144,13 @@ if (isset($_POST['update_info'])) {
 <body>
     <header>
         <div class="container">
-            <img src="img/Logo.png" alt="Logo" id="logo">
+            <a href="indexLogado.php"><img src="img/Logo.png" alt="Logo" id="logo"></a>
             <!-- Logo header -->
             <nav>
                 <ul>
+                    <a href="indexLogado.php">
+                        <li>HOME</li>
+                    </a>
                     <a href="screen-cursos.php">
                         <li>CURSOS</li>
                     </a>

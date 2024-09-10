@@ -32,7 +32,7 @@ $perfil = isset($row['nome_foto']) ? $row['nome_foto'] : "img/profile.svg";
 <body>
     <header>
         <div class="container">
-            <img src="img/Logo.png" alt="Logo" id="logo">
+            <a href="indexLogado.php"><img src="img/Logo.png" alt="Logo" id="logo"></a>
             <!-- Logo header -->
             <nav>
                 <ul>

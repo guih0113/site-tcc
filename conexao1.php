@@ -35,16 +35,27 @@
         }
     }
 
+    function LoginAdm($user, $senha){
+        $comando = 'SELECT * FROM tb_adm WHERE username_adm = "'.$user.'" AND senha_adm = "'.$senha.'"';
+        $retorno = $GLOBALS['conexao']->query($comando);
+        $usuario = $retorno->fetch_array();
+
+        if($retorno->num_rows > 0){         
+            header('Location: index.html');
+        }
+
+        else{
+            echo "<script>
+                    const msgError = document.querySelector('.msg-alert');
+                    msgError.style.display = 'block';
+                  </script>";
+        }
+    }
+
     function getCursos(){
         $sql = 'SELECT * FROM tb_cursos';
     
         $retorno = $GLOBALS['conexao']->query($sql);
         return $retorno;
-    }
-
-    function getFoto($user){
-        $sql = 'SELECT nome_foto FROM tb_foto WHERE cd_usuario='.$user;
-        $res = $GLOBALS['conexao']->query($sql);
-        return $res;
     }
 ?>
