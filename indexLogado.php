@@ -162,7 +162,7 @@ $perfil = isset($row['nome_foto']) ? $row['nome_foto'] : "img/profile.svg";
             <a href="#quemsomos">Quem somos</a>
             <a href="#">Cursos</a>
             <a href="#contato">Contato</a>
-            <a href="#">Sou um administrador</a>
+            <a href="loginAdm.php">Sou um administrador</a>
         </nav>
         <div class="footer-bottom">
             <p>&copy;Estude para o Futuro | 2024</p>

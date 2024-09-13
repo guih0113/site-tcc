@@ -40,3 +40,5 @@ SELECT * FROM tb_foto;
 
 INSERT INTO tb_adm VALUES
 (default,'guilherme','12345');
+
+SELECT * FROM tb_adm;

@@ -1,6 +1,7 @@
 <?php
     include('conexao1.php');
 
+    //exibir cursos
     if(isset($_GET['cursos'])){
         $lista = getCursos();
         $retorno = '';
@@ -20,4 +21,27 @@
 
         echo $retorno; //exibe os resultados
     }
-?>
+
+
+    //exibir usuarios
+    if(isset($_GET['users'])){
+        $lista = getUsers();
+        $retorno = '';
+
+        while($user = $lista->fetch_array()){
+            $retorno .= '<tr>
+                            <td>'.$user['id_usuario'].'</td>
+                            <td>'.$user['email_usuario'].'</td>
+                            <td>'.$user['username_usuario'].'</td>
+                            <td>'.$user['senha_usuario'].'</td>
+                            <td><button class="delete-btn" id="'.$user['id_usuario'].'" onclick="del(this)">Excluir</button></td>
+                         </tr>';
+        }
+
+        echo $retorno; //exibe os resultados
+    }
+    
+    if(isset($_GET['delUser'])){
+        excluirUser($_GET['delUser']);
+    }
+

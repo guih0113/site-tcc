@@ -38,10 +38,13 @@
     function LoginAdm($user, $senha){
         $comando = 'SELECT * FROM tb_adm WHERE username_adm = "'.$user.'" AND senha_adm = "'.$senha.'"';
         $retorno = $GLOBALS['conexao']->query($comando);
-        $usuario = $retorno->fetch_array();
+        $adm = $retorno->fetch_array();
 
-        if($retorno->num_rows > 0){         
-            header('Location: index.html');
+        if($retorno->num_rows > 0){     
+            $_SESSION['idAdm'] = $adm['id_adm']; 
+            $_SESSION['userAdm'] = $adm['username_adm']; 
+            $_SESSION['senhaAdm'] = $adm['senha_adm']; 
+            header('Location: adm.php');
         }
 
         else{
@@ -58,4 +61,23 @@
         $retorno = $GLOBALS['conexao']->query($sql);
         return $retorno;
     }
-?>
+
+    function getUsers(){
+        $sql = 'SELECT * FROM tb_usuario';
+
+        $retorno = $GLOBALS['conexao']->query($sql);
+        return $retorno;
+    }
+
+    function excluirUser($id){
+        $sql = 'DELETE FROM tb_usuario WHERE id_usuario=' .$id;
+        $resultado = $GLOBALS['conexao']->query($sql);
+    
+        if($resultado){ //garante que o registro foi excluído
+          echo "Excluído com sucesso";
+        }
+    
+        else{
+          echo "Falha ao excluir: " .$sql;
+        }
+      }
