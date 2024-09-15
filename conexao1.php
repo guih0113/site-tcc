@@ -81,3 +81,9 @@
           echo "Falha ao excluir: " .$sql;
         }
       }
+
+      function getTitle($id){
+        $sql = 'SELECT nome_curso FROM tb_cursos WHERE id_curso=' .$id;
+        $retorno = $GLOBALS['conexao']->query($sql);
+        return $retorno;
+    }

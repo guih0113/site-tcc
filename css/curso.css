@@ -2,8 +2,7 @@
     padding: 0;
     margin: 0;
     box-sizing: border-box;
-    text-decoration: none;
-    font-family: "Inter";
+    text-decoration: none;  
 }
 
 .container {
@@ -15,6 +14,7 @@
 body {
     background-image: url("../img/Bg3.png");
     background-size: cover;
+    font-family: 'Helvetica Neue', Arial, sans-serif;
 }
 
 header {
@@ -81,34 +81,25 @@ header .container .dropdown {
     border: 1px solid white;
     border-radius: 8px;
     display: block;
-    /* Permanece no fluxo de layout */
     flex-direction: column;
     align-items: center;
     justify-content: flex-start;
     position: absolute;
     right: 26px;
     top: 16px;
-    /* Ajuste conforme necessário */
     background: #12130F;
     z-index: 1;
     padding-top: 10px;
     opacity: 0;
-    /* Começa invisível */
     max-height: 0;
-    /* Altura inicial zero para esconder */
     overflow: hidden;
-    /* Esconde conteúdo quando altura é zero */
     transition: opacity 0.3s ease-out, max-height 0.3s ease-out;
-    /* Transição suave */
 }
 
 header .container .dropdown.show {
     opacity: 1;
-    /* Torna visível */
     max-height: 200px;
-    /* Expande para altura total */
 }
-
 
 header .container .dropdown .user .informations {
     margin-top: 55px;
@@ -141,7 +132,6 @@ header .container .dropdown .user .infos {
     padding-left: 8px;
 }
 
-
 header .container .dropdown .user .infos p {
     text-align: start;
     display: flex;
@@ -155,6 +145,7 @@ header .container .dropdown .user .infos p#logout {
 
 main {
     display: flex;
+    flex-direction: column;
     padding: 20px;
     justify-content: center;
     align-items: flex-start;
@@ -162,22 +153,68 @@ main {
     margin-top: 80px;
 }
 
+main > #title {
+    width: 100%;
+    color: #fff;
+    text-align: center;
+    margin-bottom: 40px;
+    /* Adicionei um espaço entre o h1 e o conteúdo abaixo */
+}
+
+#title h1 {
+    font-size: 1.8rem; /* Tamanho grande para destaque */
+    color: aliceblue; /* Cor escura elegante */
+    font-weight: bold;
+    text-align: center;
+    margin-top: 20px;
+    margin-bottom: 20px;
+}
+
+/* Barra de progresso */
+.progress-bar-container {
+    width: 50%; /* Largura ajustável da barra */
+    background-color: #e0e0e0; /* Fundo da barra */
+    border-radius: 25px; /* Arredondamento da barra */
+    overflow: hidden;
+    margin: 0 auto 20px auto; /* Centraliza a barra e adiciona espaçamento abaixo */
+    height: 25px;
+    box-shadow: 0px 3px 6px rgba(0, 0, 0, 0.1); /* Sombra para dar destaque */
+}
+
+.progress-bar {
+    width: 65%; /* Valor fictício da porcentagem de conclusão */
+    height: 100%;
+    background-color: #27ae60; /* Cor verde para indicar progresso */
+    border-radius: 25px 0 0 25px; /* Arredondamento nas bordas da barra */
+    text-align: center;
+    color: white;
+    font-weight: bold;
+    line-height: 25px; /* Centraliza o texto verticalmente */
+    transition: width 0.3s ease; /* Transição suave quando a barra se movimentar */
+}
+
+.progress-text {
+    text-align: center;
+    margin-top: 5px;
+    font-size: 1rem;
+    font-weight: bold;
+    color: aliceblue;
+}
+
+.main-container {
+    width: 100%;
+    display: flex;
+    align-items: flex-start;
+    justify-content: center;
+}
+
 .sidebar {
     width: 250px;
-    /* Largura colapsada inicial */
     background-color: rgba(0, 0, 0, 0.8);
     padding: 15px;
     border-radius: 10px;
-    margin-right: 5px;
-    transition: width 0.3s ease, margin-right 0.3s ease, opacity 0.3s ease;
-}
-
-.sidebar.collapsed {
-    width: 80px;
-    /* Largura colapsada */
-    margin-right: 5px;
-    opacity: 0.7;
-    /* Ligeiramente transparente */
+    margin-right: 20px;
+    transition: width 0.3s ease, margin-right 0.3s ease;
 }
 
 .module {
@@ -203,14 +240,12 @@ main {
     font-size: 0.8em;
     margin-left: 10px;
     transition: transform 0.3s ease;
-    /* Removi a transição aqui */
 }
 
 .dropdown-toggle.active:after {
-    transform: rotate(118deg);
+    transform: rotate(120deg);
     content: "\25B2";
     transition: transform 0.3s ease;
-    /* Adicionei essa linha para adicionar a transição apenas quando a classe active é adicionada */
 }
 
 .dropdown-toggle:hover {
@@ -279,35 +314,6 @@ main {
     align-items: center;
     padding: 5px 10px;
     border-radius: 0 0 10px 10px;
-}
-
-.play-button {
-    font-size: 1.5em;
-    cursor: pointer;
-}
-
-.progress-bar {
-    flex: 1;
-    height: 5px;
-    background-color: #555;
-    margin: 0 10px;
-    border-radius: 3px;
-    overflow: hidden;
-    position: relative;
-}
-
-.progress {
-    height: 100%;
-    background-color: #4caf50;
-    width: 30%;
-}
-
-.time {
-    font-size: 0.8em;
-}
-
-.settings {
-    cursor: pointer;
 }
 
 .lesson-info {

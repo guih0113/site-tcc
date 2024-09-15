@@ -1,26 +1,28 @@
 <?php
     include('conexao1.php');
 
-    //exibir cursos
-    if(isset($_GET['cursos'])){
+    //exibir cursos na tela screenCursos
+    if (isset($_GET['cursos'])) {
         $lista = getCursos();
         $retorno = '';
-
-        while($curso = $lista->fetch_array()){
-            $retorno .='<div class="course-card">
+    
+        while ($curso = $lista->fetch_array()) {
+            $retorno .= '<div class="course-card">
                             <div class="course-header">
-                                <span class="course-icon">'.$curso['icone_curso'].'</span>
-                                <h3>'.$curso['nome_curso'].'</h3>
-                                <p>'.$curso['descricao_curso'].'</p>
+                                <span class="course-icon">' . $curso['icone_curso'] . '</span>
+                                <h3>' . $curso['nome_curso'] . '</h3>
+                                <p>' . $curso['descricao_curso'] . '</p>
                             </div>
                             <div class="card-button">
-                                <a href="curso.php"><button class="free-label">INICIAR</button></a>
+                                <a href="curso.php?cursoId=' . $curso['id_curso'] . '#">
+                                    <button class="free-label">INICIAR</button>
+                                </a>
                             </div>
                         </div>';
         }
-
-        echo $retorno; //exibe os resultados
-    }
+    
+        echo $retorno; // exibe os resultados
+    }    
 
 
     //exibir usuarios
@@ -44,4 +46,5 @@
     if(isset($_GET['delUser'])){
         excluirUser($_GET['delUser']);
     }
+
 

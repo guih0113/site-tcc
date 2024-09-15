@@ -100,15 +100,15 @@ $perfil = isset($row['nome_foto']) ? $row['nome_foto'] : "img/profile.svg";
                 <img src="img/Group 2.png" alt="celular">
             </div> -->
             <!-- Lado esquerdo section -->
-            <div class="right">
+            <div class="right" id="section2">
                 <h1>Quem somos?</h1>
                 <p>Somos uma plataforma que tem por objetivo ensinar jovens e adultos sobre como administrar e cuidar de
                     suas vidas financeiras. Nosso objetivo para com a população é diminuir a discrepante base de
                     desinformação existente na área das finanças, disponibilizando um conteúdo de ótima qualidade à
                     todos que estiverem interessados em aprender.</p>
             </div>
-            <div class="left">
-                <img src="img/Group 2.png" alt="celular">
+            <div class="left" id="container-tablet">
+                <img src="img/tablet.png" id="tablet" alt="celular">
             </div>
             <!-- Lado Direito section -->
         </div>
@@ -162,7 +162,6 @@ $perfil = isset($row['nome_foto']) ? $row['nome_foto'] : "img/profile.svg";
             <a href="#quemsomos">Quem somos</a>
             <a href="#">Cursos</a>
             <a href="#contato">Contato</a>
-            <a href="loginAdm.php">Sou um administrador</a>
         </nav>
         <div class="footer-bottom">
             <p>&copy;Estude para o Futuro | 2024</p>

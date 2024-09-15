@@ -15,6 +15,23 @@ descricao_curso varchar(200) not null,
 icone_curso varchar(50) not null
 );
 
+CREATE TABLE tb_modulos (
+id_modulo int primary key auto_increment not null,
+numero_modulo int not null,
+nome_modulo varchar(45) not null,
+cd_curso int,
+foreign key(cd_curso) references tb_cursos(id_curso)
+);
+
+CREATE TABLE tb_aulas (
+id_aula int primary key auto_increment not null,
+numero_aula int not null,
+nome_aula varchar(45) not null,
+conteudo_aula varchar(100) not null,
+cd_modulo int,
+foreign key(cd_modulo) references tb_modulos(id_modulo)
+);
+
 CREATE TABLE tb_foto (
 id_foto int primary key auto_increment not null,
 nome_foto varchar(100) not null,

@@ -104,6 +104,17 @@ section {
   margin-left: -170px;
 }
 
+#container-tablet{
+  width: 500px;
+  height: 400px;
+  margin-top: 100px;
+}
+
+#tablet{
+  width: 100%;
+  height: 100%;
+}
+
 .s-hero .right {
   width: 719px;
   height: 361px;
@@ -114,6 +125,14 @@ section {
   position: relative;
   right: 80px;
   top: 129px;
+}
+
+.s-hero #section2{
+  display: flex;
+  align-items: start;
+  margin-left: 140px;
+  height: 250px;
+  margin-bottom: 350px;
 }
 
 .s-hero .right h1 {
