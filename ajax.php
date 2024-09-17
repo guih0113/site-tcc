@@ -46,5 +46,41 @@
     if(isset($_GET['delUser'])){
         excluirUser($_GET['delUser']);
     }
+    
+
+// Checando se os parâmetros foram passados
+if (isset($_GET['sidebar']) && isset($_GET['cursoId'])) {
+    $cursoId = $_GET['cursoId'];
+    
+    // Função que busca os módulos de um curso
+    $lista = getModules($cursoId); 
+    $retorno = '';
+
+    // Percorrer todos os módulos do curso
+    while ($module = $lista->fetch_assoc()) {
+        $moduloId = $module['id_modulo'];
+
+        // Adicionar o HTML para o módulo
+        $retorno .= '<div class="module" data-modulo="' . $moduloId . '">
+                        <h2 class="dropdown-toggle" id="' . $moduloId . '">' . htmlspecialchars($module['nome_modulo']) . '</h2>
+                        <ul class="dropdown-content">';
+        
+        // Buscar as aulas associadas ao módulo atual
+        $aulas = getAulas($moduloId); 
+        while ($aula = $aulas->fetch_assoc()) {
+            // Adicionar as aulas ao HTML
+            $retorno .= '<li><a href="#" class="aula-link" data-titulo="' . htmlspecialchars($aula['nome_aula']) . '">' . htmlspecialchars($aula['nome_aula']) . '</a></li>';
+        }
+
+        // Fechar o bloco de conteúdo do módulo
+        $retorno .= '</ul></div>';
+    }
+
+    // Retornar o conteúdo para o frontend
+    echo $retorno;
+}
+    
+    
+    
 
 
