@@ -71,70 +71,45 @@ INSERT INTO tb_cursos VALUES
 (default,'EXPERIENTES','Curso de Educação Financeira para experientes','&#11088;&#11088;&#11088;');
 
 -- Inserindo os módulos
-INSERT INTO tb_modulos (nome_modulo) VALUES
-('Módulo 1 do Curso 1'),
-('Módulo 2 do Curso 1'),
-('Módulo 3 do Curso 1'),
-('Módulo 1 do Curso 2'),
-('Módulo 2 do Curso 2'),
-('Módulo 3 do Curso 2'),
-('Módulo 1 do Curso 3'),
-('Módulo 2 do Curso 3'),
-('Módulo 3 do Curso 3');
+INSERT INTO tb_modulos VALUES
+(default,'Módulo 1 - Introdução à Educação Financeira'),
+(default,'Módulo 2 - Planejamento e Orçamento'),
+(default,'Módulo 3 - Investimentos Iniciais'),
+(default,'Módulo 4 - Teste'),
+(default,'Módulo 5 - Testando');
 
 -- Associando os cursos aos módulos
-INSERT INTO tb_cursos_modulos (cd_curso, cd_modulo) VALUES
-(1, 1),
-(1, 2),
-(1, 3),
-(2, 4),
-(2, 5),
-(2, 6),
-(3, 7),
-(3, 8),
-(3, 9);
+INSERT INTO tb_cursos_modulos VALUES (default, 1, 1); -- Curso INICIANTE - Módulo 1
+INSERT INTO tb_cursos_modulos VALUES (default, 1, 2); -- Curso INICIANTE - Módulo 2
+INSERT INTO tb_cursos_modulos VALUES (default, 1, 3); -- Curso INICIANTE - Módulo 3
 
--- Criando 2 aulas para cada módulo
-INSERT INTO tb_aulas (nome_aula, conteudo_aula) VALUES
-('Aula 1 do Módulo 1 do Curso 1', 'img/video.mp4'),
-('Aula 2 do Módulo 1 do Curso 1', 'conteudo_aula_2_modulo_1_curso_1.mp4'),
-('Aula 1 do Módulo 2 do Curso 1', 'conteudo_aula_1_modulo_2_curso_1.mp4'),
-('Aula 2 do Módulo 2 do Curso 1', 'conteudo_aula_2_modulo_2_curso_1.mp4'),
-('Aula 1 do Módulo 3 do Curso 1', 'conteudo_aula_1_modulo_3_curso_1.mp4'),
-('Aula 2 do Módulo 3 do Curso 1', 'conteudo_aula_2_modulo_3_curso_1.mp4'),
-('Aula 1 do Módulo 1 do Curso 2', 'conteudo_aula_1_modulo_1_curso_2.mp4'),
-('Aula 2 do Módulo 1 do Curso 2', 'conteudo_aula_2_modulo_1_curso_2.mp4'),
-('Aula 1 do Módulo 2 do Curso 2', 'conteudo_aula_1_modulo_2_curso_2.mp4'),
-('Aula 2 do Módulo 2 do Curso 2', 'conteudo_aula_2_modulo_2_curso_2.mp4'),
-('Aula 1 do Módulo 3 do Curso 2', 'conteudo_aula_1_modulo_3_curso_2.mp4'),
-('Aula 2 do Módulo 3 do Curso 2', 'conteudo_aula_2_modulo_3_curso_2.mp4'),
-('Aula 1 do Módulo 1 do Curso 3', 'conteudo_aula_1_modulo_1_curso_3.mp4'),
-('Aula 2 do Módulo 1 do Curso 3', 'conteudo_aula_2_modulo_1_curso_3.mp4'),
-('Aula 1 do Módulo 2 do Curso 3', 'conteudo_aula_1_modulo_2_curso_3.mp4'),
-('Aula 2 do Módulo 2 do Curso 3', 'conteudo_aula_2_modulo_2_curso_3.mp4'),
-('Aula 1 do Módulo 3 do Curso 3', 'conteudo_aula_1_modulo_3_curso_3.mp4'),
-('Aula 2 do Módulo 3 do Curso 3', 'conteudo_aula_2_modulo_3_curso_3.mp4');
+INSERT INTO tb_cursos_modulos VALUES (default, 2, 2); -- Curso INTERMEDIÁRIO - Módulo 2
+INSERT INTO tb_cursos_modulos VALUES (default, 2, 4); -- Curso INTERMEDIÁRIO - Módulo 4
 
--- Relacionando as aulas aos módulos
-INSERT INTO tb_modulos_aulas (cd_modulo, cd_aula) VALUES
-(1, 1),
-(1, 2),
-(2, 3),
-(2, 4),
-(3, 5),
-(3, 6),
-(4, 7),
-(4, 8),
-(5, 9),
-(5, 10),
-(6, 11),
-(6, 12),
-(7, 13),
-(7, 14),
-(8, 15),
-(8, 16),
-(9, 17),
-(9, 18);
+INSERT INTO tb_cursos_modulos VALUES (default, 3, 5); -- Curso EXPERIÊNTE - Módulo 5
+
+-- Inserindo as aulas (a numeração continua de um módulo para o próximo)
+INSERT INTO tb_aulas VALUES
+(default,'Aula 1 - Introdução','Conteúdo da aula 1'),
+(default,'Aula 2 - Conceitos Financeiros','Conteúdo da aula 2'),
+(default,'Aula 3 - Poupança e Renda Fixa','Conteúdo da aula 3'),
+(default,'Aula 4 - Planejamento Pessoal','Conteúdo da aula 4'),
+(default,'Aula 5 - Orçamento Familiar','Conteúdo da aula 5'),
+(default,'Aula 6 - Introdução a Investimentos','Conteúdo da aula 6'),
+(default,'Aula 7 - Fundos de Investimento','Conteúdo da aula 7'),
+(default,'Aula 8 - Testando Conceitos','Conteúdo da aula 8');
+
+-- Associando as aulas aos módulos
+INSERT INTO tb_modulos_aulas VALUES (default, 1, 1); -- Módulo 1 - Aula 1
+INSERT INTO tb_modulos_aulas VALUES (default, 1, 2); -- Módulo 1 - Aula 2
+INSERT INTO tb_modulos_aulas VALUES (default, 1, 3); -- Módulo 1 - Aula 3
+
+INSERT INTO tb_modulos_aulas VALUES (default, 2, 4); -- Módulo 2 - Aula 4
+INSERT INTO tb_modulos_aulas VALUES (default, 2, 5); -- Módulo 2 - Aula 5
+INSERT INTO tb_modulos_aulas VALUES (default, 2, 6); -- Módulo 2 - Aula 6
+
+INSERT INTO tb_modulos_aulas VALUES (default, 3, 7); -- Módulo 3 - Aula 7
+INSERT INTO tb_modulos_aulas VALUES (default, 3, 8); -- Módulo 3 - Aula 8
 
 -- Inserindo usuários
 INSERT INTO tb_usuario VALUES
