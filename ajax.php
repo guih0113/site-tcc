@@ -46,5 +46,64 @@
     if(isset($_GET['delUser'])){
         excluirUser($_GET['delUser']);
     }
+    
+
+// Checando se os parâmetros foram passados
+if (isset($_GET['sidebar']) && isset($_GET['cursoId'])) {
+    // Sanitizar o cursoId
+    $cursoId = filter_input(INPUT_GET, 'cursoId', FILTER_SANITIZE_NUMBER_INT);
+    
+    // Verifica se o cursoId foi sanitizado corretamente (não é null ou false)
+    if ($cursoId) {
+        // Função que busca os módulos de um curso
+        $lista = getModules($cursoId); 
+        $retorno = '';
+
+        // Percorrer todos os módulos do curso
+        while ($module = $lista->fetch_assoc()) {
+            $moduloId = $module['id_modulo'];
+
+            // Adicionar o HTML para o módulo
+            $retorno .= '<div class="module" data-modulo="' . $moduloId . '">
+                            <h2 class="dropdown-toggle" id="' . $moduloId . '">' . htmlspecialchars($module['nome_modulo']) . '</h2>
+                            <ul class="dropdown-content">';
+
+            // Buscar as aulas associadas ao módulo atual
+            $aulas = getAulas($moduloId); 
+            while ($aula = $aulas->fetch_assoc()) {
+                // Adicionar as aulas ao HTML
+                $retorno .= '<li><a href="#" class="aula-link" data-video="' . htmlspecialchars($aula['conteudo_aula']) . '" data-titulo="' . htmlspecialchars($aula['nome_aula']) . '">' . htmlspecialchars($aula['nome_aula']) . '</a></li>';
+            }
+
+            // Fechar o bloco de conteúdo do módulo
+            $retorno .= '</ul></div>';
+        }
+
+        // Retornar o conteúdo para o frontend
+        echo $retorno;
+    } else {
+        // Se o cursoId não for válido, você pode retornar uma mensagem de erro ou simplesmente não exibir nada.
+        echo '<p>Curso não encontrado.</p>';
+    }
+}
+
+if (isset($_GET['getAulas']) && isset($_GET['moduloId'])) {
+    $moduloId = filter_input(INPUT_GET, 'moduloId', FILTER_SANITIZE_NUMBER_INT);
+    $aulas = getAulas($moduloId);
+    
+    $result = [];
+    while ($aula = $aulas->fetch_assoc()) {
+        $result[] = [
+            'nome_aula' => $aula['nome_aula'],
+            'conteudo_aula' => $aula['conteudo_aula']
+        ];
+    }
+    
+    echo json_encode($result);
+}
+
+    
+    
+    
 
 

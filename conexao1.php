@@ -80,10 +80,44 @@
         else{
           echo "Falha ao excluir: " .$sql;
         }
-      }
+    }
 
-      function getTitle($id){
-        $sql = 'SELECT nome_curso FROM tb_cursos WHERE id_curso=' .$id;
+    function getModules($idCurso) {
+        $sql = 'SELECT * FROM tb_modulos 
+                INNER JOIN tb_cursos_modulos ON tb_modulos.id_modulo = tb_cursos_modulos.cd_modulo 
+                WHERE tb_cursos_modulos.cd_curso = ?';
+                
+        $stmt = $GLOBALS['conexao']->prepare($sql);
+        $stmt->bind_param('i', $idCurso); // Segurança contra SQL injection
+        $stmt->execute();
+        return $stmt->get_result();
+    }
+    
+    function getAulas($idModulo) {
+        // Assegure que $idModulo seja um inteiro para evitar SQL Injection
+        $idModulo = intval($idModulo);
+    
+        // Consulta para buscar as aulas associadas ao módulo
+        $sql = "
+            SELECT a.id_aula, a.nome_aula, a.conteudo_aula
+            FROM tb_modulos_aulas ma
+            INNER JOIN tb_aulas a ON ma.cd_aula = a.id_aula
+            WHERE ma.cd_modulo = $idModulo
+        ";
+    
+        // Executa a consulta
         $retorno = $GLOBALS['conexao']->query($sql);
+    
+        // Verifique se a consulta foi bem-sucedida
+        if (!$retorno) {
+            // Exibe o erro SQL e interrompe a execução
+            die("Erro na consulta: " . $GLOBALS['conexao']->error);
+        }
+    
+        // Retorna o resultado da consulta
         return $retorno;
     }
+    
+    
+    
+    

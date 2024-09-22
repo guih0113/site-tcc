@@ -138,6 +138,10 @@ header .container .dropdown .user .infos p {
     margin-top: 12px;
 }
 
+header .container .dropdown .user .infos p#config {
+    color: aliceblue;
+}
+
 header .container .dropdown .user .infos p#logout {
     margin-left: 4px;
     color: rgba(255, 0, 0, 0.705);
@@ -151,6 +155,7 @@ main {
     align-items: flex-start;
     min-height: calc(100vh - 120px);
     margin-top: 80px;
+    margin-bottom: 120px;
 }
 
 main > #title {
@@ -325,21 +330,38 @@ main > #title {
     margin-bottom: 12px;
 }
 
-.download-button {
+.button-container{
+    display: flex;
+    justify-content: space-around;
+    margin-top: 16px;
+}
+
+.conclude-button {
     background-color: #4caf50;
     border: none;
     color: white;
     padding: 10px 20px;
     text-align: center;
     text-decoration: none;
-    display: inline-block;
     font-size: 16px;
-    margin: 4px 2px;
+    margin: 12px 2px;
     cursor: pointer;
     border-radius: 12px;
-    transition: background-color 0.3s ease;
+    transition: background-color ease 0.3s;
+    height: 50px;
+    width: 205px;
 }
 
-.download-button:hover {
+.conclude-button:hover {
     background-color: #45a049;
+}
+
+.alerts{
+    color: rgba(240, 248, 255, 0.849);
+    margin-top: 35px;
+}
+
+.alerts > h3{
+    color: rgba(255, 0, 0, 0.568);
+    margin-bottom: 25px;
 }
