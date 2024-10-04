@@ -18,7 +18,6 @@
 
         if($retorno->num_rows > 0){
             $_SESSION['id'] = $usuario['id_usuario']; 
-            $user = $_SESSION['id'];
             $_SESSION['email'] = $usuario['email_usuario'];
             $_SESSION['username'] = $usuario['username_usuario'];
             $_SESSION['senha'] = $usuario['senha_usuario'];           
@@ -86,6 +85,7 @@
         $sql = 'SELECT * FROM tb_modulos 
                 INNER JOIN tb_cursos_modulos ON tb_modulos.id_modulo = tb_cursos_modulos.cd_modulo 
                 WHERE tb_cursos_modulos.cd_curso = ?';
+                
         $stmt = $GLOBALS['conexao']->prepare($sql);
         $stmt->bind_param('i', $idCurso); // Segurança contra SQL injection
         $stmt->execute();
@@ -93,24 +93,30 @@
     }
     
     function getAulas($idModulo) {
+        // Assegure que $idModulo seja um inteiro para evitar SQL Injection
+        $idModulo = intval($idModulo);
+    
         // Consulta para buscar as aulas associadas ao módulo
-        $sql = 'SELECT a.id_aula, a.nome_aula 
-                FROM tb_modulos_aulas ma
-                INNER JOIN tb_aulas a ON ma.cd_aula = a.id_aula
-                WHERE ma.cd_modulo = ' . $idModulo;
+        $sql = "
+            SELECT a.id_aula, a.nome_aula, a.conteudo_aula
+            FROM tb_modulos_aulas ma
+            INNER JOIN tb_aulas a ON ma.cd_aula = a.id_aula
+            WHERE ma.cd_modulo = $idModulo
+        ";
     
         // Executa a consulta
         $retorno = $GLOBALS['conexao']->query($sql);
     
-        // Verifique se a consulta retornou algo
+        // Verifique se a consulta foi bem-sucedida
         if (!$retorno) {
-            // Exibe o erro SQL se houver um problema
-            echo "Erro na consulta: " . $GLOBALS['conexao']->error;
-            return false;
+            // Exibe o erro SQL e interrompe a execução
+            die("Erro na consulta: " . $GLOBALS['conexao']->error);
         }
     
+        // Retorna o resultado da consulta
         return $retorno;
     }
+    
     
     
     

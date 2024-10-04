@@ -96,6 +96,9 @@ $perfil = isset($row['nome_foto']) ? $row['nome_foto'] : "img/profile.svg";
             <!-- Logo header -->
             <nav>
                 <ul>
+                    <a href="indexLogado.php">
+                        <li id="li-home">HOME</li>
+                    </a>
                     <a href="screen-cursos.php">
                         <li>CURSOS</li>
                     </a>

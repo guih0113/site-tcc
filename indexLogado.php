@@ -126,7 +126,7 @@ $perfil = isset($row['nome_foto']) ? $row['nome_foto'] : "img/profile.svg";
                     </div>
                     <h3>INICIANTE</h3>
                     <p>Curso de educação financeira para iniciantes</p>
-                    <button class="iniciar-button">INICIAR</button>
+                    <a href="curso.php?cursoId=1#"><button class="iniciar-button">INICIAR</button></a>
                 </div>
                 <div class="curso-card" data-index="1">
                     <div class="curso-nivel">
@@ -134,7 +134,7 @@ $perfil = isset($row['nome_foto']) ? $row['nome_foto'] : "img/profile.svg";
                     </div>
                     <h3>INTERMEDIÁRIO</h3>
                     <p>Curso de educação financeira para intermediários</p>
-                    <button class="iniciar-button">INICIAR</button>
+                    <a href="curso.php?cursoId=2#"><button class="iniciar-button">INICIAR</button></a>
                 </div>
                 <div class="curso-card" data-index="2">
                     <div class="curso-nivel">
@@ -142,7 +142,7 @@ $perfil = isset($row['nome_foto']) ? $row['nome_foto'] : "img/profile.svg";
                     </div>
                     <h3>EXPERIENTES</h3>
                     <p>Curso de educação financeira para experientes</p>
-                    <button class="iniciar-button">INICIAR</button>
+                    <a href="curso.php?cursoId=3#"><button class="iniciar-button">INICIAR</button></a>
                 </div>
             </div>
             <button class="next">></button>

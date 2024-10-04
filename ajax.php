@@ -1,7 +1,8 @@
 <?php
     include('conexao1.php');
+    session_start();
 
-    //exibir cursos na tela screenCursos
+    // Exibir cursos na tela screenCursos
     if (isset($_GET['cursos'])) {
         $lista = getCursos();
         $retorno = '';
@@ -14,96 +15,132 @@
                                 <p>' . $curso['descricao_curso'] . '</p>
                             </div>
                             <div class="card-button">
-                                <a href="curso.php?cursoId=' . $curso['id_curso'] . '#">
+                                <a href="curso.php?cursoId=' . $curso['id_curso'] . '&aulaId=1">
                                     <button class="free-label">INICIAR</button>
                                 </a>
                             </div>
                         </div>';
         }
     
-        echo $retorno; // exibe os resultados
+        echo $retorno; // Exibe os resultados
+        exit;
     }    
 
-
-    //exibir usuarios
-    if(isset($_GET['users'])){
+    // Exibir usuários
+    if (isset($_GET['users'])) {
         $lista = getUsers();
         $retorno = '';
 
-        while($user = $lista->fetch_array()){
+        while ($user = $lista->fetch_array()) {
             $retorno .= '<tr>
-                            <td>'.$user['id_usuario'].'</td>
-                            <td>'.$user['email_usuario'].'</td>
-                            <td>'.$user['username_usuario'].'</td>
-                            <td>'.$user['senha_usuario'].'</td>
-                            <td><button class="delete-btn" id="'.$user['id_usuario'].'" onclick="del(this)">Excluir</button></td>
+                            <td>' . $user['id_usuario'] . '</td>
+                            <td>' . $user['email_usuario'] . '</td>
+                            <td>' . $user['username_usuario'] . '</td>
+                            <td>' . $user['senha_usuario'] . '</td>
+                            <td><button class="delete-btn" id="' . $user['id_usuario'] . '" onclick="del(this)">Excluir</button></td>
                          </tr>';
         }
 
-        echo $retorno; //exibe os resultados
+        echo $retorno; // Exibe os resultados
+        exit;
     }
-    
-    if(isset($_GET['delUser'])){
+
+    // Excluir usuário
+    if (isset($_GET['delUser'])) {
         excluirUser($_GET['delUser']);
+        exit;
     }
-    
 
-// Checando se os parâmetros foram passados
-if (isset($_GET['sidebar']) && isset($_GET['cursoId'])) {
-    // Sanitizar o cursoId
-    $cursoId = filter_input(INPUT_GET, 'cursoId', FILTER_SANITIZE_NUMBER_INT);
-    
-    // Verifica se o cursoId foi sanitizado corretamente (não é null ou false)
-    if ($cursoId) {
-        // Função que busca os módulos de um curso
-        $lista = getModules($cursoId); 
-        $retorno = '';
+    // Exibir módulos e aulas na sidebar
+    if (isset($_GET['sidebar']) && isset($_GET['cursoId'])) {
+        $cursoId = filter_input(INPUT_GET, 'cursoId', FILTER_SANITIZE_NUMBER_INT);
+        $userId = $_SESSION['id']; // Assumindo que o ID do usuário está na sessão
 
-        // Percorrer todos os módulos do curso
-        while ($module = $lista->fetch_assoc()) {
-            $moduloId = $module['id_modulo'];
+        if ($cursoId) {
+            $lista = getModules($cursoId); 
+            $retorno = '';
 
-            // Adicionar o HTML para o módulo
-            $retorno .= '<div class="module" data-modulo="' . $moduloId . '">
-                            <h2 class="dropdown-toggle" id="' . $moduloId . '">' . htmlspecialchars($module['nome_modulo']) . '</h2>
-                            <ul class="dropdown-content">';
+            while ($module = $lista->fetch_assoc()) {
+                $moduloId = $module['id_modulo'];
 
-            // Buscar as aulas associadas ao módulo atual
-            $aulas = getAulas($moduloId); 
-            while ($aula = $aulas->fetch_assoc()) {
-                // Adicionar as aulas ao HTML
-                $retorno .= '<li><a href="#" class="aula-link" data-video="' . htmlspecialchars($aula['conteudo_aula']) . '" data-titulo="' . htmlspecialchars($aula['nome_aula']) . '">' . htmlspecialchars($aula['nome_aula']) . '</a></li>';
+                // Adicionar o HTML para o módulo
+                $retorno .= '<div class="module" data-modulo="' . $moduloId . '">
+                                <h2 class="dropdown-toggle" id="' . $moduloId . '">' . htmlspecialchars($module['nome_modulo']) . '</h2>
+                                <ul class="dropdown-content">';
+
+                // Buscar as aulas associadas ao módulo atual
+                $aulas = getAulas($moduloId);
+                while ($aula = $aulas->fetch_assoc()) {
+                    $aulaId = $aula['id_aula'];
+                    
+                    // Verifica se a aula foi concluída pelo usuário
+                    $concluidaQuery = "SELECT concluida FROM tb_usuario_aulas WHERE cd_usuario = $userId AND cd_aula = $aulaId";
+                    $concluidaResult = mysqli_query($conexao, $concluidaQuery);
+                    $concluida = mysqli_fetch_assoc($concluidaResult);
+
+                    // Adiciona uma classe CSS 'completed' se a aula foi concluída
+                    $completedClass = ($concluida && $concluida['concluida'] == 1) ? 'completed' : '';
+                    
+                    // Adicionar as aulas ao HTML com ícone de verificação se concluída
+                    $retorno .= '<li class="' . $completedClass . '">
+                                    <a href="#" class="aula-link" data-video="' . htmlspecialchars($aula['conteudo_aula']) . '" data-titulo="' . htmlspecialchars($aula['nome_aula']) . '">' 
+                                    . htmlspecialchars($aula['nome_aula']) . 
+                                    ($completedClass ? ' <i class="fas fa-check" style="color: green;"></i>' : '') . 
+                                    '</a>
+                                </li>';
+                }
+
+                $retorno .= '</ul></div>';
             }
 
-            // Fechar o bloco de conteúdo do módulo
-            $retorno .= '</ul></div>';
+            echo $retorno;
+        } else {
+            echo '<p>Curso não encontrado.</p>';
+        }
+        exit;
+    }
+
+    // Buscar aulas de um módulo específico
+    if (isset($_GET['getAulas']) && isset($_GET['moduloId'])) {
+        $moduloId = filter_input(INPUT_GET, 'moduloId', FILTER_SANITIZE_NUMBER_INT);
+        $aulas = getAulas($moduloId);
+        
+        $result = [];
+        while ($aula = $aulas->fetch_assoc()) {
+            $result[] = [
+                'nome_aula' => $aula['nome_aula'],
+                'conteudo_aula' => $aula['conteudo_aula']
+            ];
         }
 
-        // Retornar o conteúdo para o frontend
-        echo $retorno;
-    } else {
-        // Se o cursoId não for válido, você pode retornar uma mensagem de erro ou simplesmente não exibir nada.
-        echo '<p>Curso não encontrado.</p>';
+        echo json_encode($result);
+        exit;
     }
-}
 
-if (isset($_GET['getAulas']) && isset($_GET['moduloId'])) {
-    $moduloId = filter_input(INPUT_GET, 'moduloId', FILTER_SANITIZE_NUMBER_INT);
-    $aulas = getAulas($moduloId);
-    
-    $result = [];
-    while ($aula = $aulas->fetch_assoc()) {
-        $result[] = [
-            'nome_aula' => $aula['nome_aula'],
-            'conteudo_aula' => $aula['conteudo_aula']
-        ];
+    // Marcar aula como concluída
+    if (isset($_POST['action']) && $_POST['action'] == 'marcar_concluido') {
+        $aulaId = filter_input(INPUT_POST, 'aulaId', FILTER_SANITIZE_NUMBER_INT);
+        $user = $_SESSION['id']; // Assumindo que o ID do usuário está na sessão
+
+        if ($aulaId && $user) {
+            // Verifica se o usuário está logado e o ID da aula é válido
+            $sqlControle = "INSERT INTO tb_usuario_aulas (cd_usuario, cd_aula, concluida) 
+                            VALUES (?, ?, 1) ON DUPLICATE KEY UPDATE concluida = 1";
+            $stmtControle = $conexao->prepare($sqlControle);
+            $stmtControle->bind_param('ii', $user, $aulaId);
+
+            if ($stmtControle->execute()) {
+                // Retorna sucesso em formato JSON
+                echo json_encode(['success' => true]);
+            } else {
+                echo json_encode(['success' => false, 'error' => 'Erro ao marcar aula como concluída: ' . $stmtControle->error]);
+            }
+        } else {
+            echo json_encode(['success' => false, 'error' => 'ID da aula ou usuário inválido.']);
+        }
+        exit;
+    } elseif (isset($_POST['action'])) {
+        // Se houver uma ação POST inválida, não exibir nada
+        exit;
     }
-    
-    echo json_encode($result);
-}
-
-    
-    
-    
-
 

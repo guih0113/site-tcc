@@ -289,6 +289,15 @@ main > #title {
     background-color: rgba(255, 255, 255, 0.2);
 }
 
+.module li {
+    display: flex;
+    align-items: center;
+}
+
+.module li i {
+    margin-left: 8px; /* Espaçamento entre o texto e o ícone */
+}
+
 .content {
     flex: 0.8;
     background-color: rgba(0, 0, 0, 0.8);
@@ -350,6 +359,11 @@ main > #title {
     transition: background-color ease 0.3s;
     height: 50px;
     width: 205px;
+}
+
+.conclude-button:disabled {
+    background-color: gray; /* Cor cinza quando desabilitado */
+    cursor: not-allowed; /* Muda o cursor para indicar que está desabilitado */
 }
 
 .conclude-button:hover {
