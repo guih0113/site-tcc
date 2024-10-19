@@ -3,7 +3,6 @@
   margin: 0;
   box-sizing: border-box;
   text-decoration: none;
-  font-family: "Inter";
 }
 
 .container {
@@ -15,6 +14,7 @@
 body {
   background-image: url("../img/Bg3.png");
   background-size: cover;
+  font-family: 'Helvetica Neue', Arial, sans-serif;
 }
 
 header {
@@ -95,7 +95,7 @@ section {
   padding-bottom: 115px;
 }
 
-.s-hero{
+.s-hero {
   display: flex;
   justify-content: center;
 }
@@ -104,13 +104,13 @@ section {
   margin-left: -170px;
 }
 
-#container-tablet{
+#container-tablet {
   width: 500px;
   height: 400px;
   margin-top: 100px;
 }
 
-#tablet{
+#tablet {
   width: 100%;
   height: 100%;
 }
@@ -127,7 +127,7 @@ section {
   top: 129px;
 }
 
-.s-hero #section2{
+.s-hero #section2 {
   display: flex;
   align-items: start;
   margin-left: 140px;
@@ -191,13 +191,15 @@ section {
   display: flex;
   justify-content: center;
   align-items: center;
-  gap: 20px; /* Espaço entre os elementos */
+  gap: 20px;
+  /* Espaço entre os elementos */
   position: relative;
 }
 
 .carrossel {
   display: flex;
-  gap: 20px; /* Espaço entre os cursos */
+  gap: 20px;
+  /* Espaço entre os cursos */
 }
 
 .curso-card {
@@ -256,7 +258,7 @@ section {
   background-color: #00cc00;
 }
 
-button.prev{
+button.prev {
   margin-right: 170px;
 }
 
@@ -268,9 +270,12 @@ button.next {
   padding: 10px 20px;
   cursor: pointer;
   border-radius: 20px;
-  font-size: 24px; /* Ajusta o tamanho da seta */
-  width: 50px; /* Largura dos botões */
-  height: 50px; /* Altura dos botões */
+  font-size: 24px;
+  /* Ajusta o tamanho da seta */
+  width: 50px;
+  /* Largura dos botões */
+  height: 50px;
+  /* Altura dos botões */
   display: flex;
   align-items: center;
   justify-content: center;

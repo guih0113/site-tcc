@@ -108,22 +108,22 @@ INSERT INTO tb_cursos_modulos (cd_curso, cd_modulo) VALUES
 INSERT INTO tb_aulas (nome_aula, conteudo_aula) VALUES
 ('Aula 1 do Módulo 1 do Curso 1', 'img/video.mp4'),
 ('Aula 2 do Módulo 1 do Curso 1', 'img/video.mp4'),
-('Aula 1 do Módulo 2 do Curso 1', 'conteudo_aula_1_modulo_2_curso_1.mp4'),
-('Aula 2 do Módulo 2 do Curso 1', 'conteudo_aula_2_modulo_2_curso_1.mp4'),
-('Aula 1 do Módulo 3 do Curso 1', 'conteudo_aula_1_modulo_3_curso_1.mp4'),
-('Aula 2 do Módulo 3 do Curso 1', 'conteudo_aula_2_modulo_3_curso_1.mp4'),
-('Aula 1 do Módulo 1 do Curso 2', 'conteudo_aula_1_modulo_1_curso_2.mp4'),
-('Aula 2 do Módulo 1 do Curso 2', 'conteudo_aula_2_modulo_1_curso_2.mp4'),
-('Aula 1 do Módulo 2 do Curso 2', 'conteudo_aula_1_modulo_2_curso_2.mp4'),
-('Aula 2 do Módulo 2 do Curso 2', 'conteudo_aula_2_modulo_2_curso_2.mp4'),
-('Aula 1 do Módulo 3 do Curso 2', 'conteudo_aula_1_modulo_3_curso_2.mp4'),
-('Aula 2 do Módulo 3 do Curso 2', 'conteudo_aula_2_modulo_3_curso_2.mp4'),
-('Aula 1 do Módulo 1 do Curso 3', 'conteudo_aula_1_modulo_1_curso_3.mp4'),
-('Aula 2 do Módulo 1 do Curso 3', 'conteudo_aula_2_modulo_1_curso_3.mp4'),
-('Aula 1 do Módulo 2 do Curso 3', 'conteudo_aula_1_modulo_2_curso_3.mp4'),
-('Aula 2 do Módulo 2 do Curso 3', 'conteudo_aula_2_modulo_2_curso_3.mp4'),
-('Aula 1 do Módulo 3 do Curso 3', 'conteudo_aula_1_modulo_3_curso_3.mp4'),
-('Aula 2 do Módulo 3 do Curso 3', 'conteudo_aula_2_modulo_3_curso_3.mp4');
+('Aula 1 do Módulo 2 do Curso 1', 'img/video.mp4'),
+('Aula 2 do Módulo 2 do Curso 1', 'img/video.mp4'),
+('Aula 1 do Módulo 3 do Curso 1', 'img/video.mp4'),
+('Aula 2 do Módulo 3 do Curso 1', 'img/video.mp4'),
+('Aula 1 do Módulo 1 do Curso 2', 'img/video.mp4'),
+('Aula 2 do Módulo 1 do Curso 2', 'img/video.mp4'),
+('Aula 1 do Módulo 2 do Curso 2', 'img/video.mp4'),
+('Aula 2 do Módulo 2 do Curso 2', 'img/video.mp4'),
+('Aula 1 do Módulo 3 do Curso 2', 'img/video.mp4'),
+('Aula 2 do Módulo 3 do Curso 2', 'img/video.mp4'),
+('Aula 1 do Módulo 1 do Curso 3', 'img/video.mp4'),
+('Aula 2 do Módulo 1 do Curso 3', 'img/video.mp4'),
+('Aula 1 do Módulo 2 do Curso 3', 'img/video.mp4'),
+('Aula 2 do Módulo 2 do Curso 3', 'img/video.mp4'),
+('Aula 1 do Módulo 3 do Curso 3', 'img/video.mp4'),
+('Aula 2 do Módulo 3 do Curso 3', 'img/video.mp4');
 
 -- Relacionando as aulas aos módulos
 INSERT INTO tb_modulos_aulas (cd_modulo, cd_aula) VALUES

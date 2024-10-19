@@ -24,7 +24,7 @@
     
         echo $retorno; // Exibe os resultados
         exit;
-    }    
+    }  
 
     // Exibir usuários
     if (isset($_GET['users'])) {
@@ -51,54 +51,56 @@
         exit;
     }
 
-    // Exibir módulos e aulas na sidebar
-    if (isset($_GET['sidebar']) && isset($_GET['cursoId'])) {
-        $cursoId = filter_input(INPUT_GET, 'cursoId', FILTER_SANITIZE_NUMBER_INT);
-        $userId = $_SESSION['id']; // Assumindo que o ID do usuário está na sessão
+// Exibir módulos e aulas na sidebar
+if (isset($_GET['sidebar']) && isset($_GET['cursoId'])) {
+    $cursoId = filter_input(INPUT_GET, 'cursoId', FILTER_SANITIZE_NUMBER_INT);
+    $userId = $_SESSION['id']; // Assumindo que o ID do usuário está na sessão
 
-        if ($cursoId) {
-            $lista = getModules($cursoId); 
-            $retorno = '';
+    if ($cursoId) {
+        $lista = getModules($cursoId); 
+        $retorno = '';
 
-            while ($module = $lista->fetch_assoc()) {
-                $moduloId = $module['id_modulo'];
+        while ($module = $lista->fetch_assoc()) {
+            $moduloId = $module['id_modulo'];
 
-                // Adicionar o HTML para o módulo
-                $retorno .= '<div class="module" data-modulo="' . $moduloId . '">
-                                <h2 class="dropdown-toggle" id="' . $moduloId . '">' . htmlspecialchars($module['nome_modulo']) . '</h2>
-                                <ul class="dropdown-content">';
+            // Adicionar o HTML para o módulo
+            $retorno .= '<div class="module" data-modulo="' . $moduloId . '">
+                            <h2 class="dropdown-toggle" id="' . $moduloId . '">' . htmlspecialchars($module['nome_modulo']) . '</h2>
+                            <ul class="dropdown-content">';
 
-                // Buscar as aulas associadas ao módulo atual
-                $aulas = getAulas($moduloId);
-                while ($aula = $aulas->fetch_assoc()) {
-                    $aulaId = $aula['id_aula'];
-                    
-                    // Verifica se a aula foi concluída pelo usuário
-                    $concluidaQuery = "SELECT concluida FROM tb_usuario_aulas WHERE cd_usuario = $userId AND cd_aula = $aulaId";
-                    $concluidaResult = mysqli_query($conexao, $concluidaQuery);
-                    $concluida = mysqli_fetch_assoc($concluidaResult);
+            // Buscar as aulas associadas ao módulo atual
+            $aulas = getAulas($moduloId);
+            while ($aula = $aulas->fetch_assoc()) {
+                $aulaId = $aula['id_aula'];
 
-                    // Adiciona uma classe CSS 'completed' se a aula foi concluída
-                    $completedClass = ($concluida && $concluida['concluida'] == 1) ? 'completed' : '';
-                    
-                    // Adicionar as aulas ao HTML com ícone de verificação se concluída
-                    $retorno .= '<li class="' . $completedClass . '">
-                                    <a href="#" class="aula-link" data-video="' . htmlspecialchars($aula['conteudo_aula']) . '" data-titulo="' . htmlspecialchars($aula['nome_aula']) . '">' 
-                                    . htmlspecialchars($aula['nome_aula']) . 
-                                    ($completedClass ? ' <i class="fas fa-check" style="color: green;"></i>' : '') . 
-                                    '</a>
-                                </li>';
-                }
+                // Verifica se a aula foi concluída pelo usuário
+                $concluidaQuery = "SELECT concluida FROM tb_usuario_aulas WHERE cd_usuario = $userId AND cd_aula = $aulaId";
+                $concluidaResult = mysqli_query($conexao, $concluidaQuery);
+                $concluida = mysqli_fetch_assoc($concluidaResult);
 
-                $retorno .= '</ul></div>';
+                // Adiciona uma classe CSS 'completed' se a aula foi concluída
+                $completedClass = ($concluida && $concluida['concluida'] == 1) ? 'completed' : '';
+                
+                // Adicionar as aulas ao HTML com o link correto contendo cursoId e aulaId
+                $retorno .= '<li class="' . $completedClass . '">
+                                <a href="curso.php?cursoId=' . $cursoId . '&aulaId=' . $aulaId . '" class="aula-link" data-aulaId="' . $aulaId . '" data-video="' . htmlspecialchars($aula['conteudo_aula']) . '" data-titulo="' . htmlspecialchars($aula['nome_aula']) . '">' 
+                                . htmlspecialchars($aula['nome_aula']) . 
+                                ($completedClass ? ' <i class="fas fa-check" style="color: green;"></i>' : '') . 
+                                '</a>
+                            </li>';
             }
 
-            echo $retorno;
-        } else {
-            echo '<p>Curso não encontrado.</p>';
+            $retorno .= '</ul></div>';
         }
-        exit;
+
+        echo $retorno;
+    } else {
+        echo '<p>Curso não encontrado.</p>';
     }
+    exit;
+}
+    
+
 
     // Buscar aulas de um módulo específico
     if (isset($_GET['getAulas']) && isset($_GET['moduloId'])) {

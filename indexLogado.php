@@ -23,6 +23,7 @@ $perfil = isset($row['nome_foto']) ? $row['nome_foto'] : "img/profile.svg";
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="shortcut icon" href="img/favicon.ico" type="image/x-icon">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
     <link rel="stylesheet" href="css/mainLogado.css">
     <script src="js/indexLogado.js" defer></script>
@@ -31,7 +32,7 @@ $perfil = isset($row['nome_foto']) ? $row['nome_foto'] : "img/profile.svg";
 <body>
     <header>
         <div class="container">
-            <a href="indexLogado.php"><img src="img/Logo.png" alt="Logo" id="logo"></a> 
+            <a href="indexLogado.php"><img src="img/logo.png" alt="Logo" id="logo"></a> 
             <!-- Logo header -->
             <nav>
                 <ul>
@@ -126,7 +127,7 @@ $perfil = isset($row['nome_foto']) ? $row['nome_foto'] : "img/profile.svg";
                     </div>
                     <h3>INICIANTE</h3>
                     <p>Curso de educação financeira para iniciantes</p>
-                    <a href="curso.php?cursoId=1#"><button class="iniciar-button">INICIAR</button></a>
+                    <a href="curso.php?cursoId=1&aulaId=1"><button class="iniciar-button">INICIAR</button></a>
                 </div>
                 <div class="curso-card" data-index="1">
                     <div class="curso-nivel">
@@ -134,7 +135,7 @@ $perfil = isset($row['nome_foto']) ? $row['nome_foto'] : "img/profile.svg";
                     </div>
                     <h3>INTERMEDIÁRIO</h3>
                     <p>Curso de educação financeira para intermediários</p>
-                    <a href="curso.php?cursoId=2#"><button class="iniciar-button">INICIAR</button></a>
+                    <a href="curso.php?cursoId=2&aulaId=1"><button class="iniciar-button">INICIAR</button></a>
                 </div>
                 <div class="curso-card" data-index="2">
                     <div class="curso-nivel">
@@ -142,7 +143,7 @@ $perfil = isset($row['nome_foto']) ? $row['nome_foto'] : "img/profile.svg";
                     </div>
                     <h3>EXPERIENTES</h3>
                     <p>Curso de educação financeira para experientes</p>
-                    <a href="curso.php?cursoId=3#"><button class="iniciar-button">INICIAR</button></a>
+                    <a href="curso.php?cursoId=3&aulaId=1"><button class="iniciar-button">INICIAR</button></a>
                 </div>
             </div>
             <button class="next">></button>

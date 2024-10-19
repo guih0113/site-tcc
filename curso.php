@@ -99,6 +99,7 @@ if ($cursoId && $aulaId) {
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="shortcut icon" href="img/favicon.ico" type="image/x-icon">
     <link rel="stylesheet" href="css/curso.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
@@ -107,159 +108,176 @@ if ($cursoId && $aulaId) {
 
     <script>
         document.addEventListener('DOMContentLoaded', () => {
-            const cursoId = <?php echo json_encode($cursoId); ?>;
-            const aulaId = <?php echo json_encode($aulaId); ?>;
-            const proximaAulaId = <?php echo json_encode($proximaAulaId); ?>;
-            const aulaAnteriorId = <?php echo json_encode($aulaAnteriorId); ?>;
-            const aulaConcluida = <?php echo json_encode($aulaConcluida); ?>;
+        const cursoId = <?php echo json_encode($cursoId); ?>;
+        const aulaId = <?php echo json_encode($aulaId); ?>;
+        const proximaAulaId = <?php echo json_encode($proximaAulaId); ?>;
+        const aulaAnteriorId = <?php echo json_encode($aulaAnteriorId); ?>;
+        const aulaConcluida = <?php echo json_encode($aulaConcluida); ?>;
 
-            const btnMarcarConcluido = document.getElementById('btnMarcarConcluido');
-            const btnProximaAula = document.querySelector('.conclude-button.next');
-            const btnAulaAnterior = document.querySelector('.conclude-button.previous');
+        const btnMarcarConcluido = document.getElementById('btnMarcarConcluido');
+        const btnProximaAula = document.querySelector('.conclude-button.next');
+        const btnAulaAnterior = document.querySelector('.conclude-button.previous');
+        const video = document.getElementById('video');
 
+        // Inicialização: Controle do estado dos botões com base no status de conclusão da aula
+        btnMarcarConcluido.disabled = true;
+        btnProximaAula.disabled = true;
+
+        if (aulaConcluida) {
+            btnMarcarConcluido.innerHTML = 'Aula Concluída!';
             btnMarcarConcluido.disabled = true;
-            btnProximaAula.disabled = true;
+            btnMarcarConcluido.style.backgroundColor = '#4caf50';
+            btnProximaAula.disabled = false;
+        } else {
+            btnMarcarConcluido.innerHTML = 'Marcar como Concluída';
+            btnMarcarConcluido.disabled = false;
+        }
 
-            if (aulaConcluida) {
-                btnMarcarConcluido.innerHTML = 'Aula Concluída!';
-                btnMarcarConcluido.disabled = true;
-                btnMarcarConcluido.style.backgroundColor = '#4caf50';
-                btnProximaAula.disabled = false;
-            } else {
-                btnMarcarConcluido.disabled = true;
-                btnProximaAula.disabled = true;
-            }
-
-            const video = document.getElementById('video');
-
-            video.addEventListener('ended', () => {
-                btnMarcarConcluido.disabled = false;
-            });
-
-            btnMarcarConcluido.addEventListener('click', () => {
-                $.ajax({
-                    type: 'POST',
-                    url: 'ajax.php',
-                    data: {
-                        action: 'marcar_concluido',
-                        aulaId: aulaId // variável com o ID da aula
-                    },
-                    dataType: 'json', // Garante que o jQuery já interprete a resposta como JSON
-                    success: function(response) {
-                        // Exibir a resposta no console para depuração
-                        console.log("Resposta recebida:", response);
-
-                        // Verificar se a resposta tem a propriedade success
-                        if (response.success) {
-                            btnProximaAula.disabled = false;
-                            btnMarcarConcluido.innerHTML = 'Aula Concluída!';
-                        } else {
-                            // Exibir a mensagem de erro do servidor
-                            alert("Erro: " + response.error);
-                        }
-                    },
-                    error: function(jqXHR, textStatus, errorThrown) {
-                        // Exibir mensagem de erro detalhada no console para depuração
-                        console.error("Erro na requisição AJAX: ", textStatus, errorThrown);
-                        console.log("Resposta do servidor:", jqXHR.responseText); // Mostrar a resposta do servidor, se houver
-                    }
-                });
-            });
-
-            function navigateToAula(aulaId) {
-                window.location.href = `curso.php?cursoId=${cursoId}&aulaId=${aulaId}`;
-            }
-
-            if (btnProximaAula && proximaAulaId) {
-                btnProximaAula.addEventListener('click', () => {
-                    navigateToAula(proximaAulaId);
-                });
-            }
-
-            if (btnAulaAnterior && aulaAnteriorId) {
-                btnAulaAnterior.addEventListener('click', () => {
-                    navigateToAula(aulaAnteriorId);
-                });
-            }
-
-            const aulaLinks = document.querySelectorAll('.aula-link');
-
-            aulaLinks.forEach(link => {
-                link.addEventListener('click', function (e) {
-                    e.preventDefault();
-                    
-                    const aulaId = this.getAttribute('data-aulaId');
-                    const tituloAula = this.getAttribute('data-titulo');
-
-                    // Enviar requisição AJAX para marcar a aula como concluída
-                    fetch('ajax.php', {
-                        method: 'POST',
-                        headers: {
-                            'Content-Type': 'application/x-www-form-urlencoded',
-                        },
-                        body: new URLSearchParams({
-                            'action': 'marcar_concluido',
-                            'aulaId': aulaId
-                        })
-                    })
-                    .then(response => response.json())
-                    .then(data => {
-                        if (data.success) {
-                            // Se a aula foi marcada como concluída, adicionar a classe 'completed'
-                            this.parentElement.classList.add('completed');
-                        } else {
-                            console.error('Erro ao marcar aula como concluída:', data.error);
-                        }
-                    })
-                    .catch(error => console.error('Erro na requisição:', error));
-                });
-            });
-
-            if (cursoId) {
-                $.ajax({
-                    url: 'ajax.php',
-                    type: 'GET',
-                    data: {
-                        sidebar: true,
-                        cursoId: cursoId
-                    },
-                    success: function(response) {
-                        $('#sidebar').html(response);
-
-                        const dropdownModules = document.querySelectorAll('.dropdown-toggle');
-                        dropdownModules.forEach((dropdownModule) => {
-                            const dropdownContent = dropdownModule.nextElementSibling;
-
-                            dropdownModule.addEventListener('click', () => {
-                                dropdownContent.classList.toggle('active');
-                                dropdownContent.style.height = dropdownContent.classList.contains('active') ? dropdownContent.scrollHeight + 'px' : '0';
-                            });
-                        });
-
-                        document.querySelectorAll('.aula-link').forEach((aula) => {
-                            aula.addEventListener('click', (event) => {
-                                event.preventDefault();
-
-                                const tituloAula = aula.textContent;
-                                const moduloElement = aula.closest('.module');
-                                const nomeModulo = moduloElement.querySelector('h2').textContent;
-
-                                document.getElementById('titulo-aula').innerHTML = `<span id="modulo-aula">${nomeModulo}</span> | ${tituloAula}`;
-                                const videoUrl = aula.getAttribute('data-video');
-                                document.getElementById('video').setAttribute('src', videoUrl);
-                            });
-                        });
-                    }
-                });
-            }
+        // Desbloquear o botão "Marcar como Concluído" quando o vídeo termina
+        video.addEventListener('ended', () => {
+            btnMarcarConcluido.disabled = false;
         });
+
+        // Função para marcar a aula como concluída via AJAX
+        btnMarcarConcluido.addEventListener('click', () => {
+            $.ajax({
+                type: 'POST',
+                url: 'ajax.php',
+                data: {
+                    action: 'marcar_concluido',
+                    aulaId: aulaId
+                },
+                dataType: 'json',
+                success: function(response) {
+                    if (response.success) {
+                        btnMarcarConcluido.innerHTML = 'Aula Concluída!';
+                        btnMarcarConcluido.disabled = true;
+                        btnMarcarConcluido.style.backgroundColor = '#4caf50';
+                        btnProximaAula.disabled = false;
+                    } else {
+                        alert("Erro ao marcar a aula como concluída: " + response.error);
+                    }
+                },
+                error: function(jqXHR, textStatus, errorThrown) {
+                    console.error("Erro na requisição AJAX: ", textStatus, errorThrown);
+                }
+            });
+        });
+
+        // Função para navegar entre aulas
+        function navigateToAula(aulaId) {
+            window.location.href = `curso.php?cursoId=${cursoId}&aulaId=${aulaId}`;
+        }
+
+        // Botão "Próxima Aula"
+        if (btnProximaAula && proximaAulaId) {
+            btnProximaAula.addEventListener('click', () => {
+                navigateToAula(proximaAulaId);
+            });
+        }
+
+        // Botão "Aula Anterior"
+        if (btnAulaAnterior && aulaAnteriorId) {
+            btnAulaAnterior.addEventListener('click', () => {
+                navigateToAula(aulaAnteriorId);
+            });
+        }
+
+        // Atualização da URL e do conteúdo ao clicar nas aulas da sidebar
+        const aulaLinks = document.querySelectorAll('.aula-link');
+        aulaLinks.forEach(link => {
+            link.addEventListener('click', function(e) {
+                e.preventDefault();
+
+                const clickedAulaId = this.getAttribute('data-aulaId');
+                const videoUrl = this.getAttribute('data-video');
+                const tituloAula = this.textContent;
+                const nomeModulo = this.closest('.module').querySelector('h2').textContent;
+
+                // Atualizar o título da aula e o vídeo
+                document.getElementById('titulo-aula').innerHTML = `<span id="modulo-aula">${nomeModulo}</span> | ${tituloAula}`;
+                document.getElementById('video').setAttribute('src', videoUrl);
+
+                // Atualizar a URL sem recarregar a página
+                const novaUrl = `${window.location.pathname}?cursoId=${cursoId}&aulaId=${clickedAulaId}`;
+                history.pushState(null, null, novaUrl);
+
+                // Marcar a aula como concluída (via AJAX) quando for clicada
+                fetch('ajax.php', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/x-www-form-urlencoded',
+                    },
+                    body: new URLSearchParams({
+                        'action': 'marcar_concluido',
+                        'aulaId': clickedAulaId
+                    })
+                })
+                .then(response => response.json())
+                .then(data => {
+                    if (data.success) {
+                        this.parentElement.classList.add('completed');
+                    } else {
+                        console.error('Erro ao marcar aula como concluída:', data.error);
+                    }
+                })
+                .catch(error => console.error('Erro na requisição:', error));
+            });
+        });
+
+        // Atualização da sidebar com os módulos e aulas
+        if (cursoId) {
+            $.ajax({
+                url: 'ajax.php',
+                type: 'GET',
+                data: {
+                    sidebar: true,
+                    cursoId: cursoId
+                },
+                success: function(response) {
+                    $('#sidebar').html(response);
+
+                    const dropdownModules = document.querySelectorAll('.dropdown-toggle');
+                    dropdownModules.forEach(dropdownModule => {
+                        const dropdownContent = dropdownModule.nextElementSibling;
+
+                        dropdownModule.addEventListener('click', () => {
+                            dropdownContent.classList.toggle('active');
+                            dropdownContent.style.height = dropdownContent.classList.contains('active') ? dropdownContent.scrollHeight + 'px' : '0';
+                        });
+                    });
+
+                    document.querySelectorAll('.aula-link').forEach(aula => {
+                        aula.addEventListener('click', (event) => {
+                            event.preventDefault();
+
+                            const tituloAula = aula.textContent;
+                            const moduloElement = aula.closest('.module');
+                            const nomeModulo = moduloElement.querySelector('h2').textContent;
+
+                            document.getElementById('titulo-aula').innerHTML = `<span id="modulo-aula">${nomeModulo}</span> | ${tituloAula}`;
+                            const videoUrl = aula.getAttribute('data-video');
+                            document.getElementById('video').setAttribute('src', videoUrl);
+
+                            // Atualizar a URL sem recarregar a página
+                            const clickedAulaId = aula.getAttribute('data-aulaId');
+                            const novaUrl = `${window.location.pathname}?cursoId=${cursoId}&aulaId=${clickedAulaId}`;
+                            history.pushState(null, null, novaUrl);
+                        });
+                    });
+                }
+            });
+            btnMarcarConcluido.disabled = true;
+        }
+    });
+
     </script>
 </head>
 
 <body>
     <header>
         <div class="container">
-            <a href="indexLogado.php"><img src="img/Logo.png" alt="Logo" id="logo"></a>
+            <a href="indexLogado.php"><img src="img/logo.png" alt="Logo" id="logo"></a>
             <nav>
                 <ul>
                     <a href="indexLogado.php"><li>HOME</li></a>

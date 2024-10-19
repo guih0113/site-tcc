@@ -23,6 +23,7 @@ $perfil = isset($row['nome_foto']) ? $row['nome_foto'] : "img/profile.svg";
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="shortcut icon" href="img/favicon.ico" type="image/x-icon">
     <link rel="stylesheet" href="css/screen-cursos.css">
     <script src="./js/screen-cursos.js" defer></script>
     <title>Estude para o Futuro</title>
@@ -30,7 +31,7 @@ $perfil = isset($row['nome_foto']) ? $row['nome_foto'] : "img/profile.svg";
 <body>
     <header>
         <div class="container">
-            <a href="indexLogado.php"><img src="img/Logo.png" alt="Logo" id="logo"></a> 
+            <a href="indexLogado.php"><img src="img/logo.png" alt="Logo" id="logo"></a> 
             <!-- Logo header -->
             <nav>
                 <ul>

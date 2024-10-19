@@ -14,6 +14,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="shortcut icon" href="img/favicon.ico" type="image/x-icon">
     <link rel="stylesheet" href="./css/adm.css">
     <script src="./js/adm.js" defer></script>
     <title>Administrador</title>
@@ -25,7 +26,6 @@
             <nav class="sidebar">
                 <ul class="nav-list">
                     <li class="list"><a href="adm.php" class="active">Usuários</a></li>
-                    <li class="list"><a href="">Novo curso</a></li>
                     <li class="list"><a href="newAdm.php">Novo administrador</a></li>
                     <a href="logOutAdm.php">
                         <li>Sair</li>
