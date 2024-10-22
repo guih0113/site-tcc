@@ -366,10 +366,6 @@ main > #title {
     cursor: not-allowed; /* Muda o cursor para indicar que está desabilitado */
 }
 
-.conclude-button:hover {
-    background-color: #45a049;
-}
-
 .alerts{
     color: rgba(240, 248, 255, 0.849);
     margin-top: 35px;

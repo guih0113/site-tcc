@@ -259,10 +259,9 @@ if ($cursoId && $aulaId) {
                             const videoUrl = aula.getAttribute('data-video');
                             document.getElementById('video').setAttribute('src', videoUrl);
 
-                            // Atualizar a URL sem recarregar a página
                             const clickedAulaId = aula.getAttribute('data-aulaId');
                             const novaUrl = `${window.location.pathname}?cursoId=${cursoId}&aulaId=${clickedAulaId}`;
-                            history.pushState(null, null, novaUrl);
+                            window.location.href = novaUrl;
                         });
                     });
                 }

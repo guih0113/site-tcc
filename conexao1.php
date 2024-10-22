@@ -116,6 +116,27 @@
         // Retorna o resultado da consulta
         return $retorno;
     }
+
+    function getPrimeiraAulaId($cursoId) {
+        // Query para pegar o ID da primeira aula do curso
+        $query = "SELECT a.id_aula
+                  FROM tb_cursos_modulos cm
+                  JOIN tb_modulos m ON cm.cd_modulo = m.id_modulo
+                  JOIN tb_modulos_aulas ma ON ma.cd_modulo = m.id_modulo
+                  JOIN tb_aulas a ON ma.cd_aula = a.id_aula
+                  WHERE cm.cd_curso = ?
+                  ORDER BY a.id_aula ASC
+                  LIMIT 1";
+    
+        $stmt = $GLOBALS['conexao']->prepare($query);
+        $stmt->bind_param('i', $cursoId);
+        $stmt->execute();
+        $result = $stmt->get_result();
+        $row = $result->fetch_assoc();
+    
+        return $row['id_aula']; // Retorna o id da primeira aula do curso
+    }
+    
     
     
     
