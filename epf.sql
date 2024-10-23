@@ -15,7 +15,8 @@ CREATE TABLE tb_cursos (
     id_curso int primary key auto_increment not null,
     nome_curso varchar(40) not null,
     descricao_curso varchar(200) not null,
-    icone_curso varchar(50) not null
+    icone_curso varchar(50) not null,
+    conclusao_curso decimal(10,2) not null
 );
 
 -- Tabela de Módulos
@@ -76,9 +77,9 @@ CREATE TABLE tb_usuario_aulas (
 
 -- Inserindo os cursos
 INSERT INTO tb_cursos VALUES
-(default,'INICIANTE','Curso de Educação Financeira para iniciantes','&#11088;'),
-(default,'INTERMEDIÁRIO','Curso de Educação Financeira para intermediários','&#11088;&#11088;'),
-(default,'EXPERIENTES','Curso de Educação Financeira para experientes','&#11088;&#11088;&#11088;');
+(default,'INICIANTE','Curso de Educação Financeira para iniciantes','&#11088;', '0'),
+(default,'INTERMEDIÁRIO','Curso de Educação Financeira para intermediários','&#11088;&#11088;', '0'),
+(default,'EXPERIENTES','Curso de Educação Financeira para experientes','&#11088;&#11088;&#11088;', '0');
 
 -- Inserindo os módulos
 INSERT INTO tb_modulos (nome_modulo) VALUES
@@ -148,12 +149,19 @@ INSERT INTO tb_modulos_aulas (cd_modulo, cd_aula) VALUES
 
 -- Inserindo usuários
 INSERT INTO tb_usuario VALUES
-(default,'guih_0113','gui.henriquess13@gmail.com','guilherme1301');
+(default,'guih_0113','gui.henriquess13@gmail.com','guilherme1301'),
+(default,'guilherme henrique','gui13@gmail.com','12345678'),
+(default,'ricardo','ricardo@gmail.com','763876234'),
+(default,'ric36_87','ric12@gmail.com','574784545'),
+(default,'guilherme guedes','guiguedes@gmail.com','76237345'),
+(default,'guedes','guedes3412@gmail.com','324575432'),
+(default,'henrique','henrique12@gmail.com','096787444');
 
 -- Inserindo administradores
 INSERT INTO tb_adm VALUES
-(default,'guilherme','12345');
-
+(default,'guihenrique','12345'),
+(default,'guiguedes','12345'),
+(default,'ricardo','12345');
 
 -- Consultas para verificar se os dados foram inseridos corretamente
 SELECT * FROM tb_adm;
@@ -162,3 +170,4 @@ SELECT * FROM tb_modulos_aulas;
 SELECT * FROM tb_aulas;
 SELECT * FROM tb_usuario_aulas;	
 SELECT * FROM tb_usuario;
+SELECT * FROM tb_cursos;

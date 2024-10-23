@@ -16,11 +16,11 @@ document.addEventListener("click", function(event) {
     }
 });
 
-function CarregarCursos() {
+function CarregarCursosScreen() {
     fetch('ajax.php?cursos')
         .then(response => response.text())
         .then(data => {
-            document.getElementById('cursos').innerHTML = data;
+            document.getElementById('course-container').innerHTML = data;
         })
         .catch(error => {
             console.error('Erro ao carregar os cursos:', error);
@@ -28,5 +28,5 @@ function CarregarCursos() {
 }
 
 document.addEventListener('DOMContentLoaded', function() {
-    CarregarCursos();
+    CarregarCursosScreen();
 });

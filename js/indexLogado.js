@@ -18,11 +18,14 @@ document.addEventListener("click", function(event) {
 
 //Carrossel
 document.addEventListener('DOMContentLoaded', function() {
-    const cards = document.querySelectorAll('.curso-card');
+    const cards = document.getElementsByClassName('curso-card'); // Usando getElementsByClassName
+    console.log(cards);
     let currentIndex = 1;
 
     function updateCarousel() {
-        cards.forEach((card, index) => {
+        // Usando loop for
+        for (let index = 0; index < cards.length; index++) {
+            const card = cards[index];
             card.classList.remove('active', 'left', 'right');
             card.style.order = '';
 
@@ -38,7 +41,7 @@ document.addEventListener('DOMContentLoaded', function() {
             } else {
                 card.style.order = 3;
             }
-        });
+        }
     }
 
     document.querySelector('.next').addEventListener('click', () => {
@@ -51,11 +54,27 @@ document.addEventListener('DOMContentLoaded', function() {
         updateCarousel();
     });
 
-    // Adiciona a rotação automática a cada 3 segundos
+    // Adiciona a rotação automática a cada 4 segundos
     setInterval(() => {
         currentIndex = (currentIndex + 1) % cards.length;
         updateCarousel();
-    }, 5000); // 3000 milissegundos = 3 segundos
+    }, 4000);
 
     updateCarousel();
+});
+
+
+function CarregarCursos() {
+    fetch('ajax.php?carrossel')
+        .then(response => response.text())
+        .then(data => {
+            document.getElementById('carrossel').innerHTML = data;
+        })
+        .catch(error => {
+            console.error('Erro ao carregar os cursos:', error);
+        });
+}
+
+document.addEventListener('DOMContentLoaded', function() {
+    CarregarCursos();
 });
