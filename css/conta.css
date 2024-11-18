@@ -228,7 +228,7 @@ h1 {
 .nav-list a.active,
 .nav-list a:hover {
     background-color: #40dc39;
-    color: #ffffff;
+    color: #0c0a0a;
 }
 
 .content {
@@ -283,7 +283,7 @@ h1 {
 
 /* Estiliza o botão personalizado */
 .btn-choose-file {
-    color: #fff;
+    color: #0c0a0a;
     border: none;
     border-radius: 5px;
     cursor: pointer;
@@ -338,7 +338,7 @@ h1 {
 
 .btn-primary {
     background-color: #40dc39;
-    color: #ffffff;
+    color: #0c0a0a;
 }
 
 .btn-secondary {

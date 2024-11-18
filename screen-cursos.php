@@ -2,19 +2,23 @@
 include_once('conexao1.php');
 session_start();
 
-if((!isset($_SESSION['email']) == true) and (!isset($_SESSION['senha']) == true)){
-    unset($_SESSION['email']);
-    unset($_SESSION['senha']);
+if ((!isset($_SESSION['email']) || !isset($_SESSION['senha']))) {
+    unset($_SESSION['email'], $_SESSION['senha']);
     header('Location: login.php');
+    exit();
 }
 
 $email = $_SESSION['email'];
 $username = $_SESSION['username'];
 $user = $_SESSION['id'];
 
-$sql = "SELECT nome_foto FROM tb_foto WHERE cd_usuario = $user";
-$res = mysqli_query($conexao, $sql);
-$row = mysqli_fetch_assoc($res);
+// Busca a foto do perfil
+$sql = "SELECT nome_foto FROM tb_foto WHERE cd_usuario = ?";
+$stmt = $conexao->prepare($sql);
+$stmt->bind_param("i", $user);
+$stmt->execute();
+$result = $stmt->get_result();
+$row = $result->fetch_assoc();
 $perfil = isset($row['nome_foto']) ? $row['nome_foto'] : "img/profile.svg";
 ?>
 
@@ -26,48 +30,31 @@ $perfil = isset($row['nome_foto']) ? $row['nome_foto'] : "img/profile.svg";
     <link rel="shortcut icon" href="img/favicon.ico" type="image/x-icon">
     <link rel="stylesheet" href="css/screen-cursos.css">
     <script src="./js/screen-cursos.js" defer></script>
-    <title>Estude para o Futuro</title>
+    <title>Cursos disponíveis</title>
 </head>
 <body>
     <header>
         <div class="container">
             <a href="indexLogado.php"><img src="img/logo.png" alt="Logo" id="logo"></a> 
-            <!-- Logo header -->
             <nav>
                 <ul>
-                    <a href="indexLogado.php">
-                        <li id="li-home">HOME</li>
-                    </a>
-                    <a href="screen-cursos.php">
-                        <li id="li-cursos">CURSOS</li>
-                    </a>
-                    <a href="conta.php">
-                        <li>MINHA CONTA</li> 
-                    </a>                      
+                    <a href="indexLogado.php"><li id="li-home">HOME</li></a>
+                    <a href="screen-cursos.php"><li id="li-cursos">CURSOS</li></a>
+                    <a href="conta.php"><li>MINHA CONTA</li></a>                      
                 </ul>
             </nav>
-            <!--Nav header -->
             <div class="img-profile">
-                <a href="#"><img src="<?php echo $perfil; ?>" alt="Foto do usuário" id="profile"></a>
+                <a href="#"><img src="<?php echo htmlspecialchars($perfil); ?>" alt="Foto do usuário" id="profile"></a>
             </div>
-
             <div class="dropdown">
                 <div class="user">
                     <div class="informations">
-                        <?php
-                            echo "<p><u id='name'>$username</u></p>
-                                  <p><u id='email'>$email</u></p>";
-                        ?>
+                        <p><u id='name'><?php echo htmlspecialchars($username); ?></u></p>
+                        <p><u id='email'><?php echo htmlspecialchars($email); ?></u></p>
                     </div>
-    
                     <div class="infos">
-                        <a href="conta.php">
-                            <p id="config"><span>⚙️</span> Configurações</p>
-                        </a>
-
-                        <a href="logOut.php">
-                            <p id="logout"><span>↩</span> Log out</p>
-                        </a>
+                        <a href="conta.php"><p id="config"><span>⚙️</span> Configurações</p></a>
+                        <a href="logOut.php"><p id="logout"><span>↩</span> Log out</p></a>
                     </div>
                 </div>
             </div>

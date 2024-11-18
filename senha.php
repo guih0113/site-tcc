@@ -2,7 +2,7 @@
 include_once('conexao1.php');
 session_start();
 
-if((!isset($_SESSION['email']) == true) and (!isset($_SESSION['senha']) == true)){
+if ((!isset($_SESSION['email']) == true) and (!isset($_SESSION['senha']) == true)) {
     unset($_SESSION['email']);
     unset($_SESSION['senha']);
     header('Location: login.php');
@@ -15,7 +15,7 @@ $user = $_SESSION['id'];
 $message = ""; // Variável para armazenar a mensagem
 $alertType = ""; // Variável para armazenar o tipo de alerta (error ou success)
 
-if(isset($_POST['update-password'])){
+if (isset($_POST['update-password'])) {
     $senha_atual = $_POST['this-password'];
     $nova_senha = mysqli_real_escape_string($conexao, $_POST['new-password']);
     $confirmar_senha = $_POST['confirm-password'];
@@ -23,22 +23,20 @@ if(isset($_POST['update-password'])){
     $verifica_senha_atual = "SELECT senha_usuario FROM tb_usuario WHERE senha_usuario = '$senha_atual' AND id_usuario = $user";
     $result_verifica_atual = mysqli_query($conexao, $verifica_senha_atual);
 
-    if(mysqli_num_rows($result_verifica_atual) > 0){
+    if (mysqli_num_rows($result_verifica_atual) > 0) {
 
-        if($nova_senha == $confirmar_senha){
+        if ($nova_senha == $confirmar_senha) {
             $atualizar_senha = "UPDATE tb_usuario SET senha_usuario = '$nova_senha' WHERE id_usuario = $user";
-            if(mysqli_query($conexao, $atualizar_senha)){
+            if (mysqli_query($conexao, $atualizar_senha)) {
                 $_SESSION['senha'] = $nova_senha;
                 $message = "Senha atualizada com sucesso!";
                 $alertType = "success";
             }
-
-        } else{
+        } else {
             $message = "Confirmação incorreta, tente novamente.";
             $alertType = "error";
         }
-
-    } else{
+    } else {
         $message = "A senha atual está incorreta, tente novamente.";
         $alertType = "error";
     }
@@ -69,23 +67,37 @@ $perfil = isset($row['nome_foto']) ? $row['nome_foto'] : "img/profile.svg";
             color: white;
             border-radius: 5px;
         }
+
         div.alert.success {
-            background-color: #40dc35; /* Verde para sucesso */
+            background-color: #40dc35;
+            /* Verde para sucesso */
         }
+
         div.alert.error {
-            background-color: rgba(255, 0, 0, 0.834); /* Vermelho para erro */
+            background-color: rgba(255, 0, 0, 0.834);
+            /* Vermelho para erro */
         }
     </style>
     <script>
         document.addEventListener("DOMContentLoaded", function() {
-            var message = "<?php echo $message; ?>";
-            var alertType = "<?php echo $alertType; ?>";
-            if (message) {
-                var alertDiv = document.querySelector(".alert");
+            const message = "<?php echo $message; ?>";
+            const alertType = "<?php echo $alertType; ?>";
+            const alertDiv = document.querySelector('.alert');
+
+            if (message && alertDiv) { // Confere se o alertDiv foi identificado corretamente
                 alertDiv.innerHTML = message;
-                alertDiv.classList.add(alertType); // Adiciona a classe correspondente ao tipo
+                alertDiv.classList.add(alertType);
                 alertDiv.style.display = "block";
             }
+
+            setTimeout(function() {
+                alertDiv.style.display = "none";
+            }, 5000);
+            
+            // Função do botão "Cancelar"
+            document.querySelector(".btn-secondary").addEventListener("click", function() {
+                window.location.href = "senha.php";
+            });
         });
     </script>
 </head>
@@ -118,7 +130,7 @@ $perfil = isset($row['nome_foto']) ? $row['nome_foto'] : "img/profile.svg";
                 <div class="user">
                     <div class="informations">
                         <?php
-                            echo "<p><u id='name'>$username</u></p>
+                        echo "<p><u id='name'>$username</u></p>
                                   <p><u id='email'>$email</u></p>";
                         ?>
                     </div>
@@ -158,13 +170,13 @@ $perfil = isset($row['nome_foto']) ? $row['nome_foto'] : "img/profile.svg";
                         <div class="form-group">
                             <label for="new-password">Nova Senha</label>
                             <div class="inputPass">
-                                <input type="password" name="new-password" id="new-password" class="form-control" >
+                                <input type="password" name="new-password" id="new-password" class="form-control">
                                 <div class="password-strength">Strong</div>
                             </div>
                         </div>
                         <div class="form-group">
                             <label for="confirm-password">Confirmar Nova Senha</label>
-                                <input type="password" name="confirm-password" id="confirm-password" class="form-control">
+                            <input type="password" name="confirm-password" id="confirm-password" class="form-control">
                         </div>
                         <div class="msg-recommended">* Sua senha precisa conter letras minúsculas e maiúsculas, números e caracteres especiais.</div>
                         <div class="action-buttons">

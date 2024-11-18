@@ -16,13 +16,31 @@ document.addEventListener("click", function(event) {
     }
 });
 
-//Carrossel
+function CarregarCursos() {
+    fetch('ajax.php?carrossel')
+        .then(response => response.text())
+        .then(data => {
+            document.getElementById('carrossel').innerHTML = data;
+        })
+        .catch(error => {
+            console.error('Erro ao carregar os cursos:', error);
+        });
+}
+
 document.addEventListener('DOMContentLoaded', function() {
-    const cards = document.querySelectorAll('.curso-card');
+    CarregarCursos();
+});
+
+// Carrossel
+document.addEventListener('DOMContentLoaded', function() {
+    const cards = document.getElementsByClassName('curso-card'); // Usando getElementsByClassName
+    console.log(cards);
     let currentIndex = 1;
 
     function updateCarousel() {
-        cards.forEach((card, index) => {
+        // Usando loop for
+        for (let index = 0; index < cards.length; index++) {
+            const card = cards[index];
             card.classList.remove('active', 'left', 'right');
             card.style.order = '';
 
@@ -38,7 +56,7 @@ document.addEventListener('DOMContentLoaded', function() {
             } else {
                 card.style.order = 3;
             }
-        });
+        }
     }
 
     document.querySelector('.next').addEventListener('click', () => {
@@ -51,11 +69,19 @@ document.addEventListener('DOMContentLoaded', function() {
         updateCarousel();
     });
 
-    // Adiciona a rotação automática a cada 3 segundos
-    setInterval(() => {
+    // Chama a rotação inicial
+    updateCarousel();
+
+    // Adiciona uma rotação inicial automática de 0,1 segundo para evitar delay inicial
+    setTimeout(() => {
         currentIndex = (currentIndex + 1) % cards.length;
         updateCarousel();
-    }, 5000); // 3000 milissegundos = 3 segundos
 
-    updateCarousel();
+        // Depois inicia o intervalo de 4 segundos
+        setInterval(() => {
+            currentIndex = (currentIndex + 1) % cards.length;
+            updateCarousel();
+        }, 4000);
+    }, 100);
 });
+

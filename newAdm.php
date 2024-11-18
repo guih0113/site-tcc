@@ -1,42 +1,48 @@
 <?php
-    include_once('conexao1.php');
-    session_start();
+include_once('conexao1.php');
+session_start();
 
-    $message = ""; // Variável para armazenar a mensagem
-    $alertType = ""; // Variável para armazenar o tipo de alerta (error ou success)
-    $adm = $_SESSION['idAdm'];
+if ((!isset($_SESSION['userAdm']) == true) and (!isset($_SESSION['senhaAdm']) == true)) {
+    unset($_SESSION['userAdm']);
+    unset($_SESSION['senhaAdm']);
+    header('Location: loginAdm.php');
+}
 
-    if (isset($_POST['update_info'])) {
+$message = ""; // Variável para armazenar a mensagem
+$alertType = ""; // Variável para armazenar o tipo de alerta (error ou success)
+$adm = $_SESSION['idAdm'];
 
-        $username = mysqli_real_escape_string($conexao, $_POST['username']);
-        $password = mysqli_real_escape_string($conexao, $_POST['password']);
+if (isset($_POST['update_info'])) {
+    $username = mysqli_real_escape_string($conexao, $_POST['username']);
+    $password = mysqli_real_escape_string($conexao, $_POST['password']);
 
-        if (strlen($username) < 7) {
-            $message = "O nome de usuário deve ter pelo menos 7 caracteres.";
+    if (strlen($username) < 7) {
+        $message = "O nome de usuário deve ter pelo menos 7 caracteres.";
+        $alertType = "error";
+    } else {
+        $query_adm = "SELECT username_adm FROM tb_adm WHERE username_adm = '$username' AND id_adm != $adm";
+        $result_queryAdm = mysqli_query($conexao, $query_adm);
+
+        if (mysqli_num_rows($result_queryAdm) > 0) {
+            $message = "Já existe um administrador com esse username.";
             $alertType = "error";
         } else {
-            $query_adm = "SELECT username_adm FROM tb_adm WHERE username_adm = '$username' AND id_adm != $adm";
-            $result_queryAdm = mysqli_query($conexao, $query_adm);
-
-            if (mysqli_num_rows($result_queryAdm) > 0) {
-                $message = "Já existe um administrador com esse username.";
-                $alertType = "error";
+            $sql = "INSERT INTO tb_adm(username_adm, senha_adm) VALUES('$username', '$password')";
+            if (mysqli_query($conexao, $sql)) {
+                $message = 'Novo administrador cadastrado!';
+                $alertType = "success";
             } else {
-                $sql = "INSERT INTO tb_adm(username_adm, senha_adm) VALUES('$username', '$password')";
-                if (mysqli_query($conexao, $sql)) {
-                    $message = 'Novo administrador cadastrado!';
-                    $alertType = "success";
-                } else {
-                    $message = "Erro ao cadastrar: " . mysqli_error($conexao);
-                    $alertType = "error";
-                }
+                $message = "Erro ao cadastrar: " . mysqli_error($conexao);
+                $alertType = "error";
             }
         }
     }
+}
 ?>
 
 <!DOCTYPE html>
 <html lang="pt-br">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -50,29 +56,39 @@
             padding: 15px;
             margin-top: 20px;
             text-align: center;
-            color: white;
+            color: black;
             border-radius: 5px;
         }
+
         div.alert.success {
-            background-color: #40dc35; /* Verde para sucesso */
+            background-color: #40dc35;
+            /* Verde para sucesso */
         }
+
         div.alert.error {
-            background-color: rgba(255, 0, 0, 0.834); /* Vermelho para erro */
+            background-color: rgba(255, 0, 0, 0.834);
+            /* Vermelho para erro */
         }
     </style>
     <script>
-        document.addEventListener("DOMContentLoaded", function() {
-            var message = "<?php echo $message; ?>";
-            var alertType = "<?php echo $alertType; ?>";
+        document.addEventListener('DOMContentLoaded', function() {
+            const message = "<?php echo $message; ?>";
+            const alertType = "<?php echo $alertType; ?>";
+            const alertDiv = document.querySelector('.alert');
+
             if (message) {
-                var alertDiv = document.querySelector(".alert");
                 alertDiv.innerHTML = message;
-                alertDiv.classList.add(alertType); // Adiciona a classe correspondente ao tipo
+                alertDiv.classList.add(alertType);
                 alertDiv.style.display = "block";
             }
+
+            setTimeout(function() {
+                alertDiv.style.display = "none";
+            }, 5000); // Ocultar após 5 segundos
         });
     </script>
 </head>
+
 <body>
     <div class="container-main">
         <h1>Administrador</h1>
@@ -81,6 +97,8 @@
                 <ul class="nav-list">
                     <li class="list"><a href="adm.php">Usuários</a></li>
                     <li class="list"><a href="newAdm.php" class="active">Novo administrador</a></li>
+                    <li class="list"><a href="editarCurso.php">Editar Curso</a></li>
+                    <li class="list"><a href="editarConteudo.php">Editar módulos e aulas</a></li>
                     <a href="logOutAdm.php">
                         <li>Sair</li>
                     </a>
@@ -120,4 +138,5 @@
         </div>
     </div>
 </body>
+
 </html>

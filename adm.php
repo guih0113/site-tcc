@@ -27,6 +27,8 @@
                 <ul class="nav-list">
                     <li class="list"><a href="adm.php" class="active">Usuários</a></li>
                     <li class="list"><a href="newAdm.php">Novo administrador</a></li>
+                    <li class="list"><a href="editarCurso.php">Editar Curso</a></li>
+                    <li class="list"><a href="editarConteudo.php">Editar módulos e aulas</a></li>
                     <a href="logOutAdm.php">
                         <li>Sair</li>
                     </a>

@@ -67,6 +67,7 @@ document.getElementById('cadastrar').addEventListener('submit', function(event) 
     if(score < 3){
         canSubmit = false;
         alertText.style.display = 'block';
+        event.preventDefault();
     } else {
         alertText.style.display = 'none';
     }

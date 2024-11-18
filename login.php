@@ -8,12 +8,11 @@ session_start();
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="shortcut icon" href="img/favicon.ico" type="image/x-icon">
-    <title>Sign Up Screen</title>
+    <title>Log-in</title>
     <link rel="stylesheet" href="./css/login.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
     <script src="./js/login.js" defer></script>
-
 <body>
     <div class="back-button">
         <a href="index.html"><i class="fas fa-arrow-left"></i></a>
@@ -23,8 +22,8 @@ session_start();
             <img src="favicon_io/favicon.ico" alt="Signup Illustration" id="icon">
         </div>
         <div class="signup-form">
-            <h1>Welcome Back!</h1>
-            <p>Welcome back, we missed you!</p>
+            <h1>Seja bem vindo!</h1>
+            <p>Seja bem vindo de volta, sentimos sua falta!</p>
             <form method="POST" id="contactForm">
                 <div class="input-group">
                     <label for="username">Email</label>
@@ -53,7 +52,7 @@ session_start();
                 <h4>Não possui uma conta? <a href="cadastro.php"><span>Cadastre-se</span></a></h4>
             </form>
             <div class="social-signup">
-                <p>Or sign in with</p>
+                <p>Ou continue com</p>
                 <div class="social-icons">
                     <a href="#"><img src="img/google-icon.png" alt="Google"></a>
                     <a href="#"><img src="img/apple-icon.png" alt="Apple"></a>

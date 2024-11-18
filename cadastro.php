@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Sign Up Screen</title>
+    <title>Cadastre-se</title>
     <link rel="shortcut icon" href="img/favicon.ico" type="image/x-icon">
     <link rel="stylesheet" href="./css/cadastro.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
@@ -18,8 +18,8 @@
             <img src="favicon_io/favicon.ico" alt="Signup Illustration" id="icon">
         </div>
         <div class="signup-form">
-            <h1>Get Started Free</h1>
-            <p>Free Forever. No Credit Card Needed</p>
+            <h1>Crie sua conta já!</h1>
+            <p>Inicie agora mesmo gratuitamente!</p>
             <form action="#" method="POST" id="contactForm">
                 <div class="input-group">
                     <label for="email">Email Address</label>
@@ -50,7 +50,7 @@
                 <input type="submit" class="sign-up-btn" value="Sign up" name="submit">
             </form>
             <div class="social-signup">
-                <p>Or sign up with</p>
+                <p>Ou continue com</p>
                 <div class="social-icons">
                     <a href="#"><img src="img/google-icon.png" alt="Google"></a>
                     <a href="#"><img src="img/apple-icon.png" alt="Apple"></a>

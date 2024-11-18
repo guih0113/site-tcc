@@ -2,7 +2,7 @@
 include_once('conexao1.php');
 session_start();
 
-if((!isset($_SESSION['email']) == true) and (!isset($_SESSION['senha']) == true)){
+if ((!isset($_SESSION['email']) == true) and (!isset($_SESSION['senha']) == true)) {
     unset($_SESSION['email']);
     unset($_SESSION['senha']);
     header('Location: login.php');
@@ -56,7 +56,7 @@ if (isset($_POST['update_info'])) {
     // Captura os dados do formulário
     $novo_email = mysqli_real_escape_string($conexao, $_POST['email']);
     $novo_username = mysqli_real_escape_string($conexao, $_POST['username']);
-    
+
     // Verifica se o nome de usuário é menor que 7 caracteres
     if (strlen($novo_username) < 7) {
         $message = "O nome de usuário deve ter pelo menos 7 caracteres.";
@@ -106,6 +106,7 @@ if (isset($_POST['update_info'])) {
 
 <!DOCTYPE html>
 <html lang="pt-BR">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -122,26 +123,41 @@ if (isset($_POST['update_info'])) {
             color: white;
             border-radius: 5px;
         }
+
         div.alert.success {
-            background-color: #40dc35; /* Verde para sucesso */
+            background-color: #40dc35;
+            /* Verde para sucesso */
         }
+
         div.alert.error {
-            background-color: rgba(255, 0, 0, 0.834); /* Vermelho para erro */
+            background-color: rgba(255, 0, 0, 0.834);
+            /* Vermelho para erro */
         }
     </style>
     <script>
         document.addEventListener("DOMContentLoaded", function() {
-            var message = "<?php echo $message; ?>";
-            var alertType = "<?php echo $alertType; ?>";
-            if (message) {
-                var alertDiv = document.querySelector(".alert");
+            const message = "<?php echo $message; ?>";
+            const alertType = "<?php echo $alertType; ?>";
+            const alertDiv = document.querySelector('.alert');
+
+            if (message && alertDiv) { // Confere se o alertDiv foi identificado corretamente
                 alertDiv.innerHTML = message;
-                alertDiv.classList.add(alertType); // Adiciona a classe correspondente ao tipo
+                alertDiv.classList.add(alertType);
                 alertDiv.style.display = "block";
             }
+
+            setTimeout(function() {
+                alertDiv.style.display = "none";
+            }, 5000);
+
+            // Função do botão "Cancelar"
+            document.querySelector(".btn-secondary").addEventListener("click", function() {
+                window.location.href = "conta.php";
+            });
         });
     </script>
 </head>
+
 <body>
     <header>
         <div class="container">
@@ -169,7 +185,7 @@ if (isset($_POST['update_info'])) {
                 <div class="user">
                     <div class="informations">
                         <?php
-                            echo "<p><u id='name'>$username</u></p>
+                        echo "<p><u id='name'>$username</u></p>
                                   <p><u id='email'>$email</u></p>";
                         ?>
                     </div>
@@ -203,17 +219,17 @@ if (isset($_POST['update_info'])) {
                     <form action="conta.php" method="post" enctype="multipart/form-data">
                         <div class="profile-header">
                             <img src="<?php echo $perfil; ?>" alt="Avatar" class="avatar">
-                                <div class="photo-actions">
-                                    <div class="btn-upload">
-                                        <!-- O input type file é escondido -->
-                                        <input type="file" id="file-input" style="display: none;" name="imagem" accept="image/*" class="file-input">
-                                        <!-- O botão personalizado -->
-                                        <label for="file-input" class="btn-choose-file">
-                                            Escolher arquivo
-                                        </label>
-                                    </div>
-                                    <button type="submit" name="remover_foto" class="btn">Remover foto</button>
+                            <div class="photo-actions">
+                                <div class="btn-upload">
+                                    <!-- O input type file é escondido -->
+                                    <input type="file" id="file-input" style="display: none;" name="imagem" accept="image/*" class="file-input">
+                                    <!-- O botão personalizado -->
+                                    <label for="file-input" class="btn-choose-file">
+                                        Escolher arquivo
+                                    </label>
                                 </div>
+                                <button type="submit" name="remover_foto" class="btn">Remover foto</button>
+                            </div>
                         </div>
                         <div class="form-group">
                             <label for="email">E-mail</label>

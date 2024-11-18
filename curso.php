@@ -25,7 +25,6 @@ $perfil = isset($row['nome_foto']) ? $row['nome_foto'] : "img/profile.svg";
 $cursoId = filter_input(INPUT_GET, 'cursoId', FILTER_SANITIZE_NUMBER_INT);
 $aulaId = filter_input(INPUT_GET, 'aulaId', FILTER_SANITIZE_NUMBER_INT);
 
-
 // Inicializa as variáveis
 $value = '';
 $primeiraAula = '';
@@ -42,11 +41,10 @@ if ($cursoId && $aulaId) {
     $stmtConcluida->bind_param("ii", $user, $aulaId);
     $stmtConcluida->execute();
     $resConcluida = $stmtConcluida->get_result();
-    if ($resConcluida && $resConcluida->num_rows > 0) {
-        $rowConcluida = $resConcluida->fetch_assoc();
-        if ($rowConcluida['concluida'] == 1) {
-            $aulaConcluida = true; // Marca como concluída
-        }
+    $rowConcluida = $resConcluida->fetch_assoc(); // Armazenar o resultado corretamente
+
+    if ($rowConcluida && $rowConcluida['concluida'] == 1) {
+        $aulaConcluida = true; // Marca como concluída
     }
 
     // Consulta para obter o título do curso
@@ -92,10 +90,58 @@ if ($cursoId && $aulaId) {
         }
     }
 }
+
+function calcularPorcentagemConclusao($conexao, $cursoId, $userId)
+{
+    // Contar o total de aulas do curso
+    $sqlTotalAulas = "
+        SELECT COUNT(a.id_aula) AS total_aulas
+        FROM tb_aulas a
+        INNER JOIN tb_modulos_aulas ma ON a.id_aula = ma.cd_aula
+        INNER JOIN tb_cursos_modulos cm ON ma.cd_modulo = cm.cd_modulo
+        WHERE cm.cd_curso = ?
+    ";
+    $stmtTotalAulas = $conexao->prepare($sqlTotalAulas);
+    $stmtTotalAulas->bind_param("i", $cursoId);
+    $stmtTotalAulas->execute();
+    $resultadoTotal = $stmtTotalAulas->get_result();
+    $totalAulas = $resultadoTotal->fetch_assoc()['total_aulas'];
+
+    // Contar o total de aulas concluídas pelo usuário
+    $sqlAulasConcluidas = "
+        SELECT COUNT(ua.cd_aula) AS aulas_concluidas
+        FROM tb_usuario_aulas ua
+        WHERE ua.cd_usuario = ? AND ua.concluida = 1
+        AND ua.cd_aula IN (
+            SELECT a.id_aula
+            FROM tb_aulas a
+            INNER JOIN tb_modulos_aulas ma ON a.id_aula = ma.cd_aula
+            INNER JOIN tb_cursos_modulos cm ON ma.cd_modulo = cm.cd_modulo
+            WHERE cm.cd_curso = ?
+        )
+    ";
+    $stmtAulasConcluidas = $conexao->prepare($sqlAulasConcluidas);
+    $stmtAulasConcluidas->bind_param("ii", $userId, $cursoId);
+    $stmtAulasConcluidas->execute();
+    $resultadoConcluidas = $stmtAulasConcluidas->get_result();
+    $aulasConcluidas = $resultadoConcluidas->fetch_assoc()['aulas_concluidas'];
+
+    // Calcular a porcentagem de conclusão
+    $porcentagem = $totalAulas > 0 ? ($aulasConcluidas / $totalAulas) * 100 : 0;
+
+    // Atualizar a porcentagem de conclusão apenas no curso correto
+    $sqlUpdate = "UPDATE tb_cursos SET conclusao_curso = ? WHERE id_curso = ?";
+    $stmtUpdate = $conexao->prepare($sqlUpdate);
+    $stmtUpdate->bind_param("di", $porcentagem, $cursoId);
+    $stmtUpdate->execute();
+
+    return round($porcentagem, 2);
+}
 ?>
 
 <!DOCTYPE html>
 <html lang="pt-br">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -108,169 +154,167 @@ if ($cursoId && $aulaId) {
 
     <script>
         document.addEventListener('DOMContentLoaded', () => {
-        const cursoId = <?php echo json_encode($cursoId); ?>;
-        const aulaId = <?php echo json_encode($aulaId); ?>;
-        const proximaAulaId = <?php echo json_encode($proximaAulaId); ?>;
-        const aulaAnteriorId = <?php echo json_encode($aulaAnteriorId); ?>;
-        const aulaConcluida = <?php echo json_encode($aulaConcluida); ?>;
+            const cursoId = <?php echo json_encode($cursoId); ?>;
+            const aulaId = <?php echo json_encode($aulaId); ?>;
+            const proximaAulaId = <?php echo json_encode($proximaAulaId); ?>;
+            const aulaAnteriorId = <?php echo json_encode($aulaAnteriorId); ?>;
+            const aulaConcluida = <?php echo json_encode($aulaConcluida); ?>;
 
-        const btnMarcarConcluido = document.getElementById('btnMarcarConcluido');
-        const btnProximaAula = document.querySelector('.conclude-button.next');
-        const btnAulaAnterior = document.querySelector('.conclude-button.previous');
-        const video = document.getElementById('video');
+            const btnMarcarConcluido = document.getElementById('btnMarcarConcluido');
+            const btnProximaAula = document.querySelector('.conclude-button.next');
+            const btnAulaAnterior = document.querySelector('.conclude-button.previous');
+            const video = document.getElementById('video');
 
-        // Inicialização: Controle do estado dos botões com base no status de conclusão da aula
-        btnMarcarConcluido.disabled = true;
-        btnProximaAula.disabled = true;
-
-        if (aulaConcluida) {
-            btnMarcarConcluido.innerHTML = 'Aula Concluída!';
+            // Inicialização: Controle do estado dos botões com base no status de conclusão da aula
             btnMarcarConcluido.disabled = true;
-            btnMarcarConcluido.style.backgroundColor = '#4caf50';
-            btnProximaAula.disabled = false;
-        } else {
-            btnMarcarConcluido.innerHTML = 'Marcar como Concluída';
-            btnMarcarConcluido.disabled = false;
-        }
+            btnProximaAula.disabled = true;
 
-        // Desbloquear o botão "Marcar como Concluído" quando o vídeo termina
-        video.addEventListener('ended', () => {
-            btnMarcarConcluido.disabled = false;
-        });
+            if (aulaConcluida) {
+                btnMarcarConcluido.innerHTML = 'Aula Concluída!';
+                btnMarcarConcluido.disabled = true;
+                btnMarcarConcluido.style.backgroundColor = '#4caf50';
+                btnProximaAula.disabled = false;
+            } else {
+                btnMarcarConcluido.innerHTML = 'Marcar como Concluída';
+                btnMarcarConcluido.disabled = false;
+            }
 
-        // Função para marcar a aula como concluída via AJAX
-        btnMarcarConcluido.addEventListener('click', () => {
-            $.ajax({
-                type: 'POST',
-                url: 'ajax.php',
-                data: {
-                    action: 'marcar_concluido',
-                    aulaId: aulaId
-                },
-                dataType: 'json',
-                success: function(response) {
-                    if (response.success) {
-                        btnMarcarConcluido.innerHTML = 'Aula Concluída!';
-                        btnMarcarConcluido.disabled = true;
-                        btnMarcarConcluido.style.backgroundColor = '#4caf50';
-                        btnProximaAula.disabled = false;
-                    } else {
-                        alert("Erro ao marcar a aula como concluída: " + response.error);
-                    }
-                },
-                error: function(jqXHR, textStatus, errorThrown) {
-                    console.error("Erro na requisição AJAX: ", textStatus, errorThrown);
-                }
+            // Desbloquear o botão "Marcar como Concluído" quando o vídeo termina
+            video.addEventListener('ended', () => {
+                btnMarcarConcluido.disabled = false;
             });
-        });
 
-        // Função para navegar entre aulas
-        function navigateToAula(aulaId) {
-            window.location.href = `curso.php?cursoId=${cursoId}&aulaId=${aulaId}`;
-        }
-
-        // Botão "Próxima Aula"
-        if (btnProximaAula && proximaAulaId) {
-            btnProximaAula.addEventListener('click', () => {
-                navigateToAula(proximaAulaId);
-            });
-        }
-
-        // Botão "Aula Anterior"
-        if (btnAulaAnterior && aulaAnteriorId) {
-            btnAulaAnterior.addEventListener('click', () => {
-                navigateToAula(aulaAnteriorId);
-            });
-        }
-
-        // Atualização da URL e do conteúdo ao clicar nas aulas da sidebar
-        const aulaLinks = document.querySelectorAll('.aula-link');
-        aulaLinks.forEach(link => {
-            link.addEventListener('click', function(e) {
-                e.preventDefault();
-
-                const clickedAulaId = this.getAttribute('data-aulaId');
-                const videoUrl = this.getAttribute('data-video');
-                const tituloAula = this.textContent;
-                const nomeModulo = this.closest('.module').querySelector('h2').textContent;
-
-                // Atualizar o título da aula e o vídeo
-                document.getElementById('titulo-aula').innerHTML = `<span id="modulo-aula">${nomeModulo}</span> | ${tituloAula}`;
-                document.getElementById('video').setAttribute('src', videoUrl);
-
-                // Atualizar a URL sem recarregar a página
-                const novaUrl = `${window.location.pathname}?cursoId=${cursoId}&aulaId=${clickedAulaId}`;
-                history.pushState(null, null, novaUrl);
-
-                // Marcar a aula como concluída (via AJAX) quando for clicada
-                fetch('ajax.php', {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/x-www-form-urlencoded',
+            // Função para marcar a aula como concluída via AJAX
+            btnMarcarConcluido.addEventListener('click', () => {
+                $.ajax({
+                    type: 'POST',
+                    url: 'ajax.php',
+                    data: {
+                        action: 'marcar_concluido',
+                        aulaId: aulaId
                     },
-                    body: new URLSearchParams({
-                        'action': 'marcar_concluido',
-                        'aulaId': clickedAulaId
-                    })
-                })
-                .then(response => response.json())
-                .then(data => {
-                    if (data.success) {
-                        this.parentElement.classList.add('completed');
-                    } else {
-                        console.error('Erro ao marcar aula como concluída:', data.error);
+                    dataType: 'json',
+                    success: function(response) {
+                        if (response.success) {
+                            btnMarcarConcluido.innerHTML = 'Aula Concluída!';
+                            btnMarcarConcluido.disabled = true;
+                            btnMarcarConcluido.style.backgroundColor = '#4caf50';
+                            btnProximaAula.disabled = false;
+                        } else {
+                            alert("Erro ao marcar a aula como concluída: " + response.error);
+                        }
+                    },
+                    error: function(jqXHR, textStatus, errorThrown) {
+                        console.error("Erro na requisição AJAX: ", textStatus, errorThrown);
                     }
-                })
-                .catch(error => console.error('Erro na requisição:', error));
+                });
             });
+
+            // Função para navegar entre aulas
+            function navigateToAula(aulaId) {
+                window.location.href = `curso.php?cursoId=${cursoId}&aulaId=${aulaId}`;
+            }
+
+            // Botão "Próxima Aula"
+            if (btnProximaAula && proximaAulaId) {
+                btnProximaAula.addEventListener('click', () => {
+                    navigateToAula(proximaAulaId);
+                });
+            }
+
+            // Botão "Aula Anterior"
+            if (btnAulaAnterior && aulaAnteriorId) {
+                btnAulaAnterior.addEventListener('click', () => {
+                    navigateToAula(aulaAnteriorId);
+                });
+            }
+
+            // Atualização da URL e do conteúdo ao clicar nas aulas da sidebar
+            const aulaLinks = document.querySelectorAll('.aula-link');
+            aulaLinks.forEach(link => {
+                link.addEventListener('click', function(e) {
+                    e.preventDefault();
+
+                    const clickedAulaId = this.getAttribute('data-aulaId');
+                    const videoUrl = this.getAttribute('data-video');
+                    const tituloAula = this.textContent;
+                    const nomeModulo = this.closest('.module').querySelector('h2').textContent;
+
+                    // Atualizar o título da aula e o vídeo
+                    document.getElementById('titulo-aula').innerHTML = `<span id="modulo-aula">${nomeModulo}</span> | ${tituloAula}`;
+                    document.getElementById('video').setAttribute('src', videoUrl);
+
+                    // Atualizar a URL sem recarregar a página
+                    const novaUrl = `${window.location.pathname}?cursoId=${cursoId}&aulaId=${clickedAulaId}`;
+                    history.pushState(null, null, novaUrl);
+
+                    // Marcar a aula como concluída (via AJAX) quando for clicada
+                    fetch('ajax.php', {
+                            method: 'POST',
+                            headers: {
+                                'Content-Type': 'application/x-www-form-urlencoded',
+                            },
+                            body: new URLSearchParams({
+                                'action': 'marcar_concluido',
+                                'aulaId': clickedAulaId
+                            })
+                        })
+                        .then(response => response.json())
+                        .then(data => {
+                            if (data.success) {
+                                this.parentElement.classList.add('completed');
+                            } else {
+                                console.error('Erro ao marcar aula como concluída:', data.error);
+                            }
+                        })
+                        .catch(error => console.error('Erro na requisição:', error));
+                });
+            });
+
+            // Atualização da sidebar com os módulos e aulas
+            if (cursoId) {
+                $.ajax({
+                    url: 'ajax.php',
+                    type: 'GET',
+                    data: {
+                        sidebar: true,
+                        cursoId: cursoId
+                    },
+                    success: function(response) {
+                        $('#sidebar').html(response);
+
+                        const dropdownModules = document.querySelectorAll('.dropdown-toggle');
+                        dropdownModules.forEach(dropdownModule => {
+                            const dropdownContent = dropdownModule.nextElementSibling;
+
+                            dropdownModule.addEventListener('click', () => {
+                                dropdownContent.classList.toggle('active');
+                                dropdownContent.style.height = dropdownContent.classList.contains('active') ? dropdownContent.scrollHeight + 'px' : '0';
+                            });
+                        });
+
+                        document.querySelectorAll('.aula-link').forEach(aula => {
+                            aula.addEventListener('click', (event) => {
+                                event.preventDefault();
+
+                                const tituloAula = aula.textContent;
+                                const moduloElement = aula.closest('.module');
+                                const nomeModulo = moduloElement.querySelector('h2').textContent;
+
+                                document.getElementById('titulo-aula').innerHTML = `<span id="modulo-aula">${nomeModulo}</span> | ${tituloAula}`;
+                                const videoUrl = aula.getAttribute('data-video');
+                                document.getElementById('video').setAttribute('src', videoUrl);
+
+                                const clickedAulaId = aula.getAttribute('data-aulaId');
+                                const novaUrl = `${window.location.pathname}?cursoId=${cursoId}&aulaId=${clickedAulaId}`;
+                                window.location.href = novaUrl;
+                            });
+                        });
+                    }
+                });
+                btnMarcarConcluido.disabled = true;
+            }
         });
-
-        // Atualização da sidebar com os módulos e aulas
-        if (cursoId) {
-            $.ajax({
-                url: 'ajax.php',
-                type: 'GET',
-                data: {
-                    sidebar: true,
-                    cursoId: cursoId
-                },
-                success: function(response) {
-                    $('#sidebar').html(response);
-
-                    const dropdownModules = document.querySelectorAll('.dropdown-toggle');
-                    dropdownModules.forEach(dropdownModule => {
-                        const dropdownContent = dropdownModule.nextElementSibling;
-
-                        dropdownModule.addEventListener('click', () => {
-                            dropdownContent.classList.toggle('active');
-                            dropdownContent.style.height = dropdownContent.classList.contains('active') ? dropdownContent.scrollHeight + 'px' : '0';
-                        });
-                    });
-
-                    document.querySelectorAll('.aula-link').forEach(aula => {
-                        aula.addEventListener('click', (event) => {
-                            event.preventDefault();
-
-                            const tituloAula = aula.textContent;
-                            const moduloElement = aula.closest('.module');
-                            const nomeModulo = moduloElement.querySelector('h2').textContent;
-
-                            document.getElementById('titulo-aula').innerHTML = `<span id="modulo-aula">${nomeModulo}</span> | ${tituloAula}`;
-                            const videoUrl = aula.getAttribute('data-video');
-                            document.getElementById('video').setAttribute('src', videoUrl);
-
-                            // Atualizar a URL sem recarregar a página
-                            const clickedAulaId = aula.getAttribute('data-aulaId');
-                            const novaUrl = `${window.location.pathname}?cursoId=${cursoId}&aulaId=${clickedAulaId}`;
-                            history.pushState(null, null, novaUrl);
-                        });
-                    });
-                }
-            });
-            btnMarcarConcluido.disabled = true;
-        }
-    });
-
     </script>
 </head>
 
@@ -280,9 +324,15 @@ if ($cursoId && $aulaId) {
             <a href="indexLogado.php"><img src="img/logo.png" alt="Logo" id="logo"></a>
             <nav>
                 <ul>
-                    <a href="indexLogado.php"><li>HOME</li></a>
-                    <a href="screen-cursos.php"><li>CURSOS</li></a>
-                    <a href="conta.php"><li>MINHA CONTA</li></a>
+                    <a href="indexLogado.php">
+                        <li>HOME</li>
+                    </a>
+                    <a href="screen-cursos.php">
+                        <li>CURSOS</li>
+                    </a>
+                    <a href="conta.php">
+                        <li>MINHA CONTA</li>
+                    </a>
                 </ul>
             </nav>
             <div class="img-profile">
@@ -297,8 +347,12 @@ if ($cursoId && $aulaId) {
                     </div>
 
                     <div class="infos">
-                        <a href="conta.php"><p id="config"><span>⚙️</span> Configurações</p></a>
-                        <a href="logOut.php"><p id="logout"><span>↩</span> Log out</p></a>
+                        <a href="conta.php">
+                            <p id="config"><span>⚙️</span> Configurações</p>
+                        </a>
+                        <a href="logOut.php">
+                            <p id="logout"><span>↩</span> Log out</p>
+                        </a>
                     </div>
                 </div>
             </div>
@@ -308,10 +362,13 @@ if ($cursoId && $aulaId) {
     <main>
         <div id="title">
             <h1><?php echo $value; ?></h1>
+            <?php
+            $porcentagemConclusao = calcularPorcentagemConclusao($conexao, $cursoId, $user);
+            ?>
             <div class="progress-bar-container">
-                <div class="progress-bar">65%</div>
+                <div class="progress-bar" style="width: <?php echo $porcentagemConclusao; ?>%"><?php echo $porcentagemConclusao; ?>%</div>
             </div>
-            <div class="progress-text">65% Concluído</div>
+            <div class="progress-text"><?php echo $porcentagemConclusao; ?>% Concluído</div>
         </div>
 
         <div class="main-container">
@@ -326,9 +383,9 @@ if ($cursoId && $aulaId) {
                 <div class="lesson-info">
                     <h3 id="titulo-aula"><span id="modulo-aula"><?php echo htmlspecialchars($nomeModulo); ?></span> | <?php echo htmlspecialchars($primeiraAula); ?></h3>
                     <div class="button-container">
-                        <button class="conclude-button previous">Aula anterior <</button>
-                        <button id="btnMarcarConcluido" class="conclude-button">Marcar como concluído</button>
-                        <button class="conclude-button next">Próxima aula ></button>
+                        <button class="conclude-button previous">Aula anterior < </button>
+                                <button id="btnMarcarConcluido" class="conclude-button">Marcar como concluído</button>
+                                <button class="conclude-button next">Próxima aula ></button>
                     </div>
                 </div>
 
@@ -340,4 +397,5 @@ if ($cursoId && $aulaId) {
         </div>
     </main>
 </body>
+
 </html>

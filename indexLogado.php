@@ -2,7 +2,7 @@
 include_once('conexao1.php');
 session_start();
 
-if((!isset($_SESSION['email']) == true) and (!isset($_SESSION['senha']) == true)){
+if ((!isset($_SESSION['email']) == true) and (!isset($_SESSION['senha']) == true)) {
     unset($_SESSION['email']);
     unset($_SESSION['senha']);
     header('Location: login.php');
@@ -20,6 +20,7 @@ $perfil = isset($row['nome_foto']) ? $row['nome_foto'] : "img/profile.svg";
 
 <!DOCTYPE html>
 <html lang="pt-br">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -29,10 +30,11 @@ $perfil = isset($row['nome_foto']) ? $row['nome_foto'] : "img/profile.svg";
     <script src="js/indexLogado.js" defer></script>
     <title>Estude para o Futuro</title>
 </head>
+
 <body>
     <header>
         <div class="container">
-            <a href="indexLogado.php"><img src="img/logo.png" alt="Logo" id="logo"></a> 
+            <a href="indexLogado.php"><img src="img/logo.png" alt="Logo" id="logo"></a>
             <!-- Logo header -->
             <nav>
                 <ul>
@@ -40,11 +42,11 @@ $perfil = isset($row['nome_foto']) ? $row['nome_foto'] : "img/profile.svg";
                         <li id="li-home">HOME</li>
                     </a>
                     <a href="screen-cursos.php">
-                        <li>CURSOS</li> 
-                    </a>                      
+                        <li>CURSOS</li>
+                    </a>
                     <a href="conta.php">
-                        <li>MINHA CONTA</li> 
-                    </a>                      
+                        <li>MINHA CONTA</li>
+                    </a>
                 </ul>
             </nav>
             <!--Nav header -->
@@ -56,11 +58,11 @@ $perfil = isset($row['nome_foto']) ? $row['nome_foto'] : "img/profile.svg";
                 <div class="user">
                     <div class="informations">
                         <?php
-                            echo "<p><u id='name'>$username</u></p>
+                        echo "<p><u id='name'>$username</u></p>
                                   <p><u id='email'>$email</u></p>";
                         ?>
                     </div>
-    
+
                     <div class="infos">
                         <a href="conta.php">
                             <p id="config"><span>⚙️</span> Configurações</p>
@@ -118,38 +120,14 @@ $perfil = isset($row['nome_foto']) ? $row['nome_foto'] : "img/profile.svg";
     <section class="cursos">
         <h2>Cursos disponíveis:</h2>
         <div class="carrossel-container">
-            <button class="prev"><</button>
-            <div class="carrossel">
-                <!-- Card de cursos aqui -->
-                <div class="curso-card" data-index="0">
-                    <div class="curso-nivel">
-                        <span>&#11088;</span>
-                    </div>
-                    <h3>INICIANTE</h3>
-                    <p>Curso de educação financeira para iniciantes</p>
-                    <a href="curso.php?cursoId=1&aulaId=1"><button class="iniciar-button">INICIAR</button></a>
-                </div>
-                <div class="curso-card" data-index="1">
-                    <div class="curso-nivel">
-                        <span>&#11088;&#11088;</span>
-                    </div>
-                    <h3>INTERMEDIÁRIO</h3>
-                    <p>Curso de educação financeira para intermediários</p>
-                    <a href="curso.php?cursoId=2&aulaId=1"><button class="iniciar-button">INICIAR</button></a>
-                </div>
-                <div class="curso-card" data-index="2">
-                    <div class="curso-nivel">
-                        <span>&#11088;&#11088;&#11088;</span>
-                    </div>
-                    <h3>EXPERIENTES</h3>
-                    <p>Curso de educação financeira para experientes</p>
-                    <a href="curso.php?cursoId=3&aulaId=1"><button class="iniciar-button">INICIAR</button></a>
-                </div>
+            <button class="prev"> < </button>
+            <div class="carrossel" id="carrossel">
+
             </div>
-            <button class="next">></button>
+            <button class="next"> > </button>
         </div>
     </section>
-    
+
     <!-- Fim section -->
     <footer id="contato">
         <div class="social-icons">
@@ -165,7 +143,7 @@ $perfil = isset($row['nome_foto']) ? $row['nome_foto'] : "img/profile.svg";
             <a href="#contato">Contato</a>
         </nav>
         <div class="footer-bottom">
-            <p>&copy;Estude para o Futuro | 2024</p>
+            <p>&copy; Estude para o Futuro | 2024</p>
         </div>
     </footer>
 </body>

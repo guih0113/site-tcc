@@ -30,3 +30,4 @@ function CarregarCursos() {
 document.addEventListener('DOMContentLoaded', function() {
     CarregarCursos();
 });
+
