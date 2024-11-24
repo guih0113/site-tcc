@@ -94,49 +94,71 @@ function excluirUser($id)
 
 function getModules($idCurso)
 {
-    $sql = 'SELECT * FROM tb_modulos 
-                INNER JOIN tb_cursos_modulos ON tb_modulos.id_modulo = tb_cursos_modulos.cd_modulo 
-                WHERE tb_cursos_modulos.cd_curso = ?';
+    global $conexao; // Certifique-se de que a conexão está acessível
 
-    $retorno = $GLOBALS['conexao']->query($sql);
+    // Consulta com prepared statement
+    $sql = 'SELECT tb_modulos.id_modulo, tb_modulos.nome_modulo 
+            FROM tb_modulos 
+            INNER JOIN tb_cursos_modulos 
+                ON tb_modulos.id_modulo = tb_cursos_modulos.cd_modulo 
+            WHERE tb_cursos_modulos.cd_curso = ?';
 
-    if($retorno && $retorno->num_rows > 0){
-        // Armazena as informações do primeiro curso na sessão, se desejado
-        $modulo = $retorno->fetch_assoc(); // Armazena o primeiro curso
+    // Preparar a consulta
+    $stmt = $conexao->prepare($sql);
+    if (!$stmt) {
+        die("Erro na preparação da consulta: " . $conexao->error);
+    }
+
+    // Vincular o parâmetro e executar
+    $stmt->bind_param('i', $idCurso);
+    $stmt->execute();
+    $retorno = $stmt->get_result();
+
+    // Verificar se há resultados
+    if ($retorno && $retorno->num_rows > 0) {
+        // Salvar informações do primeiro módulo na sessão (opcional)
+        $modulo = $retorno->fetch_assoc();
         $_SESSION['idModulo'] = $modulo['id_modulo'];
         $_SESSION['nomeModulo'] = $modulo['nome_modulo'];
-        
-        // Reinicia o ponteiro do resultado para garantir que todos os cursos sejam lidos no loop
-        $retorno->data_seek(0); 
+
+        // Reiniciar o ponteiro para permitir iterações futuras
+        $retorno->data_seek(0);
     }
 
     return $retorno;
 }
 
+
 function getAulas($idModulo)
 {
-    // Assegure que $idModulo seja um inteiro para evitar SQL Injection
-    $idModulo = intval($idModulo);
+    global $conexao;
 
-    // Consulta para buscar as aulas associadas ao módulo
-    $sql = "
-            SELECT a.id_aula, a.nome_aula, a.conteudo_aula
-            FROM tb_modulos_aulas ma
-            INNER JOIN tb_aulas a ON ma.cd_aula = a.id_aula
-            WHERE ma.cd_modulo = $idModulo
-        ";
+    $sql = 'SELECT a.id_aula, a.nome_aula, a.conteudo_aula 
+            FROM tb_modulos_aulas ma 
+            INNER JOIN tb_aulas a ON ma.cd_aula = a.id_aula 
+            WHERE ma.cd_modulo = ?';
 
-    $retorno = $GLOBALS['conexao']->query($sql);
+    $stmt = $conexao->prepare($sql);
+    if (!$stmt) {
+        die("Erro na preparação da consulta: " . $conexao->error);
+    }
 
-    if($retorno && $retorno->num_rows > 0){
+    $stmt->bind_param('i', $idModulo);
+    $stmt->execute();
+    $retorno = $stmt->get_result();
+
+    if ($retorno && $retorno->num_rows > 0) {
         $aula = $retorno->fetch_assoc();
         $_SESSION['idAula'] = $aula['id_aula'];
         $_SESSION['nomeAula'] = $aula['nome_aula'];
         $_SESSION['conteudoAula'] = $aula['conteudo_aula'];
+
+        $retorno->data_seek(0);
     }
 
     return $retorno;
 }
+
 
 function getPrimeiraAulaId($cursoId)
 {

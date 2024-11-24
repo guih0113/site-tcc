@@ -95,10 +95,13 @@ if (isset($_POST['update_info'])) {
         <div class="row">
             <nav class="sidebar">
                 <ul class="nav-list">
-                    <li class="list"><a href="adm.php">Usuários</a></li>
+                    <li class="list"><a href="adm.php">Usuários cadastrados</a></li>
                     <li class="list"><a href="newAdm.php" class="active">Novo administrador</a></li>
                     <li class="list"><a href="editarCurso.php">Editar Curso</a></li>
                     <li class="list"><a href="editarConteudo.php">Editar módulos e aulas</a></li>
+                    <li class="list"><a href="adicionarConteudo.php">Adicionar módulos</a></li>
+                    <li class="list"><a href="adicionarAulas.php">Adicionar aulas</a></li>
+                    <li class="list"><a href="novoCurso.php">Novo Curso</a></li>
                     <a href="logOutAdm.php">
                         <li>Sair</li>
                     </a>
@@ -107,7 +110,7 @@ if (isset($_POST['update_info'])) {
             <main class="content">
                 <section class="form-section">
                     <div class="form-container">
-                        <h2>Cadastro de Administrador</h2>
+                        <h1>Cadastro de Administrador</h1>
                         <form action="#" method="POST" class="admin-form" id="cadastrar">
                             <div class="input-group">
                                 <label for="username">Username</label>

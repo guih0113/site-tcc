@@ -11,61 +11,28 @@ if ((!isset($_SESSION['userAdm']) == true) and (!isset($_SESSION['senhaAdm']) ==
 $message = ""; // Variável para armazenar a mensagem
 $alertType = ""; // Variável para armazenar o tipo de alerta (error ou success)
 
-// Função de API interna para carregar dados do curso quando solicitado por AJAX
-if (isset($_GET['id_curso'])) {
-    $id_curso = $_GET['id_curso'];
-    $query = "SELECT * FROM tb_cursos WHERE id_curso = $id_curso";
-    $result = mysqli_query($conexao, $query);
+// Função para cadastrar um novo curso
+if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['update-course'])) {
+    // Captura os dados do formulário
+    $nomeCurso = $_POST['nome'];
+    $descricaoCurso = $_POST['descricao'];
+    $iconeCurso = $_POST['icone'];
 
-    if ($curso = mysqli_fetch_assoc($result)) {
-        echo json_encode($curso);
+    // Verifica se todos os campos foram preenchidos
+    if (!empty($nomeCurso) && !empty($descricaoCurso) && !empty($iconeCurso)) {
+        // Prepara a query para inserir o curso no banco de dados
+        $stmtCurso = $conexao->prepare("INSERT INTO tb_cursos (nome_curso, descricao_curso, icone_curso) VALUES (?, ?, ?)");
+        $stmtCurso->bind_param("sss", $nomeCurso, $descricaoCurso, $iconeCurso);
+
+        if ($stmtCurso->execute()) {
+            $message = "Curso cadastrado com sucesso!";
+            $alertType = "success";
+        } else {
+            $message = "Erro ao cadastrar o curso.";
+            $alertType = "error";
+        }
     } else {
-        echo json_encode(["error" => "Curso não encontrado"]);
-    }
-    exit; // Para interromper a execução em uma requisição AJAX
-}
-
-// Defina o curso selecionado na sessão
-if (isset($_POST['course-select']) && !empty($_POST['course-select'])) {
-    $_SESSION['id_curso'] = $_POST['course-select'];
-}
-
-// Atualização de curso
-if (isset($_POST['update-course']) && isset($_SESSION['id_curso'])) {
-    $novo_nome = mysqli_real_escape_string($conexao, $_POST['nome']);
-    $nova_desc = mysqli_real_escape_string($conexao, $_POST['descricao']);
-    $novo_icone = mysqli_real_escape_string($conexao, $_POST['icone']);
-    $id_curso = $_SESSION['id_curso'];
-
-    $query_atualiza = "UPDATE tb_cursos SET nome_curso = '$novo_nome', descricao_curso = '$nova_desc', icone_curso = '$novo_icone' WHERE id_curso = $id_curso";
-    if (mysqli_query($conexao, $query_atualiza)) {
-        $_SESSION['nomeCurso'] = $novo_nome;
-        $_SESSION['descCurso'] = $nova_desc;
-        $_SESSION['iconeCurso'] = $novo_icone;
-        $message = "Informações atualizadas com sucesso!";
-        $alertType = "success";
-    } else {
-        $message = "Erro ao atualizar informações: " . mysqli_error($conexao);
-        $alertType = "error";
-    }
-}
-
-// Exclusão de curso
-if (isset($_POST['delete_course']) && isset($_SESSION['id_curso'])) {
-    $id_curso = $_SESSION['id_curso'];
-
-    // Exclui registros relacionados na tabela `tb_cursos_modulos`
-    $deleteRelations = "DELETE FROM tb_cursos_modulos WHERE cd_curso = $id_curso";
-    mysqli_query($conexao, $deleteRelations);
-
-    // Exclui o curso
-    $delete = "DELETE FROM tb_cursos WHERE id_curso = $id_curso";
-    if (mysqli_query($conexao, $delete)) {
-        $message = "Curso excluído com sucesso!";
-        $alertType = "success";
-        unset($_SESSION['id_curso']); // Limpa o ID do curso da sessão após exclusão
-    } else {
-        $message = "Erro ao excluir curso: " . mysqli_error($conexao);
+        $message = "Por favor, preencha todos os campos.";
         $alertType = "error";
     }
 }
@@ -78,7 +45,6 @@ if (isset($_POST['delete_course']) && isset($_SESSION['id_curso'])) {
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="shortcut icon" href="img/favicon.ico" type="image/x-icon">
     <link rel="stylesheet" href="css/editarCurso.css">
-    <script src="./js/editarCurso.js" defer></script>
     <title>Estude para o Futuro</title>
     <style>
         div.alert {
@@ -125,11 +91,11 @@ if (isset($_POST['delete_course']) && isset($_SESSION['id_curso'])) {
                 <ul class="nav-list">
                     <li class="list"><a href="adm.php">Usuários cadastrados</a></li>
                     <li class="list"><a href="newAdm.php">Novo administrador</a></li>
-                    <li class="list"><a href="editarCurso.php" class="active">Editar curso</a></li>
+                    <li class="list"><a href="editarCurso.php">Editar curso</a></li>
                     <li class="list"><a href="editarConteudo.php">Editar módulos e aulas</a></li>
                     <li class="list"><a href="adicionarConteudo.php">Adicionar módulos</a></li>
                     <li class="list"><a href="adicionarAulas.php">Adicionar aulas</a></li>
-                    <li class="list"><a href="novoCurso.php">Novo Curso</a></li>
+                    <li class="list"><a href="novoCurso.php" class="active">Novo Curso</a></li>
                     <a href="logOutAdm.php">
                         <li>Sair</li>
                     </a>
@@ -137,23 +103,8 @@ if (isset($_POST['delete_course']) && isset($_SESSION['id_curso'])) {
             </nav>
             <main class="content">
                 <section id="account-change-password" class="tab-content">
-                    <form action="editarCurso.php" method="POST" class="form">
-                        <h1>Editar Curso</h1>
-
-                        <div class="form-group">
-                            <label for="course-select">Selecione o Curso</label>
-                            <select id="course-select" name="course-select" class="form-control">
-                                <option value="">Selecione um curso</option>
-                                <?php
-                                $query = "SELECT id_curso, nome_curso FROM tb_cursos";
-                                $result = mysqli_query($conexao, $query);
-
-                                while ($curso = mysqli_fetch_assoc($result)) {
-                                    echo "<option value='{$curso['id_curso']}'>{$curso['nome_curso']}</option>";
-                                }
-                                ?>
-                            </select>
-                        </div>
+                    <form action="novoCurso.php" method="POST" class="form">
+                        <h1>Novo Curso</h1>
 
                         <div class="form-group">
                             <label for="course-name">Nome do Curso</label>
@@ -173,7 +124,6 @@ if (isset($_POST['delete_course']) && isset($_SESSION['id_curso'])) {
                         <div class="action-buttons">
                             <button type="submit" class="btn btn-primary" name="update-course">Salvar Alterações</button>
                             <button type="button" class="btn btn-secondary">Cancelar</button>
-                            <button type="submit" class="btn btn-danger" name="delete_course">Excluir Curso</button>
                         </div>
                         <div class="alert"></div>
                     </form>

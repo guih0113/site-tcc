@@ -77,36 +77,33 @@ h1 {
 .content {
     flex: 3;
     display: flex;
-    padding: 20px;
     align-items: flex-start;
+    padding: 15px 0;
 }
 
 .admin-section {
     width: 100%;
-    display: flex;
-    justify-content: center;
-    align-items: center;
+
 }
 
 .admin-container {
     width: 100%;
     max-width: 1000px;
-    background-color: #1C1C1C;
     padding: 20px;
     border-radius: 8px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
     margin-top: -20px;
 }
 
-h2 {
-    margin-left: 5px;
-    margin-bottom: 30px;
-    color: aliceblue;
-    font-weight: normal;
+h1 {
+    font-size: 28px;
+    color: #ffffff;
+    border-bottom: 2px solid #40dc39;
+    padding-bottom: 15px;
+    margin-bottom: 25px;
 }
 
 div#table-content {
-    height: 268px;
+    max-height: 300px;
     overflow-y: auto;
 }
 
@@ -148,10 +145,8 @@ div#table-content {
 
 .form-container {
     width: 100%;
-    background-color: #1C1C1C;
-    padding: 30px;
+    padding: 20px;
     border-radius: 8px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
     margin-top: -20px;
 }
 

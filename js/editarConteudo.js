@@ -7,30 +7,56 @@ document.addEventListener("DOMContentLoaded", function () {
     const categoriaInput = document.getElementById("course-category");
     const nomeAulaInput = document.getElementById("class-name");
     const conteudoAulaInput = document.getElementById("class-content");
-    
+
     // Inicialmente, desabilitar os campos
     nomeInput.disabled = true;
     nomeAulaInput.disabled = true;
     conteudoAulaInput.disabled = true;
-    
+
     // Habilitar inputs quando uma opção válida for selecionada
     function enableInputsIfValid() {
         const isModuleSelected = selectModulo.value !== "";
         const isClassSelected = selectAula.value !== "";
-    
+
         // Habilitar 'nomeInput' (Nome do Curso) apenas com módulo selecionado
         nomeInput.disabled = !isModuleSelected;
-    
+
         // Habilitar 'nomeAulaInput' e 'conteudoAulaInput' quando módulo e aula estão selecionados
         nomeAulaInput.disabled = !(isModuleSelected && isClassSelected);
         conteudoAulaInput.disabled = !(isModuleSelected && isClassSelected);
     }
-    
+
     // Adicionar eventos de mudança nos selects para habilitar os inputs
     selectModulo.addEventListener('change', enableInputsIfValid);
     selectAula.addEventListener('change', enableInputsIfValid);
-    
 
+    // Definir o valor inicial e travar os 4 primeiros caracteres
+    conteudoAulaInput.value = "img/";
+
+    // Adicionar um evento para monitorar alterações no campo
+    conteudoAulaInput.addEventListener("input", function () {
+        // Verificar se os 4 primeiros caracteres foram alterados
+        if (!conteudoAulaInput.value.startsWith("img/")) {
+            // Restaurar o prefixo caso tenha sido alterado
+            conteudoAulaInput.value = "img/" + conteudoAulaInput.value.slice(4);
+        }
+    });
+
+    // Adicionar evento de foco para garantir que o cursor não fique antes de "img/"
+    conteudoAulaInput.addEventListener("focus", function () {
+        // Colocar o cursor no final do texto ao focar
+        const length = conteudoAulaInput.value.length;
+        conteudoAulaInput.setSelectionRange(length, length);
+    });
+
+    // Adicionar evento de seleção para impedir que o prefixo seja selecionado
+    conteudoAulaInput.addEventListener("select", function (e) {
+        // Impedir que o início do texto ("img/") seja selecionado
+        const start = conteudoAulaInput.selectionStart;
+        if (start < 4) {
+            conteudoAulaInput.setSelectionRange(4, conteudoAulaInput.selectionEnd);
+        }
+    });
 
     // Limpar o campo de nome do módulo ao carregar a página
     nomeInput.value = '';
@@ -204,5 +230,4 @@ document.addEventListener("DOMContentLoaded", function () {
                 .catch(error => console.error('Erro ao excluir a aula:', error));
         }
     });
-
 });

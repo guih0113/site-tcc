@@ -83,48 +83,36 @@ INSERT INTO tb_cursos VALUES
 
 -- Inserindo os módulos
 INSERT INTO tb_modulos (nome_modulo) VALUES
-('Módulo 1 do Curso 1'),
-('Módulo 2 do Curso 1'),
-('Módulo 3 do Curso 1'),
-('Módulo 1 do Curso 2'),
-('Módulo 2 do Curso 2'),
-('Módulo 3 do Curso 2'),
-('Módulo 1 do Curso 3'),
-('Módulo 2 do Curso 3'),
-('Módulo 3 do Curso 3');
+('Módulo 1: Fundamentos básicos da Educação Financeira'),
+('Módulo 2: Gerenciamento Financeiro básico'),
+('Módulo 1: Planejamento Financeiro'),
+('Módulo 2: Controle e Recuperação Financeira'),
+('Módulo 1: Construção de Patrimônio'),
+('Módulo 2: Empreendedorismo e Renda extra');
 
 -- Associando os cursos aos módulos
 INSERT INTO tb_cursos_modulos (cd_curso, cd_modulo) VALUES
 (1, 1),
 (1, 2),
-(1, 3),
+(2, 3),
 (2, 4),
-(2, 5),
-(2, 6),
-(3, 7),
-(3, 8),
-(3, 9);
+(3, 5),
+(3, 6);
 
 -- Criando 2 aulas para cada módulo
 INSERT INTO tb_aulas (nome_aula, conteudo_aula) VALUES
-('Aula 1 do Módulo 1 do Curso 1', 'img/video.mp4'),
-('Aula 2 do Módulo 1 do Curso 1', 'img/video.mp4'),
-('Aula 1 do Módulo 2 do Curso 1', 'img/video.mp4'),
-('Aula 2 do Módulo 2 do Curso 1', 'img/video.mp4'),
-('Aula 1 do Módulo 3 do Curso 1', 'img/video.mp4'),
-('Aula 2 do Módulo 3 do Curso 1', 'img/video.mp4'),
-('Aula 1 do Módulo 1 do Curso 2', 'img/video.mp4'),
-('Aula 2 do Módulo 1 do Curso 2', 'img/video.mp4'),
-('Aula 1 do Módulo 2 do Curso 2', 'img/video.mp4'),
-('Aula 2 do Módulo 2 do Curso 2', 'img/video.mp4'),
-('Aula 1 do Módulo 3 do Curso 2', 'img/video.mp4'),
-('Aula 2 do Módulo 3 do Curso 2', 'img/video.mp4'),
-('Aula 1 do Módulo 1 do Curso 3', 'img/video.mp4'),
-('Aula 2 do Módulo 1 do Curso 3', 'img/video.mp4'),
-('Aula 1 do Módulo 2 do Curso 3', 'img/video.mp4'),
-('Aula 2 do Módulo 2 do Curso 3', 'img/video.mp4'),
-('Aula 1 do Módulo 3 do Curso 3', 'img/video.mp4'),
-('Aula 2 do Módulo 3 do Curso 3', 'img/video.mp4');
+('O que é Educação Financeira?', 'img/video.mp4'),
+('O que vamos aprender?', 'img/video.mp4'),
+('Cartão de Crédito, Débito e Boleto', 'img/video.mp4'),
+('Como fazer empréstimos', 'img/video.mp4'),
+('Entenda seu imposto', 'img/video.mp4'),
+('Como declarar sua renda', 'img/video.mp4'),
+('Como limpar seu nome', 'img/video.mp4'),
+('Como comprar seu próprio automóvel', 'img/video.mp4'),
+('Investimentos', 'img/video.mp4'),
+('Como comprar sua própria casa', 'img/video.mp4'),
+('Como ganhar dinheiro', 'img/video.mp4'),
+('Como ter sua própria empresa', 'img/video.mp4');
 
 -- Relacionando as aulas aos módulos
 INSERT INTO tb_modulos_aulas (cd_modulo, cd_aula) VALUES
@@ -139,13 +127,7 @@ INSERT INTO tb_modulos_aulas (cd_modulo, cd_aula) VALUES
 (5, 9),
 (5, 10),
 (6, 11),
-(6, 12),
-(7, 13),
-(7, 14),
-(8, 15),
-(8, 16),
-(9, 17),
-(9, 18);
+(6, 12);
 
 -- Inserindo usuários
 INSERT INTO tb_usuario VALUES

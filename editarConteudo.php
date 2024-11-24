@@ -232,6 +232,9 @@
                         <li class="list"><a href="newAdm.php">Novo administrador</a></li>
                         <li class="list"><a href="editarCurso.php">Editar curso</a></li>
                         <li class="list"><a href="editarConteudo.php" class="active">Editar módulos e aulas</a></li>
+                        <li class="list"><a href="adicionarConteudo.php">Adicionar módulos</a></li>
+                        <li class="list"><a href="adicionarAulas.php">Adicionar aulas</a></li>
+                        <li class="list"><a href="novoCurso.php">Novo Curso</a></li>
                         <a href="logOutAdm.php">
                             <li>Sair</li>
                         </a>

@@ -118,7 +118,7 @@ $perfil = isset($row['nome_foto']) ? $row['nome_foto'] : "img/profile.svg";
     </section>
 
     <section class="cursos">
-        <h2>Cursos disponíveis:</h2>
+        <h2>Principais cursos:</h2>
         <div class="carrossel-container">
             <button class="prev"> < </button>
             <div class="carrossel" id="carrossel">
